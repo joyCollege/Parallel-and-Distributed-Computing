@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from src.data_loader import load_data
 from src.preprocessing import split_data
 from src.model import train_model
