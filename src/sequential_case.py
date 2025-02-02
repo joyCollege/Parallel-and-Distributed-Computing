@@ -1,6 +1,6 @@
 import time
-from add_random_numbers import add_random_numbers
-from join_random_letters import join_random_letters
+from .add_random_numbers import add_random_numbers
+from .join_random_letters import join_random_letters
 
 def sequential_case():
     total_start_time = time.time()
