@@ -8,5 +8,3 @@ def sequential_case():
     add_random_numbers()
     total_end_time = time.time()
     print(f"Serial case time taken:  {total_end_time - total_start_time} seconds")
-
-sequential_case()
