@@ -1,2 +1,2 @@
-def calc_amdahl(s, tp):
-     return 1 / ((1 - tp) + (tp / s))
+def calc_amdahl(n, part_parallelized):
+     return 1 / ((1 - part_parallelized) + (part_parallelized / n))

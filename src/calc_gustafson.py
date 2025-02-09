@@ -1,2 +1,2 @@
-def calc_gustafson(p, s):
-    return p + s * (1 - 0.1)
+def calc_gustafson(p, part_nonparallelized):
+    return p + part_nonparallelized * (1 - p)
