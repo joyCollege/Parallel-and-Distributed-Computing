@@ -22,8 +22,8 @@ if __name__ == '__main__':
     p_threading=2
     s_threading = calc_speadup(ts, tp_threading)
     e_threading = calc_efficiency(s_threading, p_threading)
-    amdahl_threading = calc_amdahl(s_threading, tp_threading)
-    gustafson_threading = calc_gustafson(p_threading, s_threading)
+    amdahl_threading = calc_amdahl(6, tp_threading)
+    gustafson_threading = calc_gustafson(6, s_threading)
     print("Speadup             ", s_threading)
     print("Efficiency          ", e_threading)
     print("Amdhal’s speedup    ", amdahl_threading)
@@ -33,8 +33,8 @@ if __name__ == '__main__':
     p_advanced_threading=4
     s_advanced_threading = calc_speadup(ts, tp_advanced_threading)
     e_advanced_threading = calc_efficiency(s_advanced_threading, p_advanced_threading)
-    amdahl_advanced_threading = calc_amdahl(p_advanced_threading, 12/18)
-    gustafson_advanced_threading = calc_gustafson(p_advanced_threading, 12/18)
+    amdahl_advanced_threading = calc_amdahl(6, 12/18)
+    gustafson_advanced_threading = calc_gustafson(6, 12/18)
     print("Speadup             ", s_advanced_threading)
     print("Efficiency          ", e_advanced_threading)
     print("Amdhal’s speedup    ", amdahl_advanced_threading)
@@ -44,8 +44,8 @@ if __name__ == '__main__':
     p_multiprocessing=2
     s_multiprocessing = calc_speadup(ts, tp_multiprocessing)
     e_multiprocessing = calc_efficiency(s_multiprocessing, p_multiprocessing)
-    amdahl_multiprocessing = calc_amdahl(p_multiprocessing, 6/12)
-    gustafson_multiprocessing = calc_gustafson(p_multiprocessing, 6/12)
+    amdahl_multiprocessing = calc_amdahl(6, 6/12)
+    gustafson_multiprocessing = calc_gustafson(6, 6/12)
     print("Speadup             ", s_multiprocessing)
     print("Efficiency          ", e_multiprocessing)
     print("Amdhal’s speedup    ", amdahl_multiprocessing)
@@ -55,8 +55,8 @@ if __name__ == '__main__':
     p_advanced_multiprocessing=4
     s_advanced_multiprocessing = calc_speadup(ts, tp_advanced_multiprocessing)
     e_advanced_multiprocessing = calc_efficiency(s_advanced_multiprocessing, p_advanced_multiprocessing)
-    amdahl_advanced_multiprocessing = calc_amdahl(p_advanced_multiprocessing, 12/18)
-    gustafson_advanced_multiprocessing = calc_gustafson(p_advanced_multiprocessing, 12/18)
+    amdahl_advanced_multiprocessing = calc_amdahl(6, 12/18)
+    gustafson_advanced_multiprocessing = calc_gustafson(6, 12/18)
     print("Speadup             ", s_advanced_multiprocessing)
     print("Efficiency          ", e_advanced_multiprocessing)
     print("Amdhal’s speedup    ", amdahl_advanced_multiprocessing)
