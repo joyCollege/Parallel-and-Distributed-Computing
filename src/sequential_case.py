@@ -1,26 +1,14 @@
 import time
 from .add_random_numbers import add_random_numbers
-from .join_random_letters import join_random_letters
 
-def sequential_case(n):
-    """
-    Executes the operations sequentially and measures the total execution time.
+def sequential_case(num_numbers=1000):
+    print(f"\nStarting the sequential case...")
 
-    This function calls the `join_random_letters` and `add_random_numbers` 
-    functions in sequence, timing the total execution and printing the time 
-    taken in milliseconds.
-
-    Parameters:
-    n (int): The number of iterations for each function.
-
-    Returns:
-    float: The total time taken in milliseconds for the sequential operations.
-    """
     total_start_time = time.time()
-    join_random_letters(n)
-    add_random_numbers(n)
+    result = add_random_numbers(0, num_numbers)
+    print(f">> Sum of random numbers: {result}")
     total_end_time = time.time()
     
     total_time = (total_end_time - total_start_time) * 1000
-    print(f"Serial case taken: {total_time} milliseconds")
+    print(f">> Time taken: {total_time} milliseconds")
     return total_time

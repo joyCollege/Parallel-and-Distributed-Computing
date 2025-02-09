@@ -1,18 +1,8 @@
 import random
 
-def add_random_numbers(n=1000):
-    """
-    Generates a list of random numbers and calculates their sum.
-
-    This function creates a list of `n` random integers between 1 and 1000 
-    and computes their total sum.
-
-    Parameters:
-    n (int, optional): The number of random numbers to generate. Default is 1000.
-
-    Returns:
-    int: The sum of the generated random numbers.
-    """
-    numbers = [random.randint(1, 1000) for _ in range(n)]
-    total_sum = sum(numbers)
+def add_random_numbers(start=0, end=1000):
+    total_sum = 0
+    for _ in range(start, end):
+        total_sum += random.randint(1, 1000)
     return total_sum
+
