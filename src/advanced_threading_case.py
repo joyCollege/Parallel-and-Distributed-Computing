@@ -4,6 +4,19 @@ from .add_random_numbers import add_random_numbers
 from .join_random_letters import join_random_letters
 
 def advanced_threading_case(n):
+    """
+    Executes tasks in parallel using threading.
+
+    This function runs `join_random_letters` and `add_random_numbers` in 
+    four separate threads, each handling half of the workload. It measures 
+    the total execution time and prints the duration in milliseconds.
+
+    Parameters:
+    n (int): The number of iterations, split among threads.
+
+    Returns:
+    float: The total execution time in milliseconds.
+    """
     thread_letters1 = threading.Thread(target=join_random_letters, args=(n//2,))
     thread_letters2 = threading.Thread(target=join_random_letters, args=(n//2,))
 
