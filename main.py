@@ -4,10 +4,8 @@ from src.threading_case import threading_case
 from src.multiprocessing_case import multiprocessing_case
 from src.print_analysis import print_analysis
 
-if __name__ == '__main__':
-    
+def lab3_1():
     n = 1000000
-
     print(f"\n**************** Running {n} times ****************")
     ts = sequential_case(num_numbers=n)
     for i in [2, 3, 4, 5]:
@@ -33,4 +31,4 @@ if __name__ == '__main__':
                 parallel_time=multiprocessing_case_time, 
                 parallelized_portion=multiprocessing_case_parallelized_time/(non_parallelized_time-threading_case_parallelized_time), 
                 title=f"Multiprocessing {i}")
-    
+lab3_1()
