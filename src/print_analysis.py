@@ -15,7 +15,7 @@ def print_analysis(num_actions, serial_time, parallel_time, parallelized_portion
     """
     print(f"\n**************** {title} Performance Analysis ****************")
     speedup = calc_speadup(serial_time, parallel_time)
-    efficiency = calc_efficiency(speedup, num_actions)
+    efficiency = calc_efficiency(speedup, 6)
     amdahl_speedup = calc_amdahl(6, parallelized_portion)
     gustafson_speedup = calc_gustafson(6, 1 - parallelized_portion)
     
