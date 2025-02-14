@@ -169,7 +169,7 @@ Amdhal’s speedup     5.999754383235837
 Gustaffson’s speedup 5.999959062196805
 '''
 
-# lab3_2()
+lab3_2()
 
 '''
 The best parameters {'n_estimators': 100, 'max_features': None, 'max_depth': None} for RMSE = 26057.941851126383, MAPE: 9.868196740754167%
