@@ -48,7 +48,7 @@ def train_model(n_estimators, max_features, max_depth, shared_data, data):
     mape = np.mean(np.abs((np.expm1(data['y_val']) - np.expm1(y_val_pred)) / np.expm1(data['y_val']))) * 100
     print(f"The parameters: {n_estimators}, {max_features}, {max_depth}. RMSE: {rmse}, MAPE: {mape}%")
     # If the model is better than the current best, update the best model and its parameters
-    if rmse < shared_data['best_rmse']:
+    if mape < shared_data['best_mape']:
         shared_data['best_rmse'] = rmse
         shared_data['best_mape'] = mape
         shared_data['best_model'] = rf_model

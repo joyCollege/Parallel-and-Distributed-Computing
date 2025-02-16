@@ -55,6 +55,13 @@ def data_preprocessing(file_path):
     # X = X[~((X < (Q1 - 1.5 * IQR)) | (X > (Q3 + 1.5 * IQR))).any(axis=1)]
     # y = y[X.index]
 
+    # Outlier removal for target variable (y)
+    Q1_y = y.quantile(0.25)
+    Q3_y = y.quantile(0.75)
+    IQR_y = Q3_y - Q1_y
+    y = y[(y >= (Q1_y - 1.5 * IQR_y)) & (y <= (Q3_y + 1.5 * IQR_y))]
+    X = X.loc[y.index]
+
     # Split the data
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.30, random_state=42)
 
