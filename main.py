@@ -145,30 +145,31 @@ def lab3_2():
     data['X_train_filled'], data['X_val_filled'], data['y_train'], data['y_val'] = data_preprocessing(csv_path)
     
     # Define the parameter ranges
-    n_estimators_range = [10, 25, 50, 100, 200, 300, 400]
-    max_features_range = ['sqrt', 'log2', None]  # None means using all features
-    max_depth_range = [1, 2, 5, 10, 20, None]  # None means no limit
+    n_estimators_range = [10, 25, 50, 100, 200, 300, 400, 500, 600, 800]
+    max_features_range = ['sqrt', 'log2', None, 0.2, 0.5]
+    max_depth_range = [1, 2, 5, 10, 20, 30, 50, None]
+
 
     non_parallized_time =  time.time() - non_parallized_time
     
     # Run sequential, threading, and multiprocessing parameter finder
-    sequential_time =  sequential_parameter_finder(n_estimators_range, max_features_range, max_depth_range, data)
-    threading_time = threading_parameter_finder(n_estimators_range, max_features_range, max_depth_range, data)
+    # sequential_time =  sequential_parameter_finder(n_estimators_range, max_features_range, max_depth_range, data)
+    # threading_time = threading_parameter_finder(n_estimators_range, max_features_range, max_depth_range, data)
     multiprocessing_time = multiprocessing_parameter_finder(n_estimators_range[::-1], max_features_range, max_depth_range, data)
 
-    print_analysis(num_actions = len(n_estimators_range) * len(max_features_range) * len(max_depth_range) ,
-        serial_time = sequential_time,
-        parallel_time = threading_time,
-        parallelized_portion = threading_time / (non_parallized_time+threading_time) ,
-        title = "threading_parameter_finder"
-        )
+    # print_analysis(num_actions = len(n_estimators_range) * len(max_features_range) * len(max_depth_range) ,
+    #     serial_time = sequential_time,
+    #     parallel_time = threading_time,
+    #     parallelized_portion = threading_time / (non_parallized_time+threading_time) ,
+    #     title = "threading_parameter_finder"
+    #     )
     
-    print_analysis(num_actions = len(n_estimators_range) * len(max_features_range) * len(max_depth_range),
-        serial_time = sequential_time,
-        parallel_time = multiprocessing_time,
-        parallelized_portion = multiprocessing_time / (non_parallized_time+multiprocessing_time),
-        title = "multiprocessing_parameter_finder"
-        )
+    # print_analysis(num_actions = len(n_estimators_range) * len(max_features_range) * len(max_depth_range),
+    #     serial_time = sequential_time,
+    #     parallel_time = multiprocessing_time,
+    #     parallelized_portion = multiprocessing_time / (non_parallized_time+multiprocessing_time),
+    #     title = "multiprocessing_parameter_finder"
+    #     )
     
 lab3_2()
 
@@ -245,5 +246,14 @@ Speadup              5.024032496146557
 Efficiency           0.8373387493577594
 Amdhal’s speedup     5.892765780113264
 Gustaffson’s speedup 5.981802395702095
+
+
+
+---- with transformation AND removing y outliers with more parameters----
+n_estimators_range = [10, 25, 50, 100, 200, 300, 400, 500, 600, 800]
+max_features_range = ['sqrt', 'log2', None, 0.2, 0.5]
+max_depth_range = [1, 2, 5, 10, 20, 30, 50, None]
+The best parameters {'n_estimators': 500, 'max_features': 0.2, 'max_depth': 30} for RMSE = 0.12027586723667646, MAPE: 8.3359489677376%
+The multiprocessing execution time is 77.59755396842957 
 
 '''
