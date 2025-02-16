@@ -1,6 +1,8 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+import numpy as np
+
 
 def data_preprocessing(file_path):
     """
@@ -33,6 +35,9 @@ def data_preprocessing(file_path):
     X = train_data_cleaned.drop('SalePrice', axis=1)
     y = train_data_cleaned['SalePrice']
 
+    # Feature engineering: Apply log transformation to target variable
+    y = np.log1p(y)
+
     # Identify the categorical columns in X
     categorical_columns = X.select_dtypes(include=['object']).columns
 
@@ -43,15 +48,15 @@ def data_preprocessing(file_path):
     for column in categorical_columns:
         X[column] = label_encoders[column].fit_transform(X[column])
 
-    # NEW: Outlier detection (using IQR)
-    Q1 = X.quantile(0.25)
-    Q3 = X.quantile(0.75)
-    IQR = Q3 - Q1
-    X_cleaned = X[~((X < (Q1 - 1.5 * IQR)) | (X > (Q3 + 1.5 * IQR))).any(axis=1)]
-    y_cleaned = y[X_cleaned.index]
+    # Outlier detection (using IQR)
+    # Q1 = X.quantile(0.25)
+    # Q3 = X.quantile(0.75)
+    # IQR = Q3 - Q1
+    # X = X[~((X < (Q1 - 1.5 * IQR)) | (X > (Q3 + 1.5 * IQR))).any(axis=1)]
+    # y = y[X.index]
 
     # Split the data
-    X_train, X_val, y_train, y_val = train_test_split(X_cleaned, y_cleaned, test_size=0.30, random_state=42)
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.30, random_state=42)
 
     # Fill NaN values in X_train and X_val with the median of the respective columns
     X_train_filled = X_train.fillna(X_train.median())

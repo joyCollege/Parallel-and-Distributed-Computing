@@ -2,6 +2,7 @@ from sklearn.metrics import mean_absolute_percentage_error
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from math import sqrt
+import numpy as np
 
 def train_model(n_estimators, max_features, max_depth, shared_data, data):
     """
@@ -44,7 +45,7 @@ def train_model(n_estimators, max_features, max_depth, shared_data, data):
     y_val_pred = rf_model.predict(data['X_val_filled'])
     rmse = sqrt(mean_squared_error(data['y_val'], y_val_pred))
     # Compute MAPE
-    mape = mean_absolute_percentage_error(data['y_val'], y_val_pred) * 100
+    mape = np.mean(np.abs((np.expm1(data['y_val']) - np.expm1(y_val_pred)) / np.expm1(data['y_val']))) * 100
     print(f"The parameters: {n_estimators}, {max_features}, {max_depth}. RMSE: {rmse}, MAPE: {mape}%")
     # If the model is better than the current best, update the best model and its parameters
     if rmse < shared_data['best_rmse']:
