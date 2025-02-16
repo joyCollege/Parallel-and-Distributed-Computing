@@ -54,6 +54,62 @@ def lab3_1():
                 parallelized_portion=multiprocessing_case_parallelized_time/(non_parallelized_time-threading_case_parallelized_time), 
                 title=f"Multiprocessing {i}")
 
+# lab3_1()
+'''
+Starting the sequential case...
+>> Sum of random numbers: 500495857
+>> Time taken: 338.0863666534424 milliseconds
+
+**************** Threading 2 Performance Analysis ****************
+Speadup              0.9923295903843112
+Efficiency           0.16538826506405188
+Amdhal’s speedup     5.99991603905863
+Gustaffson’s speedup 5.999986006313951
+
+**************** Multiprocessing 2 Performance Analysis ****************
+Speadup              1.675926965528571
+Efficiency           0.2793211609214285
+Amdhal’s speedup     5.999865306713449
+Gustaffson’s speedup 5.999977550614945
+
+**************** Threading 3 Performance Analysis ****************
+Speadup              0.9676560202260762
+Efficiency           0.1612760033710127
+Amdhal’s speedup     5.999918124617062
+Gustaffson’s speedup 5.999986353916631
+
+**************** Multiprocessing 3 Performance Analysis ****************
+Speadup              2.3073382179938395
+Efficiency           0.38455636966563994
+Amdhal’s speedup     5.999815053133696
+Gustaffson’s speedup 5.999969174572104
+
+**************** Threading 4 Performance Analysis ****************
+Speadup              1.0243918825201983
+Efficiency           0.17073198042003304
+Amdhal’s speedup     5.999913325922701
+Gustaffson’s speedup 5.9999855541117695
+
+**************** Multiprocessing 4 Performance Analysis ****************
+Speadup              2.4702928039356418
+Efficiency           0.41171546732260694
+Amdhal’s speedup     5.999802780790848
+Gustaffson’s speedup 5.9999671290513445
+
+**************** Threading 5 Performance Analysis ****************
+Speadup              1.016382832322711
+Efficiency           0.16939713872045184
+Amdhal’s speedup     5.999914001365943
+Gustaffson’s speedup 5.999985666688883
+
+**************** Multiprocessing 5 Performance Analysis ****************
+Speadup              3.0726296082824494
+Efficiency           0.5121049347137415
+Amdhal’s speedup     5.999754383235837
+Gustaffson’s speedup 5.999959062196805
+'''
+
+
 from src.data_preprocessing import data_preprocessing
 from src.sequential_parameter_finder import sequential_parameter_finder
 from src.multiprocessing_parameter_finder import multiprocessing_parameter_finder
@@ -114,61 +170,6 @@ def lab3_2():
         title = "multiprocessing_parameter_finder"
         )
     
-lab3_1()
-'''
-Starting the sequential case...
->> Sum of random numbers: 500495857
->> Time taken: 338.0863666534424 milliseconds
-
-**************** Threading 2 Performance Analysis ****************
-Speadup              0.9923295903843112
-Efficiency           0.16538826506405188
-Amdhal’s speedup     5.99991603905863
-Gustaffson’s speedup 5.999986006313951
-
-**************** Multiprocessing 2 Performance Analysis ****************
-Speadup              1.675926965528571
-Efficiency           0.2793211609214285
-Amdhal’s speedup     5.999865306713449
-Gustaffson’s speedup 5.999977550614945
-
-**************** Threading 3 Performance Analysis ****************
-Speadup              0.9676560202260762
-Efficiency           0.1612760033710127
-Amdhal’s speedup     5.999918124617062
-Gustaffson’s speedup 5.999986353916631
-
-**************** Multiprocessing 3 Performance Analysis ****************
-Speadup              2.3073382179938395
-Efficiency           0.38455636966563994
-Amdhal’s speedup     5.999815053133696
-Gustaffson’s speedup 5.999969174572104
-
-**************** Threading 4 Performance Analysis ****************
-Speadup              1.0243918825201983
-Efficiency           0.17073198042003304
-Amdhal’s speedup     5.999913325922701
-Gustaffson’s speedup 5.9999855541117695
-
-**************** Multiprocessing 4 Performance Analysis ****************
-Speadup              2.4702928039356418
-Efficiency           0.41171546732260694
-Amdhal’s speedup     5.999802780790848
-Gustaffson’s speedup 5.9999671290513445
-
-**************** Threading 5 Performance Analysis ****************
-Speadup              1.016382832322711
-Efficiency           0.16939713872045184
-Amdhal’s speedup     5.999914001365943
-Gustaffson’s speedup 5.999985666688883
-
-**************** Multiprocessing 5 Performance Analysis ****************
-Speadup              3.0726296082824494
-Efficiency           0.5121049347137415
-Amdhal’s speedup     5.999754383235837
-Gustaffson’s speedup 5.999959062196805
-'''
-
 lab3_2()
 
 '''
@@ -192,4 +193,27 @@ Speadup              4.9645447350043375
 Efficiency           0.827424122500723
 Amdhal’s speedup     5.8990178870252965
 Gustaffson’s speedup 5.982881538095213
+
+------- WITHOUT OUTLIERS -------
+The best parameters {'n_estimators': 25, 'max_features': None, 'max_depth': 20} for RMSE = 14664.515738958607, MAPE: 6.988021300057051%
+The sequential execution time is 15.976894855499268 
+
+The best parameters {'n_estimators': 25, 'max_features': None, 'max_depth': 20} for RMSE = 14664.515738958607, MAPE: 6.988021300057051%
+The threading execution time is 15.905033349990845 
+
+The best parameters {'n_estimators': 25, 'max_features': None, 'max_depth': 20} for RMSE = 14664.515738958607, MAPE: 6.988021300057051%
+The multiprocessing execution time is 3.589268684387207 
+
+**************** threading_parameter_finder Performance Analysis ****************
+Speadup              1.0045181612592131
+Efficiency           0.16741969354320219
+Amdhal’s speedup     5.899575317300179
+Gustaffson’s speedup 5.98297764206767
+
+**************** multiprocessing_parameter_finder Performance Analysis ****************
+Speadup              4.451295308427708
+Efficiency           0.741882551404618
+Amdhal’s speedup     5.583682056268535
+Gustaffson’s speedup 5.925440249008433
+
 '''

@@ -43,8 +43,15 @@ def data_preprocessing(file_path):
     for column in categorical_columns:
         X[column] = label_encoders[column].fit_transform(X[column])
 
-    # Split the first dataset (X, y) into train and test sets with a 70% - 30% split
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.30, random_state=42)
+    # NEW: Outlier detection (using IQR)
+    Q1 = X.quantile(0.25)
+    Q3 = X.quantile(0.75)
+    IQR = Q3 - Q1
+    X_cleaned = X[~((X < (Q1 - 1.5 * IQR)) | (X > (Q3 + 1.5 * IQR))).any(axis=1)]
+    y_cleaned = y[X_cleaned.index]
+
+    # Split the data
+    X_train, X_val, y_train, y_val = train_test_split(X_cleaned, y_cleaned, test_size=0.30, random_state=42)
 
     # Fill NaN values in X_train and X_val with the median of the respective columns
     X_train_filled = X_train.fillna(X_train.median())
