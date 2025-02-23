@@ -280,6 +280,12 @@ The multiprocessing execution time is 77.59755396842957
 ===================================================================================================
 ⭐ ---- with transformation AND removing y outliers WIHTOUT more parameters----
 ===================================================================================================
-The best parameters {'n_estimators': 400, 'max_features': 'log2', 'max_depth': None} for RMSE = 0.12287539968239682, MAPE: 8.487969424865259%
-The multiprocessing execution time is 12.25222635269165 
+The best parameters {'n_estimators': 400, 'max_features': 'log2', 'max_depth': 20} for RMSE = 0.12287539968239682, MAPE: 8.487969424865259%
+The sequential execution time is 63.702088356018066 
+The best parameters {'n_estimators': 400, 'max_features': 'log2', 'max_depth': 20} for RMSE = 0.12287539968239682, MAPE: 8.487969424865259%
+The threading execution time is 24.746341705322266 
+The best parameters {'n_estimators': 400, 'max_features': 'log2', 'max_depth': 20} for RMSE = 0.12287539968239682, MAPE: 8.487969424865259%
+The multiprocessing execution time is 12.724173784255981 
+The best parameters (100, 'sqrt', None) for RMSE = 0.12220846771275232, MAPE: 8.664785338976484%
+The queue multiprocessing execution time is 12.652228593826294 
 '''
