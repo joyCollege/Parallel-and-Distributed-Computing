@@ -3,7 +3,7 @@ from src.calc_efficiency import calc_efficiency
 from src.calc_amdahl import calc_amdahl
 from src.calc_gustafson import calc_gustafson
 
-def print_analysis(num_actions, serial_time, parallel_time, parallelized_portion, title):
+def calc_print_analysis(num_actions, serial_time, parallel_time, parallelized_portion, title):
     """
     Perform and print performance analysis based on speedup, efficiency, Amdahl’s speedup, and Gustafson’s speedup.
 
@@ -20,7 +20,7 @@ def print_analysis(num_actions, serial_time, parallel_time, parallelized_portion
     gustafson_speedup = calc_gustafson(6, 1 - parallelized_portion)
     
     # Print the results
-    print("Speadup             ", speedup)
-    print("Efficiency          ", efficiency)
-    print("Amdhal’s speedup    ", amdahl_speedup)
-    print("Gustaffson’s speedup", gustafson_speedup)
+    print("Speedup            ", speedup)
+    print("Efficiency         ", efficiency)
+    print("Amdahl’s speedup   ", amdahl_speedup)
+    print("Gustafson’s speedup", gustafson_speedup)
