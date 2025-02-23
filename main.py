@@ -188,7 +188,7 @@ lab3_2()
 
 '''
 ===================================================================================================
----- the first run: ----
+---- the first run ----
 ===================================================================================================
 The best parameters {'n_estimators': 100, 'max_features': None, 'max_depth': None} for RMSE = 26057.941851126383, MAPE: 9.868196740754167%
 The sequential execution time is 63.36062264442444 
@@ -218,58 +218,8 @@ Gustaffson’s speedup 5.982881538095213
 The best parameters {'n_estimators': 25, 'max_features': 'sqrt', 'max_depth': 20} for RMSE = 0.0957066288065848, MAPE: 7.078892942298647%
 The multiprocessing execution time is 3.4361608028411865 
 
-
-
 ===================================================================================================
------ with transformation ONLY ----
-===================================================================================================
-The best parameters {'n_estimators': 400, 'max_features': None, 'max_depth': 20} for RMSE = 0.13632892372048172, MAPE: 9.565758459583686%
-The sequential execution time is 63.19388961791992 
-The best parameters {'n_estimators': 400, 'max_features': None, 'max_depth': 20} for RMSE = 0.13632892372048172, MAPE: 9.565758459583686%
-The threading execution time is 24.349693059921265 
-The best parameters {'n_estimators': 400, 'max_features': None, 'max_depth': 20} for RMSE = 0.13632892372048172, MAPE: 9.565758459583686%
-The multiprocessing execution time is 12.777265310287476 
-
->> threading_parameter_finder Performance Analysis >>
-Speadup              2.5952643206798705
-Efficiency           0.4325440534466451
-Amdhal’s speedup     5.946629014493024
-Gustaffson’s speedup 5.9910250016644895
-
->> multiprocessing_parameter_finder Performance Analysis >>
-Speadup              4.945807109995599
-Efficiency           0.8243011849992664
-Amdhal’s speedup     5.8992645453760435
-Gustaffson’s speedup 5.982924065559509
-
-
-
-===================================================================================================
----- with transformation AND removing y outliers AND more parameters ----
-===================================================================================================
-The best parameters {'n_estimators': 400, 'max_features': 'log2', 'max_depth': 20} for RMSE = 0.12287539968239682, MAPE: 8.487969424865259%
-The sequential execution time is 62.103671073913574 
-The best parameters {'n_estimators': 400, 'max_features': 'log2', 'max_depth': 20} for RMSE = 0.12287539968239682, MAPE: 8.487969424865259%
-The threading execution time is 21.89735746383667 
-The best parameters {'n_estimators': 400, 'max_features': 'log2', 'max_depth': 20} for RMSE = 0.12287539968239682, MAPE: 8.487969424865259%
-The multiprocessing execution time is 12.361319541931152 
-
-**************** threading_parameter_finder Performance Analysis ****************
-Speadup              2.836126284939968
-Efficiency           0.4726877141566614
-Amdhal’s speedup     5.93889428559979
-Gustaffson’s speedup 5.989710927411458
-
-**************** multiprocessing_parameter_finder Performance Analysis ****************
-Speadup              5.024032496146557
-Efficiency           0.8373387493577594
-Amdhal’s speedup     5.892765780113264
-Gustaffson’s speedup 5.981802395702095
-
-
-
-===================================================================================================
-⭐ ---- with transformation AND removing y outliers AND more parameters----
+⭐ ---- with transformation AND removing y outliers WITH more parameters----
 ===================================================================================================
 n_estimators_range = [10, 25, 50, 100, 200, 300, 400, 500, 600, 800]
 max_features_range = ['sqrt', 'log2', None, 0.2, 0.5]
@@ -288,4 +238,22 @@ The best parameters {'n_estimators': 400, 'max_features': 'log2', 'max_depth': 2
 The multiprocessing execution time is 12.724173784255981 
 The best parameters (100, 'sqrt', None) for RMSE = 0.12220846771275232, MAPE: 8.664785338976484%
 The queue multiprocessing execution time is 12.652228593826294 
+
+**************** threading_parameter_finder Performance Analysis ****************
+Speadup              2.5742022442984966
+Efficiency           0.4290337073830828
+Amdhal’s speedup     5.948394541994672
+Gustaffson’s speedup 5.991324472907605
+
+**************** multiprocessing_parameter_finder Performance Analysis ****************
+Speadup              5.006383081221246
+Efficiency           0.834397180203541
+Amdhal’s speedup     5.900605472882478
+Gustaffson’s speedup 5.983155198636087
+
+**************** queue_parameter_finder Performance Analysis ****************
+Speadup              5.03485120298109
+Efficiency           0.839141867163515
+Amdhal’s speedup     5.900051577358773
+Gustaffson’s speedup 5.983059737473351
 '''
