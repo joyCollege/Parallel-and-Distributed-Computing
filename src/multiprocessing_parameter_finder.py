@@ -1,5 +1,5 @@
-import time
-import multiprocessing
+from time import time
+from multiprocessing import Manager, Process
 from .train_model import train_model
 
 def multiprocessing_parameter_finder(n_estimators_range, max_features_range, max_depth_range, data):
@@ -29,10 +29,10 @@ def multiprocessing_parameter_finder(n_estimators_range, max_features_range, max
     """
     print("*"*20, "Starting Multiprocessing Parameter Finder", "*"*20)
 
-    parallel_time = time.time()
+    parallel_time = time()
 
     # Initialize variables to store the best model and its RMSE and parameters
-    shared_data = multiprocessing.Manager().dict()
+    shared_data = Manager().dict()
     shared_data['best_rmse'] = float('inf')
     shared_data['best_mape'] = float('inf')
     shared_data['best_model'] = None
@@ -43,7 +43,7 @@ def multiprocessing_parameter_finder(n_estimators_range, max_features_range, max
     for n_estimators in n_estimators_range:
         for max_features in max_features_range:
             for max_depth in max_depth_range:
-                process = multiprocessing.Process(target=train_model, args=(n_estimators, max_features, max_depth, shared_data, data))
+                process = Process(target=train_model, args=(n_estimators, max_features, max_depth, shared_data, data))
                 processes.append(process)
                 process.start()
 
@@ -52,6 +52,6 @@ def multiprocessing_parameter_finder(n_estimators_range, max_features_range, max
 
     print(f"The best parameters {shared_data['best_parameters']} for RMSE = {shared_data['best_rmse']}, MAPE: {shared_data['best_mape']}%")
 
-    parallel_time = time.time() - parallel_time 
+    parallel_time = time() - parallel_time 
     print(f"The multiprocessing execution time is {parallel_time}", "\n"*5)
     return parallel_time

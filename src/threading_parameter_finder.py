@@ -1,5 +1,5 @@
-import time
-import threading
+from time import time
+from threading import Thread
 from .train_model import train_model
 
 def threading_parameter_finder(n_estimators_range, max_features_range, max_depth_range, data):
@@ -29,7 +29,7 @@ def threading_parameter_finder(n_estimators_range, max_features_range, max_depth
     """
     
     print("*"*20, "Starting Threading Parameter Finder", "*"*20)
-    parallel_time = time.time()
+    parallel_time = time()
     # Initialize variables to store the best model and its RMSE and parameters
     shared_data = dict()
     shared_data['best_rmse'] = float('inf')
@@ -42,7 +42,7 @@ def threading_parameter_finder(n_estimators_range, max_features_range, max_depth
     for n_estimators in n_estimators_range:
         for max_features in max_features_range:
             for max_depth in max_depth_range:
-                thread = threading.Thread(target=train_model, args=(n_estimators, max_features, max_depth, shared_data, data))
+                thread = Thread(target=train_model, args=(n_estimators, max_features, max_depth, shared_data, data))
                 threads.append(thread)
                 thread.start()
 
@@ -51,6 +51,6 @@ def threading_parameter_finder(n_estimators_range, max_features_range, max_depth
 
     print(f"The best parameters {shared_data['best_parameters']} for RMSE = {shared_data['best_rmse']}, MAPE: {shared_data['best_mape']}%")
 
-    parallel_time = time.time() - parallel_time 
+    parallel_time = time() - parallel_time 
     print(f"The threading execution time is {parallel_time}", "\n"*5)
     return parallel_time
