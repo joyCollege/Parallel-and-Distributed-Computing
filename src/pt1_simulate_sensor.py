@@ -1,11 +1,16 @@
 from random import randint
-from time import time
-from pt1_global_vars import latest_temperatures
+from time import sleep
 
-def simulate_sensor():
+
+def simulate_sensor(sensor_id, queue):
+    global latest_temperatures_lock
+    global latest_temperatures
+    
     while True:
-        # Generate a random temperature
-        temp = random.randint(15, 40)
-        # Update the global dictionary with the new temperature reading
-        latest_temperatures["temperature"] = temp
-        time.sleep(1)  # Wait for 1 second before next reading
+        temperature_reading = randint(15, 40)
+        queue.put((sensor_id, temperature_reading))  
+
+        with latest_temperatures_lock:
+            latest_temperatures[sensor_id] = temperature_reading
+
+        sleep(1)  
