@@ -1,4 +1,9 @@
 pandas
+jupyter
+seaborn
 scikit-learn
-pytes
-pytest
+keras
+tensorflow
+opencv-python
+scikit-image
+tqdm

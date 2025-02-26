@@ -1,4 +1,4 @@
-# Temperature Sensor Simulation Program
+# 4.1 Temperature Sensor Simulation Program
 
 This program simulates temperature sensors that periodically generate random temperature readings. The readings are then processed to calculate and update the average temperature for each sensor in real time using multithreading.
 
@@ -71,3 +71,5 @@ The average temperatures: {'sensor 0': 24.5, 'sensor 1': 30.0, 'sensor 2': 22.0}
 ## License
 
 This project is open-source and available under the MIT License.
+
+# 4.2 Working on it...
