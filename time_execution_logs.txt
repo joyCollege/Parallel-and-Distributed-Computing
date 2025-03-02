@@ -37,6 +37,10 @@ Sequential execution time: 254.28439903259277 seconds
 100%|████████| 5/5 [00:00<00:00, 97.74it/s]
 Parallel execution time: 91.11478185653687 seconds
 
+100%|████████| 10/10 [00:51<00:00,  5.11s/it]
+100%|████████| 10/10 [00:56<00:00,  5.62s/it]
+Pool execution time: 107.46087837219238 seconds
+
 100%|████████| 5/5 [00:00<00:00, 1566.79it/s]
 100%|████████| 5/5 [00:00<00:00, 1907.20it/s]
 Threaded execution time: 91.26989102363586 seconds
