@@ -12,7 +12,7 @@ Sequential execution time: 133.2787766456604 seconds
 
 100%|████████| 3/3 [00:00<00:00, 123.13it/s]
 100%|████████| 3/3 [00:00<00:00, 138.88it/s]
-Parallel execution time: 75.65542411804199 seconds
+Multiprocessing execution time: 75.65542411804199 seconds
 
 100%|████████| 3/3 [00:00<00:00, 1325.21it/s]
 100%|████████| 3/3 [00:00<00:00, 2344.50it/s]
@@ -20,26 +20,26 @@ Threaded execution time: 74.96208500862122 seconds
 
 100%|████████| 3/3 [00:00<00:00, 113.15it/s]
 100%|████████| 3/3 [00:00<00:00, 112.70it/s]
-Combined threading and parallel execution time: 75.21951389312744 seconds
+Combined threading and Multiprocessing execution time: 75.21951389312744 seconds
 
-Parallel Execution Speedup: 1.76165527058
+Multiprocessing Execution Speedup: 1.76165527058
 Threaded Execution Speedup: 1.77794916764
-Combined Threading + Parallel Speedup: 1.77186437066
+Combined Threading + Multiprocessing Speedup: 1.77186437066
 
 
 
-========================== 10 imgages only ==========================
-100%|████████| 5/5 [02:02<00:00, 24.58s/it]
-100%|████████| 5/5 [02:11<00:00, 26.28s/it]
-Sequential execution time: 254.28439903259277 seconds
+========================== 12 imgages only ==========================
+100%|████████| 6/6 [02:19<00:00, 23.23s/it]
+100%|████████| 6/6 [02:22<00:00, 23.82s/it]
+Sequential execution time: 282.3219676017761 seconds
 
-100%|████████| 5/5 [00:00<00:00, 101.15it/s]
-100%|████████| 5/5 [00:00<00:00, 97.74it/s]
-Parallel execution time: 91.11478185653687 seconds
+100%|████████| 6/6 [00:00<00:00, 87.72it/s]
+100%|████████| 6/6 [00:00<00:00, 92.63it/s]
+Processes execution time: 89.60747647285461 seconds
 
-100%|████████| 10/10 [00:51<00:00,  5.11s/it]
-100%|████████| 10/10 [00:56<00:00,  5.62s/it]
-Pool execution time: 107.46087837219238 seconds
+100%|████████| 6/6 [00:40<00:00,  6.77s/it]
+100%|████████| 6/6 [00:48<00:00,  8.12s/it]
+Pooling execution time: 89.52078104019165 seconds
 
 100%|████████| 5/5 [00:00<00:00, 1566.79it/s]
 100%|████████| 5/5 [00:00<00:00, 1907.20it/s]
@@ -47,8 +47,9 @@ Threaded execution time: 91.26989102363586 seconds
 
 100%|████████| 5/5 [00:00<00:00, 90.86it/s]
 100%|████████| 5/5 [00:00<00:00, 87.45it/s]
-Combined threading and parallel execution time: 92.01781964302063 seconds
+Combined threading and Multiprocessing execution time: 92.01781964302063 seconds
 
-Parallel Execution Speedup: 2.79081389267
+Multiprocessing Execution Speedup: 2.79081389267
+Pooling Execution Speedup: 2.8422431885
 Threaded Execution Speedup: 2.78607102716
-Combined Threading + Parallel 2.76342560625
+Combined Threading + Multiprocessing 2.76342560625
