@@ -1,0 +1,50 @@
+========================== Full Run ==========================
+100%|████████| 154/154 [1:58:05<00:00, 46.01s/it]
+100%|████████| 91/91 [43:44<00:00, 28.84s/it]
+Sequential execution time: 9709.818974733353 seconds
+
+
+
+========================== 6 imgages only ==========================
+100%|████████| 3/3 [01:01<00:00, 20.39s/it]
+100%|████████| 3/3 [01:12<00:00, 24.04s/it]
+Sequential execution time: 133.2787766456604 seconds
+
+100%|████████| 3/3 [00:00<00:00, 123.13it/s]
+100%|████████| 3/3 [00:00<00:00, 138.88it/s]
+Parallel execution time: 75.65542411804199 seconds
+
+100%|████████| 3/3 [00:00<00:00, 1325.21it/s]
+100%|████████| 3/3 [00:00<00:00, 2344.50it/s]
+Threaded execution time: 74.96208500862122 seconds
+
+100%|████████| 3/3 [00:00<00:00, 113.15it/s]
+100%|████████| 3/3 [00:00<00:00, 112.70it/s]
+Combined threading and parallel execution time: 75.21951389312744 seconds
+
+Parallel Execution Speedup: 1.76165527058
+Threaded Execution Speedup: 1.77794916764
+Combined Threading + Parallel Speedup: 1.77186437066
+
+
+
+========================== 10 imgages only ==========================
+100%|████████| 5/5 [02:02<00:00, 24.58s/it]
+100%|████████| 5/5 [02:11<00:00, 26.28s/it]
+Sequential execution time: 254.28439903259277 seconds
+
+100%|████████| 5/5 [00:00<00:00, 101.15it/s]
+100%|████████| 5/5 [00:00<00:00, 97.74it/s]
+Parallel execution time: 91.11478185653687 seconds
+
+100%|████████| 5/5 [00:00<00:00, 1566.79it/s]
+100%|████████| 5/5 [00:00<00:00, 1907.20it/s]
+Threaded execution time: 91.26989102363586 seconds
+
+100%|████████| 5/5 [00:00<00:00, 90.86it/s]
+100%|████████| 5/5 [00:00<00:00, 87.45it/s]
+Combined threading and parallel execution time: 92.01781964302063 seconds
+
+Parallel Execution Speedup: 2.79081389267
+Threaded Execution Speedup: 2.78607102716
+Combined Threading + Parallel 2.76342560625
