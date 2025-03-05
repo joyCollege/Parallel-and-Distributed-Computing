@@ -1,92 +1,477 @@
 Number of 'yes' images: 154
 Number of 'no' images: 91
 
-Sequential execution time: 130.89553117752075 seconds
+Sequential execution time: 9717.20770573616 seconds
+Processed images saved to yes_full_processed_images.pkl
+Processed images saved to no_full_processed_images.pkl
 
-Pooling execution time: 74.96189045906067 seconds
+Pooling execution time: 1908.0378203392029 seconds
 **************** pooling process_image Performance Analysis ****************
-Speedup             1.7461610209658123
-Efficiency          0.29102683682763536
-Amdahl’s speedup    6.059383612696509
-Gustafson’s speedup 6.009800272848228
+Speedup             5.092775207154268
+Efficiency          0.8487958678590446
+Amdahl’s speedup    6.002286155388279
+Gustafson’s speedup 6.0003808807726084
 
-Hessian execution time: 25.11 seconds (combined threading and pooling)
+Hessian execution time: 6066.10 seconds (combined threading and pooling)
 **************** hessian process_image (combined threading + pooling) Performance Analysis ****************
-Speedup             5.212633445427709
-Efficiency          0.8687722409046182
-Amdahl’s speedup    6.181552314335642
-Gustafson’s speedup 6.0293700198758495
+Speedup             1.601887807797245
+Efficiency          0.26698130129954084
+Amdahl’s speedup    6.00071886483966
+Gustafson’s speedup 6.0001197964537
 
 Processed images loaded from yes_full_processed_images.pkl
 Processed images loaded from no_full_processed_images.pkl
-Parallel processing with Pool took: 7.43 seconds
-Parallel processing with Pool took: 3.48 seconds
-DataFrame shape: (245, 169)
-   Original_contrast_1  Original_contrast_2  ...  Prewitt_ASM_4  Tumor
-0           743.883044          1045.726731  ...       0.073761      1
-1          3242.300601          4296.988313  ...       0.010994      1
-2           206.624178           374.873914  ...       0.023154      1
-3          2181.559822          2936.011896  ...       0.040443      1
-4          2727.864063          3701.019877  ...       0.033853      1
 
-[5 rows x 169 columns]
-Model: RandomForest
-Training Time (s): 0.14515256881713867
-Confusion Matrix:
- [[14 12]
- [ 6 30]]
-Accuracy: 0.7096774193548387
-Precision: 0.7142857142857143
-Recall: 0.8333333333333334
-F1 Score: 0.7692307692307693
-Classification Report:
-               precision    recall  f1-score   support
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20/20 [00:01<00:00, 10.34it/s]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20/20 [00:03<00:00,  6.61it/s]
+Exception in thread Thread-43 (process_single_image):█████████████████████████████████████████████████████████████████████████████████████████████████████████████▋        | 19/20 [00:02<00:00,  5.73it/s]
+Traceback (most recent call last):
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+Exception in thread Thread-25 (process_single_image):
+Traceback (most recent call last):
+    self.run()
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+    self.run()
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+    with Pool(processes=None) as pool: 
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+    with Pool(processes=None) as pool: 
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+    return self._repopulate_pool_static(self._ctx, self.Process,
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    w.start()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+    w.start()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+Exception in thread Thread-39 (process_single_image):
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+Traceback (most recent call last):
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self._launch(process_obj)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+    self._launch(process_obj)
+    self.run()
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+    self.pid = os.fork()
+               ^^^^^^^^^
+OSError: [Errno 12] Cannot allocate memory
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+    self.pid = os.fork()
+               ^^^^^^^^^
+OSError: [Errno 12] Cannot allocate memory
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+    with Pool(processes=None) as pool: 
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    w.start()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+    self.pid = os.fork()
+               ^^^^^^^^^
+OSError: [Errno 12] Cannot allocate memory
+Exception in thread Thread-34 (process_single_image):
+Traceback (most recent call last):
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+Exception in thread Thread-36 (process_single_image):
+Traceback (most recent call last):
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+    with Pool(processes=None) as pool: 
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    w.start()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+    with Pool(processes=None) as pool: 
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    w.start()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+    self.pid = os.fork()
+               ^^^^^^^^^
+OSError: [Errno 12] Cannot allocate memory
+    self._launch(process_obj)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+    self.pid = os.fork()
+               ^^^^^^^^^
+OSError: [Errno 12] Cannot allocate memory
+Exception in thread Thread-12 (process_single_image):
+Traceback (most recent call last):
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+    with Pool(processes=None) as pool: 
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    w.start()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+Exception in thread Thread-24 (process_single_image):
+           ^^^^^^^^^^^^^^^^^^
+Exception in thread Thread-48 (process_single_image):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+Exception in thread Thread-50 (process_single_image):
+Traceback (most recent call last):
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+Exception in thread Thread-52 (process_single_image):
+    self.run()
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+    self.run()
+Traceback (most recent call last):
+    self._launch(process_obj)
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+Exception in thread Thread-29 (process_single_image):
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.pid = os.fork()
+Traceback (most recent call last):
+    self._target(*self._args, **self._kwargs)
+    self.run()
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+Exception in thread Thread-30 (process_single_image):
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+    self.run()
+Traceback (most recent call last):
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+               ^^^^^^^^^
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+    self.run()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    self._target(*self._args, **self._kwargs)
+    with Pool(processes=None) as pool: 
+OSError: [Errno 12] Cannot allocate memory
+    with Pool(processes=None) as pool: 
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+  File "/home/student/anaconda3/lib/python3.12/threading.py", line 1012, in run
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+         ^^^^^^^^^^^^^^^^^^^^
+    with Pool(processes=None) as pool: 
+    with Pool(processes=None) as pool: 
+         ^^^^^^^^^^^^^^^^^^^^
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+    self._target(*self._args, **self._kwargs)
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+    with Pool(processes=None) as pool: 
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    self._repopulate_pool()
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 27, in process_single_image
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+    self._repopulate_pool()
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    w.start()
+    'Hessian': compute_hessian(image, sigmas=range(1, 100, 1)),  # Parallelized Hessian
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+  File "/home/student/Parallel-and-Distributed-Computing/src/pt2_process_image_hessian.py", line 16, in compute_hessian
+    self._popen = self._Popen(self)
+    return self._repopulate_pool_static(self._ctx, self.Process,
+    return self._repopulate_pool_static(self._ctx, self.Process,
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+                  ^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    with Pool(processes=None) as pool: 
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    w.start()
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 119, in Pool
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    return Popen(process_obj)
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 215, in __init__
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+    w.start()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+    self._repopulate_pool()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 306, in _repopulate_pool
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    w.start()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    w.start()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+    w.start()
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+    self._popen = self._Popen(self)
+    self._launch(process_obj)
+                  ^^^^^^^^^^^^^^^^^
+    return Popen(process_obj)
+    return Popen(process_obj)
+                  ^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 121, in start
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+    self.pid = os.fork()
+    return Popen(process_obj)
+    return Popen(process_obj)
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/context.py", line 282, in _Popen
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+           ^^^^^^^^^^^^^^^^^^
+    return Popen(process_obj)
+               ^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+OSError: [Errno 12] Cannot allocate memory
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    self._launch(process_obj)
+    self._launch(process_obj)
+    self.pid = os.fork()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+               ^^^^^^^^^
+    self._launch(process_obj)
+    self.pid = os.fork()
+               ^^^^^^^^^
+    self.pid = os.fork()
+OSError: [Errno 12] Cannot allocate memory
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+OSError: [Errno 12] Cannot allocate memory
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/popen_fork.py", line 66, in _launch
+               ^^^^^^^^^
+    self.pid = os.fork()
+    self.pid = os.fork()
+               ^^^^^^^^^
+OSError: [Errno 12] Cannot allocate memory
+               ^^^^^^^^^
+OSError: [Errno 12] Cannot allocate memory
+OSError: [Errno 12] Cannot allocate memory
+Hessian execution time: 6066.10 seconds (combined threading and pooling)
+**************** hessian process_image (combined threading + pooling) Performance Analysis ****************
+Speedup             1.601887807797245
+Efficiency          0.26698130129954084
+Amdahl’s speedup    6.00071886483966
+Gustafson’s speedup 6.0001197964537
 
-           0       0.70      0.54      0.61        26
-           1       0.71      0.83      0.77        36
+Processed images loaded from yes_full_processed_images.pkl
+Processed images loaded from no_full_processed_images.pkl
+Process ForkPoolWorker-231:
+Traceback (most recent call last):
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/connection.py", line 420, in _send_bytes
+    self._send(header)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
 
-    accuracy                           0.71        62
-   macro avg       0.71      0.69      0.69        62
-weighted avg       0.71      0.71      0.70        62
+During handling of the above exception, another exception occurred:
 
------------------------------------------------------
-Model: SVM
-Training Time (s): 0.014533042907714844
-Confusion Matrix:
- [[ 6 20]
- [ 0 36]]
-Accuracy: 0.6774193548387096
-Precision: 0.6428571428571429
-Recall: 1.0
-F1 Score: 0.782608695652174
-Classification Report:
-               precision    recall  f1-score   support
-
-           0       1.00      0.23      0.38        26
-           1       0.64      1.00      0.78        36
-
-    accuracy                           0.68        62
-   macro avg       0.82      0.62      0.58        62
-weighted avg       0.79      0.68      0.61        62
-
------------------------------------------------------
-Model: LogisticRegression
-Training Time (s): 0.20165133476257324
-Confusion Matrix:
- [[16 10]
- [ 3 33]]
-Accuracy: 0.7903225806451613
-Precision: 0.7674418604651163
-Recall: 0.9166666666666666
-F1 Score: 0.8354430379746836
-Classification Report:
-               precision    recall  f1-score   support
-
-           0       0.84      0.62      0.71        26
-           1       0.77      0.92      0.84        36
-
-    accuracy                           0.79        62
-   macro avg       0.80      0.77      0.77        62
-weighted avg       0.80      0.79      0.78        62
-
------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/connection.py", line 420, in _send_bytes
+    self._send(header)
+  File "/home/student/anaconda3/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
