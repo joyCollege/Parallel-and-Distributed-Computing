@@ -14,7 +14,7 @@ def process_single_image(image):
         'Gaussian': nd.gaussian_filter(image, sigma=1),
         'Sobel': sobel(image),
         'Gabor': gabor(image, frequency=0.9)[1],
-        'Hessian': hessian(image, sigmas=range(1, 100, 1)),
+        'Hessian': hessian(image, sigmas=range(1, 100, 1)), 
         'Prewitt': prewitt(image)
     }
     return filtered_images
