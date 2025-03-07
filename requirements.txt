@@ -7,3 +7,4 @@ tensorflow
 opencv-python
 scikit-image
 tqdm
+imblearn

@@ -1,0 +1,40 @@
+Number of 'yes' images: 154
+Number of 'no' images: 91
+
+Sequential execution time: 9717.20770573616 seconds
+
+Pooling execution time: 1908.0378203392029 seconds
+**************** pooling process_image Performance Analysis ****************
+Speedup             5.092775207154268
+Efficiency          0.8487958678590446
+Amdahl’s speedup    6.002241037102137
+Gustafson’s speedup 6.000373366728907
+
+Hessian pool execution time: 1698.31 seconds
+**************** first main hessian_run process_image Performance Analysis ****************
+Speedup             5.721690304187225
+Efficiency          0.9536150506978709
+Amdahl’s speedup    6.002517925787229
+Gustafson’s speedup 6.000419478262016
+
+Hessian thread execution time: 1722.65 seconds
+**************** thread_run process_image Performance Analysis ****************
+Speedup             5.640850340334262
+Efficiency          0.9401417233890436
+Amdahl’s speedup    6.002482333143428
+Gustafson’s speedup 6.000413551095306
+
+Splitting thread execution time: 1739.6116609573364 seconds
+**************** split_run process_image Performance Analysis ****************
+Speedup             5.585848798224671
+Efficiency          0.9309747997041118
+Amdahl’s speedup    6.0024581170651645
+Gustafson’s speedup 6.000409518403498
+
+Hybrid execution time: 1889.6358449459076 seconds
+**************** hybrid_run process_image Performance Analysis ****************
+Speedup             5.142370542835635
+Efficiency          0.8570617571392725
+Amdahl’s speedup    6.002262871030436
+Gustafson’s speedup 6.000377002986883
+

@@ -69,5 +69,5 @@ def hessian_run(yes_images, no_images):
     
     end_time = time()
     execution_time_hessian = end_time - start_time
-    print(f"Hessian pool execution time: {execution_time_hessian:.2f} seconds")
+    print(f"Hessian pool execution time: {execution_time_hessian} seconds")
     return execution_time_hessian, yes_processed_hessian, no_processed_hessian

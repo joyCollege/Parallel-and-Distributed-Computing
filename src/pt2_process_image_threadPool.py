@@ -67,7 +67,7 @@ def thread_run(yes_images, no_images):
     
     end_time = time()
     execution_time = end_time - start_time
-    print(f"Hessian thread execution time: {execution_time:.2f} seconds")
+    print(f"Hessian thread execution time: {execution_time} seconds")
     return execution_time, yes_processed, no_processed
 
 

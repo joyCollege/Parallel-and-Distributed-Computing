@@ -69,6 +69,6 @@ def split_run(yes_images, no_images):
     yes_processed = process_images(yes_images)
     no_processed = process_images(no_images)
     total_time = time() - start_time
-    print(f"Splitting thread execution time: {total_time:.2f} seconds")
+    print(f"Splitting thread execution time: {total_time} seconds")
     return total_time, yes_processed, no_processed
 
