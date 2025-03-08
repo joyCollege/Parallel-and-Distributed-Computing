@@ -8,6 +8,15 @@ from time import time
 from tqdm import tqdm
 
 def process_single_image(image):
+    """
+    Applies multiple filters to an image and returns a dictionary of results.
+
+    Args:
+        image (ndarray): Input grayscale image.
+
+    Returns:
+        dict: Processed images with various filters applied.
+    """
     filtered_images = {
         'Original': image,
         'Entropy': entropy(image, disk(2)),
@@ -20,12 +29,30 @@ def process_single_image(image):
     return filtered_images
 
 def process_images_pooling(images):
-    # Process the images in parallel using the pool map method
+    """
+    Processes a list of images in parallel using multiprocessing.
+
+    Args:
+        images (list of ndarray): List of grayscale images.
+
+    Returns:
+        list: Processed images with applied filters.
+    """
     with Pool() as pool:
         processed_images = list(tqdm(pool.imap(process_single_image, images), total=len(images)))
     return processed_images
 
 def pooling_run(yes_images, no_images):
+    """
+    Runs image processing in parallel for two datasets and measures execution time.
+
+    Args:
+        yes_images (list of ndarray): List of positive-class images.
+        no_images (list of ndarray): List of negative-class images.
+
+    Returns:
+        tuple: Execution time, processed positive-class images, processed negative-class images.
+    """
     start_time = time()
 
     yes_processed_pooling = process_images_pooling(yes_images)

@@ -20,7 +20,12 @@ def read_images(images_path):
     return images
 
 def read_path():
-    # Define the path to the dataset
+    """
+    Reads image file paths from the dataset directories and loads the images.
+
+    Returns:
+        tuple: Lists of loaded images from the 'yes' and 'no' categories.
+    """
     dataset_path = './data/brain_tumor_dataset/'
 
     # List all image files in the 'yes' and 'no' directories

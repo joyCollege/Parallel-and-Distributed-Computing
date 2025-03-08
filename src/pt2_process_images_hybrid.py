@@ -64,6 +64,17 @@ def process_images_hybrid(images):
     return results
 
 def hybrid_run(yes_images, no_images):
+    """
+    Runs image processing using a hybrid approach and measures execution time.
+
+    Args:
+        yes_images (list of ndarray): List of positive-class images.
+        no_images (list of ndarray): List of negative-class images.
+
+    Returns:
+        tuple: Execution time, processed positive-class images, processed negative-class images.
+    """
+
     start_time = time()
 
     yes_processed = process_images_hybrid(yes_images)

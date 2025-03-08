@@ -7,6 +7,15 @@ from time import time
 from tqdm import tqdm
 
 def process_images(images):
+    """
+    Applies multiple filters to a list of images sequentially.
+
+    Args:
+        images (list of ndarray): List of grayscale images.
+
+    Returns:
+        list: Processed images with various filters applied.
+    """
     processed_images = []
     for image in tqdm(images):
         filtered_images = {
@@ -22,6 +31,16 @@ def process_images(images):
     return processed_images
 
 def sequential_run(yes_images, no_images):
+    """
+    Runs image processing sequentially for two datasets and measures execution time.
+
+    Args:
+        yes_images (list of ndarray): List of positive-class images.
+        no_images (list of ndarray): List of negative-class images.
+
+    Returns:
+        tuple: Execution time, processed positive-class images, processed negative-class images.
+    """
     start_time = time()
     yes_processed_sequential = process_images(yes_images)
     no_processed_sequential = process_images(no_images)
