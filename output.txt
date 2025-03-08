@@ -1,3 +1,117 @@
 Number of 'yes' images: 154
 Number of 'no' images: 91
 
+Sequential execution time: 9785.694283485413 seconds
+Processed images saved to yes_full_processed_images.pkl
+Processed images saved to no_full_processed_images.pkl
+
+Pooling execution time: 1808.5785808563232 seconds
+**************** pooling process_image Performance Analysis ****************
+Speedup             5.410710038848351
+Efficiency          0.9017850064747251
+Amdahl’s speedup    6.002378884490548
+Gustafson’s speedup 6.000396323613741
+
+Hessian pool execution time: 1720.7265241146088 seconds
+**************** first main hessian_run process_image Performance Analysis ****************
+Speedup             5.68695498462232
+Efficiency          0.9478258307703866
+Amdahl’s speedup    6.002500399678443
+Gustafson’s speedup 6.000416559685457
+
+Hessian thread execution time: 1736.806408405304 seconds
+**************** thread_run process_image Performance Analysis ****************
+Speedup             5.634303418116941
+Efficiency          0.9390505696861569
+Amdahl’s speedup    6.002477238745041
+Gustafson’s speedup 6.0004127027303085
+
+Splitting thread execution time: 1755.947701215744 seconds
+**************** split_run process_image Performance Analysis ****************
+Speedup             5.572884816962493
+Efficiency          0.9288141361604155
+Amdahl’s speedup    6.002450221545816
+Gustafson’s speedup 6.000408203559443
+
+Hybrid execution time: 1884.9257266521454 seconds
+**************** hybrid_run process_image Performance Analysis ****************
+Speedup             5.191554311726638
+Efficiency          0.8652590519544398
+Amdahl’s speedup    6.002282486023506
+Gustafson’s speedup 6.000380269677214
+
+Processed images loaded from yes_full_processed_images.pkl
+Processed images loaded from no_full_processed_images.pkl
+Feature extraction with Pool took: 7.60 seconds
+Feature extraction with Pool took: 4.22 seconds
+DataFrame shape: (245, 169)
+   Original_contrast_1  Original_contrast_2  ...  Prewitt_ASM_4  Tumor
+0           743.883044          1045.726731  ...       0.073761      1
+1          3242.300601          4296.988313  ...       0.010994      1
+2           206.624178           374.873914  ...       0.023154      1
+3          2181.559822          2936.011896  ...       0.040443      1
+4          2727.864063          3701.019877  ...       0.033853      1
+
+[5 rows x 169 columns]
+Fitting 3 folds for each of 8000 candidates, totalling 24000 fits
+Fitting 3 folds for each of 972 candidates, totalling 2916 fits
+Model: RandomForest
+Training Time (s): 2226.8863649368286
+Confusion Matrix:
+ [[18  6]
+ [11 27]]
+Accuracy: 0.7258064516129032
+Precision: 0.8181818181818182
+Recall: 0.7105263157894737
+F1 Score: 0.7605633802816901
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.62      0.75      0.68        24
+           1       0.82      0.71      0.76        38
+
+    accuracy                           0.73        62
+   macro avg       0.72      0.73      0.72        62
+weighted avg       0.74      0.73      0.73        62
+
+-----------------------------------------------------
+Model: SVM
+Training Time (s): 0.019444942474365234
+Confusion Matrix:
+ [[ 8 16]
+ [ 8 30]]
+Accuracy: 0.6129032258064516
+Precision: 0.6521739130434783
+Recall: 0.7894736842105263
+F1 Score: 0.7142857142857143
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.50      0.33      0.40        24
+           1       0.65      0.79      0.71        38
+
+    accuracy                           0.61        62
+   macro avg       0.58      0.56      0.56        62
+weighted avg       0.59      0.61      0.59        62
+
+-----------------------------------------------------
+Model: LogisticRegression
+Training Time (s): 33.40048432350159
+Confusion Matrix:
+ [[17  7]
+ [ 9 29]]
+Accuracy: 0.7419354838709677
+Precision: 0.8055555555555556
+Recall: 0.7631578947368421
+F1 Score: 0.7837837837837838
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.65      0.71      0.68        24
+           1       0.81      0.76      0.78        38
+
+    accuracy                           0.74        62
+   macro avg       0.73      0.74      0.73        62
+weighted avg       0.75      0.74      0.74        62
+
+-----------------------------------------------------
