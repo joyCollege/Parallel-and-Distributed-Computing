@@ -1,40 +1,43 @@
 from mpi4py import MPI
 import numpy as np
-from src.square import square
+import time
+import os
+
+def square(arr):
+    return arr ** 2  # Vectorized NumPy operation
+    
+# Set the time limit in seconds
+TIME_LIMIT = 60
+start_time = time.time()
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
-size = comm.Get_size() #number of processes 
+size = comm.Get_size()
 
-print(f"rank: {rank} of {size}")
+# Each process will store its computed results as a list of tuples (n, square(n))
+local_results = []
+# Start at a different number based on rank to distribute work
+n = rank
 
-if rank == 0:
-    numbers = np.arange(size, dtype = 'i')
-else:
-    numbers = None
-print("numbers", numbers)
+# Continue computing until the time limit is reached
+print("Calculating the squares", end="")
+while time.time() - start_time < TIME_LIMIT:
+    local_results.append((n, square(n)))
+    n += size  # This ensures different processes compute different numbers
 
-number = np.zeros(1, dtype = 'i')
-comm.Scatter(numbers, number, root =0) # MPI_Bcast() sends the same piece of data to everyone, while MPI_Scatter() sends each process a part of the input array.
-print("numbers:", numbers)
-print("number:", number)
-
-result = square(number[0])
-print(result)
-import time 
-import random
-
-time.sleep(random.random())
-request = comm.isend(result, dest=0, tag=rank)
+# Gather all results at the root process
+all_results = comm.gather(local_results, root=0)
 
 if rank == 0:
-    results = np.zeros(size, dtype = 'i')
-    for i in range(size):
-        results[i] = comm.irecv(source=i, tag=i).wait()
-    print("results", results)
-
-request.wait()
-
+    # Flatten the list of lists
+    flat_results = [item for sublist in all_results for item in sublist]
+    # Optionally, sort the results by the original number
+    flat_results.sort(key=lambda x: x[0])
     
-
-# mpirun -n 6 python main.py
+    # Print a summary of the computed results
+    print(f"Total squares computed: {len(flat_results)}")
+    print("First 10 results:", flat_results[:10])
+    print("Last 10 results:", flat_results[-10:])
+    
+    end_time = time.time()
+    print(f"Total time taken: {end_time - start_time} seconds")
