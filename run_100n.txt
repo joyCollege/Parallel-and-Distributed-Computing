@@ -1,0 +1,29 @@
+sequential_run:      0.000007s to square until 100. The last 3 squares [9604, 9801, 10000]
+multiprocessing_run: 0.196421s to square until 100. The last 3 squares [9604, 9801, 10000]
+pool_map_run:        0.010329s to square until 100. The last 3 squares [9604, 9801, 10000]
+pool_apply_run:      0.031369s to square until 100. The last 3 squares [9604, 9801, 10000]
+pool_ex_run:         0.022018s to square until 100. The last 3 squares [9604, 9801, 10000]
+
+**************** multiprocessing_run Performance Analysis ****************
+Speedup             0.0000376282546923
+Efficiency          0.0000062713757821
+Amdahl’s speedup    4.7612458579905965
+Gustafson’s speedup 5.7398256298967514
+
+**************** pool_map_run Performance Analysis ****************
+Speedup             0.0007155552477899
+Efficiency          0.0001192592079650
+Amdahl’s speedup    5.2966379053853014
+Gustafson’s speedup 5.8672059319177619
+
+**************** pool_apply_run Performance Analysis ****************
+Speedup             0.0002356160218895
+Efficiency          0.0000392693369816
+Amdahl’s speedup    5.7632322062124386
+Gustafson’s speedup 5.9589175335443993
+
+**************** pool_ex_run Performance Analysis ****************
+Speedup             0.0003356794802382
+Efficiency          0.0000559465800397
+Amdahl’s speedup    5.9501500857632923
+Gustafson’s speedup 5.9916220744824606
