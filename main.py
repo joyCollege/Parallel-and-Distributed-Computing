@@ -2,7 +2,7 @@ from src.calc_print_analysis import calc_print_analysis
 from src.sequential import sequential_run
 from time import time
 
-LIST_SIZE = 10**6
+LIST_SIZE = 10**7
 num_list = [i for i in range(1, LIST_SIZE+1)]
 
 sequential_time, sequential_list = sequential_run(num_list)
