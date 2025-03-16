@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def calculate_fitness(route,
                       distance_matrix):
     """
@@ -15,10 +14,15 @@ def calculate_fitness(route,
            Returns a large negative penalty if the route is infeasible.
     """
     total_distance = 0
+
+    for i in range(len(route) - 1):
+        total_distance += distance_matrix[route[i], route[i + 1]]
     
-    # add your code here.
+    # Add the return to the starting point to complete the cycle
+    total_distance += distance_matrix[route[-1], route[0]]
     
     return total_distance
+    
 
 
 def select_in_tournament(population,
@@ -38,9 +42,10 @@ def select_in_tournament(population,
         - list: A list of selected individuals for crossover.
     """
     selected = []
-    
-    # add your code here.
-    
+    for _ in range(number_tournaments):
+        tournament_indices = np.random.choice(len(population), tournament_size, replace=False)
+        best_index = tournament_indices[np.argmax(scores[tournament_indices])]
+        selected.append(population[best_index])
     return selected
 
 
