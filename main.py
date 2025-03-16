@@ -5,6 +5,9 @@ from time import time
 from src.connectionPool import ConnectionPool, access_database
 from multiprocessing import Process
 
+LIST_SIZE = 10**6
+NUM_PROCESSES = 600
+
 if __name__ == '__main__':
     print(
 """
@@ -13,16 +16,21 @@ SQUARE PROGRAMS USING MULTIPROCESSING AND CONCURRENT FUTURES
 ====================================================================================
 """
     )
-
-    LIST_SIZE = 10**2
     num_list = [i for i in range(1, LIST_SIZE+1)]
 
     sequential_time, sequential_list = sequential_run(num_list)
 
     from src.multiprocessing import multiprocessing_run
-    multiprocessing_totalTime = time()
-    multiprocessing_time, multiprocessing_list = multiprocessing_run(num_list)
-    multiprocessing_totalTime = time() - multiprocessing_totalTime
+    try:
+        multiprocessing_totalTime = time()
+        multiprocessing_time, multiprocessing_list = multiprocessing_run(num_list)
+        multiprocessing_totalTime = time() - multiprocessing_totalTime
+        multiprocessing_successful = True
+    except:
+        print(f"multiprocessing_run couldn'nt make {LIST_SIZE} processes")
+        multiprocessing_successful = False
+
+        
 
     from src.pool import pool_map_run, pool_apply_run
     pool_map_totalTime = time()
@@ -47,7 +55,7 @@ SQUARE PROGRAMS USING MULTIPROCESSING AND CONCURRENT FUTURES
     pool_ex_time, pool_ex_list = pool_ex_run(num_list)
     pool_ex_totalTime = time() - pool_ex_totalTime
 
-    calc_print_analysis(sequential_time, multiprocessing_time, multiprocessing_time/(multiprocessing_totalTime), "multiprocessing_run")
+    if multiprocessing_successful: calc_print_analysis(sequential_time, multiprocessing_time, multiprocessing_time/(multiprocessing_totalTime), "multiprocessing_run")
     calc_print_analysis(sequential_time, pool_map_time, pool_map_time/(pool_map_totalTime), "pool_map_run")
     calc_print_analysis(sequential_time, pool_apply_time, pool_apply_time/(pool_apply_totalTime), "pool_apply_run")
     calc_print_analysis(sequential_time, pool_ex_time, pool_ex_time/(pool_ex_totalTime), "pool_ex_run")
@@ -62,9 +70,7 @@ SIMULATED DATABASE OPERATION WITH SEMAPHORES
 """
     )
 
-    NUM_PROCESSES = 10 
-
-    pool = ConnectionPool(max_connections=3)
+    pool = ConnectionPool(max_connections=6)
     processes = []
     
     for i in range(NUM_PROCESSES):
