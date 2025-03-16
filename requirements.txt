@@ -4,3 +4,4 @@ seaborn
 scikit-learn
 mpi4py
 numpy
+multiprocessing
