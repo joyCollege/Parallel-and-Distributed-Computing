@@ -1,6 +1,7 @@
 from time import time
 from .square import square
 import concurrent.futures
+import numpy as np
 
 def pool_ex_run(numlist, chunk_size=10000):
     parallel_time = time()
