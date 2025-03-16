@@ -1,6 +1,395 @@
-sequential_run:      0.706621s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
-parallel_run:        120.56s to square until 10000000. The last 3 squares [(9999998, 99999960000004), (9999999, 99999980000001), (10000000, 100000000000000)]
-pool_map_run:        1.452920s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
-pool_apply_run:      1651.242141s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
-pool_map_async_run:  1.638617s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
-pool_apply_async_run: 527.044425s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
+
+====================================================================================
+SQUARE PROGRAMS USING MULTIPROCESSING AND CONCURRENT FUTURES
+====================================================================================
+
+sequential_run:        0.610386s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
+********* multiprocessing_run couldn't make 10000000 processes *********
+pool_map_run:          1.332583s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
+pool_apply_run:        1741.821892s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
+pool_map_async_run:    1.551906s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
+pool_apply_async_run:  544.095500s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
+pool_ex_run:           1711.56s to square until 10000000. The last 3 squares [99999960000004, 99999980000001, 100000000000000]
+
+**************** pool_map_run Performance Analysis ****************
+Speedup             0.4580472041190441
+Efficiency          0.0763412006865073
+Amdahl’s speedup    4.6188372860944389
+Gustafson’s speedup 5.7009717752855860
+
+**************** pool_apply_run Performance Analysis ****************
+Speedup             0.0003504295689305
+Efficiency          0.0000584049281551
+Amdahl’s speedup    5.9984509881743326
+Gustafson’s speedup 5.9997417646941313
+
+**************** pool_ex_run Performance Analysis ****************
+Speedup             0.0003566257761666
+Efficiency          0.0000594376293611
+Amdahl’s speedup    5.9999988048139388
+Gustafson’s speedup 5.9999998008022830
+
+**************** pool_map_async_run Performance Analysis ****************
+Speedup             0.3933137957501148
+Efficiency          0.0655522992916858
+Amdahl’s speedup    4.7048173364463102
+Gustafson’s speedup 5.7247113817744983
+
+**************** pool_apply_async_run Performance Analysis ****************
+Speedup             0.0011218359558550
+Efficiency          0.0001869726593092
+Amdahl’s speedup    5.8701292994782248
+Gustafson’s speedup 5.9778760068311749
+
+====================================================================================
+SIMULATED DATABASE OPERATION WITH SEMAPHORES
+====================================================================================
+
+Process-4 waiting for a connection
+Process-4 has acquired connection-4.
+Process-4 released connection 4. Worked for 2s.
+Process-2 waiting for a connection
+Process-2 has acquired connection-2.
+Process-2 released connection 2. Worked for 6s.
+Process-1 waiting for a connection
+Process-1 has acquired connection-1.
+Process-1 released connection 1. Worked for 7s.
+Process-6 waiting for a connection
+Process-6 has acquired connection-6.
+Process-6 released connection 6. Worked for 7s.
+Process-7 waiting for a connection
+Process-7 has acquired connection-4.
+Process-7 released connection 4. Worked for 6s.
+Process-5 waiting for a connection
+Process-5 has acquired connection-5.
+Process-5 released connection 5. Worked for 9s.
+Process-8 waiting for a connection
+Process-8 has acquired connection-2.
+Process-8 released connection 2. Worked for 4s.
+Process-3 waiting for a connection
+Process-3 has acquired connection-3.
+Process-3 released connection 3. Worked for 11s.
+Process-10 waiting for a connection
+Process-10 has acquired connection-6.
+Process-10 released connection 6. Worked for 4s.
+Process-14 waiting for a connection
+Process-14 has acquired connection-3.
+Process-14 released connection 3. Worked for 1s.
+Process-9 waiting for a connection
+Process-9 has acquired connection-1.
+Process-9 released connection 1. Worked for 6s.
+Process-13 waiting for a connection
+Process-13 has acquired connection-2.
+Process-13 released connection 2. Worked for 3s.
+Process-12 waiting for a connection
+Process-12 has acquired connection-5.
+Process-12 released connection 5. Worked for 4s.
+Process-11 waiting for a connection
+Process-11 has acquired connection-4.
+Process-11 released connection 4. Worked for 9s.
+Process-20 waiting for a connection
+Process-20 has acquired connection-4.
+Process-20 released connection 4. Worked for 1s.
+Process-18 waiting for a connection
+Process-18 has acquired connection-2.
+Process-18 released connection 2. Worked for 6s.
+Process-15 waiting for a connection
+Process-15 has acquired connection-6.
+Process-15 released connection 6. Worked for 7s.
+Process-21 waiting for a connection
+Process-21 has acquired connection-4.
+Process-21 released connection 4. Worked for 1s.
+Process-17 waiting for a connection
+Process-17 has acquired connection-1.
+Process-17 released connection 1. Worked for 7s.
+Process-23 waiting for a connection
+Process-23 has acquired connection-6.
+Process-23 released connection 6. Worked for 2s.
+Process-16 waiting for a connection
+Process-16 has acquired connection-3.
+Process-16 released connection 3. Worked for 11s.
+Process-19 waiting for a connection
+Process-19 has acquired connection-5.
+Process-19 released connection 5. Worked for 10s.
+Process-27 waiting for a connection
+Process-27 has acquired connection-3.
+Process-27 released connection 3. Worked for 1s.
+Process-29 waiting for a connection
+Process-29 has acquired connection-3.
+Process-29 released connection 3. Worked for 1s.
+Process-22 waiting for a connection
+Process-22 has acquired connection-2.
+Process-22 released connection 2. Worked for 8s.
+Process-28 waiting for a connection
+Process-28 has acquired connection-5.
+Process-28 released connection 5. Worked for 4s.
+Process-26 waiting for a connection
+Process-26 has acquired connection-6.
+Process-26 released connection 6. Worked for 7s.
+Process-25 waiting for a connection
+Process-25 has acquired connection-1.
+Process-25 released connection 1. Worked for 9s.
+Process-24 waiting for a connection
+Process-24 has acquired connection-4.
+Process-24 released connection 4. Worked for 10s.
+Process-31 waiting for a connection
+Process-31 has acquired connection-2.
+Process-31 released connection 2. Worked for 3s.
+Process-30 waiting for a connection
+Process-30 has acquired connection-3.
+Process-30 released connection 3. Worked for 5s.
+Process-35 waiting for a connection
+Process-35 has acquired connection-4.
+Process-35 released connection 4. Worked for 1s.
+Process-33 waiting for a connection
+Process-33 has acquired connection-6.
+Process-33 released connection 6. Worked for 5s.
+Process-37 waiting for a connection
+Process-37 has acquired connection-3.
+Process-37 released connection 3. Worked for 3s.
+Process-38 waiting for a connection
+Process-38 has acquired connection-4.
+Process-38 released connection 4. Worked for 3s.
+Process-41 waiting for a connection
+Process-41 has acquired connection-4.
+Process-41 released connection 4. Worked for 1s.
+Process-40 waiting for a connection
+Process-40 has acquired connection-3.
+Process-40 released connection 3. Worked for 2s.
+Process-42 waiting for a connection
+Process-42 has acquired connection-4.
+Process-42 released connection 4. Worked for 1s.
+Process-32 waiting for a connection
+Process-32 has acquired connection-5.
+Process-32 released connection 5. Worked for 8s.
+Process-43 waiting for a connection
+Process-43 has acquired connection-3.
+Process-43 released connection 3. Worked for 1s.
+Process-36 waiting for a connection
+Process-36 has acquired connection-2.
+Process-36 released connection 2. Worked for 7s.
+Process-34 waiting for a connection
+Process-34 has acquired connection-1.
+Process-34 released connection 1. Worked for 10s.
+Process-46 waiting for a connection
+Process-46 has acquired connection-3.
+Process-46 released connection 3. Worked for 4s.
+Process-39 waiting for a connection
+Process-39 has acquired connection-6.
+Process-39 released connection 6. Worked for 9s.
+Process-48 waiting for a connection
+Process-48 has acquired connection-1.
+Process-48 released connection 1. Worked for 5s.
+Process-45 waiting for a connection
+Process-45 has acquired connection-5.
+Process-45 released connection 5. Worked for 8s.
+Process-47 waiting for a connection
+Process-47 has acquired connection-2.
+Process-47 released connection 2. Worked for 8s.
+Process-49 waiting for a connection
+Process-49 has acquired connection-3.
+Process-49 released connection 3. Worked for 6s.
+Process-44 waiting for a connection
+Process-44 has acquired connection-4.
+Process-44 released connection 4. Worked for 11s.
+Process-55 waiting for a connection
+Process-55 has acquired connection-4.
+Process-55 released connection 4. Worked for 5s.
+Process-53 waiting for a connection
+Process-53 has acquired connection-2.
+Process-53 released connection 2. Worked for 8s.
+Process-50 waiting for a connection
+Process-50 has acquired connection-6.
+Process-50 released connection 6. Worked for 11s.
+Process-51 waiting for a connection
+Process-51 has acquired connection-1.
+Process-51 released connection 1. Worked for 10s.
+Process-57 waiting for a connection
+Process-57 has acquired connection-2.
+Process-57 released connection 2. Worked for 1s.
+Process-52 waiting for a connection
+Process-52 has acquired connection-5.
+Process-52 released connection 5. Worked for 11s.
+Process-56 waiting for a connection
+Process-56 has acquired connection-4.
+Process-56 released connection 4. Worked for 4s.
+Process-61 waiting for a connection
+Process-61 has acquired connection-5.
+Process-61 released connection 5. Worked for 1s.
+Process-54 waiting for a connection
+Process-54 has acquired connection-3.
+Process-54 released connection 3. Worked for 10s.
+Process-59 waiting for a connection
+Process-59 has acquired connection-1.
+Process-59 released connection 1. Worked for 3s.
+Process-63 waiting for a connection
+Process-63 has acquired connection-5.
+Process-63 released connection 5. Worked for 3s.
+Process-60 waiting for a connection
+Process-60 has acquired connection-2.
+Process-60 released connection 2. Worked for 6s.
+Process-58 waiting for a connection
+Process-58 has acquired connection-6.
+Process-58 released connection 6. Worked for 9s.
+Process-66 waiting for a connection
+Process-66 has acquired connection-5.
+Process-66 released connection 5. Worked for 4s.
+Process-68 waiting for a connection
+Process-68 has acquired connection-6.
+Process-68 released connection 6. Worked for 3s.
+Process-62 waiting for a connection
+Process-62 has acquired connection-4.
+Process-62 released connection 4. Worked for 11s.
+Process-65 waiting for a connection
+Process-65 has acquired connection-1.
+Process-65 released connection 1. Worked for 10s.
+Process-64 waiting for a connection
+Process-64 has acquired connection-3.
+Process-64 released connection 3. Worked for 11s.
+Process-71 waiting for a connection
+Process-71 has acquired connection-4.
+Process-71 released connection 4. Worked for 2s.
+Process-67 waiting for a connection
+Process-67 has acquired connection-2.
+Process-67 released connection 2. Worked for 9s.
+Process-69 waiting for a connection
+Process-69 has acquired connection-5.
+Process-69 released connection 5. Worked for 6s.
+Process-75 waiting for a connection
+Process-75 has acquired connection-2.
+Process-75 released connection 2. Worked for 2s.
+Process-72 waiting for a connection
+Process-72 has acquired connection-1.
+Process-72 released connection 1. Worked for 5s.
+Process-73 waiting for a connection
+Process-73 has acquired connection-3.
+Process-73 released connection 3. Worked for 5s.
+Process-77 waiting for a connection
+Process-77 has acquired connection-2.
+Process-77 released connection 2. Worked for 2s.
+Process-79 waiting for a connection
+Process-79 has acquired connection-3.
+Process-79 released connection 3. Worked for 1s.
+Process-70 waiting for a connection
+Process-70 has acquired connection-6.
+Process-70 released connection 6. Worked for 8s.
+Process-76 waiting for a connection
+Process-76 has acquired connection-5.
+Process-76 released connection 5. Worked for 5s.
+Process-74 waiting for a connection
+Process-74 has acquired connection-4.
+Process-74 released connection 4. Worked for 6s.
+Process-83 waiting for a connection
+Process-83 has acquired connection-5.
+Process-83 released connection 5. Worked for 1s.
+Process-78 waiting for a connection
+Process-78 has acquired connection-1.
+Process-78 released connection 1. Worked for 4s.
+Process-84 waiting for a connection
+Process-84 has acquired connection-4.
+Process-84 released connection 4. Worked for 2s.
+Process-82 waiting for a connection
+Process-82 has acquired connection-6.
+Process-82 released connection 6. Worked for 4s.
+Process-81 waiting for a connection
+Process-81 has acquired connection-3.
+Process-81 released connection 3. Worked for 5s.
+Process-88 waiting for a connection
+Process-88 has acquired connection-6.
+Process-88 released connection 6. Worked for 3s.
+Process-80 waiting for a connection
+Process-80 has acquired connection-2.
+Process-80 released connection 2. Worked for 10s.
+Process-86 waiting for a connection
+Process-86 has acquired connection-1.
+Process-86 released connection 1. Worked for 8s.
+Process-87 waiting for a connection
+Process-87 has acquired connection-4.
+Process-87 released connection 4. Worked for 7s.
+Process-91 waiting for a connection
+Process-91 has acquired connection-2.
+Process-91 released connection 2. Worked for 1s.
+Process-85 waiting for a connection
+Process-85 has acquired connection-5.
+Process-85 released connection 5. Worked for 9s.
+Process-89 waiting for a connection
+Process-89 has acquired connection-3.
+Process-89 released connection 3. Worked for 7s.
+Process-90 waiting for a connection
+Process-90 has acquired connection-6.
+Process-90 released connection 6. Worked for 10s.
+Process-93 waiting for a connection
+Process-93 has acquired connection-4.
+Process-93 released connection 4. Worked for 8s.
+Process-95 waiting for a connection
+Process-95 has acquired connection-5.
+Process-95 released connection 5. Worked for 7s.
+Process-92 waiting for a connection
+Process-92 has acquired connection-1.
+Process-92 released connection 1. Worked for 8s.
+Process-94 waiting for a connection
+Process-94 has acquired connection-2.
+Process-94 released connection 2. Worked for 8s.
+Process-96 waiting for a connection
+Process-96 has acquired connection-3.
+Process-96 released connection 3. Worked for 7s.
+Process-99 waiting for a connection
+Process-99 has acquired connection-5.
+Process-99 released connection 5. Worked for 5s.
+Process-100 waiting for a connection
+Process-100 has acquired connection-1.
+Process-100 released connection 1. Worked for 5s.
+Process-97 waiting for a connection
+Process-97 has acquired connection-6.
+Process-97 released connection 6. Worked for 6s.
+Process-101 waiting for a connection
+Process-101 has acquired connection-2.
+Process-101 released connection 2. Worked for 6s.
+Process-104 waiting for a connection
+Process-104 has acquired connection-1.
+Process-104 released connection 1. Worked for 3s.
+Process-98 waiting for a connection
+Process-98 has acquired connection-4.
+Process-98 released connection 4. Worked for 9s.
+Process-107 waiting for a connection
+Process-107 has acquired connection-1.
+Process-107 released connection 1. Worked for 1s.
+Process-103 waiting for a connection
+Process-103 has acquired connection-5.
+Process-103 released connection 5. Worked for 5s.
+Process-105 waiting for a connection
+Process-105 has acquired connection-6.
+Process-105 released connection 6. Worked for 5s.
+Process-102 waiting for a connection
+Process-102 has acquired connection-3.
+Process-102 released connection 3. Worked for 9s.
+Process-110 waiting for a connection
+Process-110 has acquired connection-5.
+Process-110 released connection 5. Worked for 1s.
+Process-109 waiting for a connection
+Process-109 has acquired connection-1.
+Process-109 released connection 1. Worked for 3s.
+Process-113 waiting for a connection
+Process-113 has acquired connection-5.
+Process-113 released connection 5. Worked for 2s.
+Process-106 waiting for a connection
+Process-106 has acquired connection-2.
+Process-106 released connection 2. Worked for 7s.
+Process-112 waiting for a connection
+Process-112 has acquired connection-3.
+Process-112 released connection 3. Worked for 4s.
+Process-116 waiting for a connection
+Process-116 has acquired connection-2.
+Process-116 released connection 2. Worked for 2s.
+Process-117 waiting for a connection
+Process-117 has acquired connection-3.
+Process-115 waiting for a connection
+Process-115 has acquired connection-5.
+Process-108 waiting for a connection
+Process-108 has acquired connection-4.
+Process-111 waiting for a connection
+Process-111 has acquired connection-6.
+Process-114 waiting for a connection
+Process-114 has acquired connection-1.
+Process-118 waiting for a connection
+Process-118 has acquired connection-2.
