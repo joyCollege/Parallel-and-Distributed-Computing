@@ -1,8 +1,22 @@
 import time
 import threading
-from .worker import worker
+from .pt2_worker import worker
 
 def threading_case(num_threads=2, num_numbers=1000):
+    """
+    Executes a multi-threaded summation of random numbers.
+
+    Args:
+        num_threads (int, optional): The number of threads to use (default is 2).
+        num_numbers (int, optional): The total count of numbers to sum (default is 1000).
+
+    Returns:
+        float: The total execution time in milliseconds.
+
+    The function divides the task among multiple threads, each summing a portion of the numbers.
+    It records the start and end time to measure execution duration.
+    """
+
     print(f"\nStarting all {num_threads} threads...")
 
     total_start_time = time.time()

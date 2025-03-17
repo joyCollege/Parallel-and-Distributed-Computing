@@ -3,7 +3,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 import numpy as np
 
-
 def data_preprocessing(file_path):
     """
     Preprocesses the housing prices dataset by performing the following steps:

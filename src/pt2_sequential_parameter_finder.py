@@ -1,5 +1,5 @@
 import time
-from .train_model import train_model
+from src.pt2_train_model import train_model
 
 def sequential_parameter_finder(n_estimators_range, max_features_range, max_depth_range, data):
     """
