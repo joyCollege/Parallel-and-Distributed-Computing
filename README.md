@@ -1,75 +1,45 @@
-# 4.1 Temperature Sensor Simulation Program
+# Lab Tutorial: Distributed Square Computation with MPI
+## DSAI3202: Parallel and Distributed Computing
+## By: Dela Cruz, Joy Anne P. [60301959]
 
-This program simulates temperature sensors that periodically generate random temperature readings. The readings are then processed to calculate and update the average temperature for each sensor in real time using multithreading.
-
-## Features
-- Simulates multiple temperature sensors.
-- Each sensor generates random temperature readings at regular intervals.
-- The latest temperature readings from each sensor are displayed and updated in real-time.
-- The program calculates and updates the average temperature for each sensor.
-- Thread-safe data handling using locks to ensure consistency.
-
-## Components
-
-1. **`simulate_sensor`**: 
-   - Simulates the behavior of a temperature sensor.
-   - Generates random temperature readings between 15 and 40 degrees Celsius.
-   - Puts the sensor ID and temperature reading into a queue.
-   - Updates the latest temperature for each sensor in a shared dictionary.
-   
-2. **`process_temperature`**: 
-   - Processes temperature readings from the queue.
-   - Updates the average temperature for each sensor based on the received readings.
-   - Uses a lock to ensure thread-safe updates to the shared data.
-   
-3. **Main Program**:
-   - Initializes multiple sensor threads that simulate the sensors.
-   - Starts a separate processing thread that updates the average temperature for each sensor.
-   - Prints the latest and average temperatures every second.
+This project computes the squares of numbers in parallel using MPI (Message Passing Interface). The computation is distributed across multiple machines, with each machine performing part of the computation. The results are gathered at the root process, sorted, and displayed. This example demonstrates how to set up a parallel computing environment using MPI and NumPy.
 
 ## Requirements
-
-- Python 3.x
-- `threading` module (built-in)
-- `queue` module (built-in)
-
-## Usage
-
-1. Clone the repository or copy the code files to your project folder.
-2. Run the program by executing the Python file.
-
 ```bash
-python main.py
+conda activate parallel
+pip install -r requirements.txt
 ```
 
-3. The program will output the latest and average temperatures for each sensor every second.
+## Running the Program
 
-## Example Output
+1. Clone or download this repository to your local machine.
+2. The program uses MPI to distribute computation, so you'll need to execute it using `mpirun` or `mpiexec`.
+3. To run the program, use the following command:
+   ```bash
+   mpirun -n 6 python main.py
+   ```
 
-```
-The latest temperatures: {'sensor 0': 25, 'sensor 1': 30, 'sensor 2': 22}
-The average temperatures: {'sensor 0': 24.5, 'sensor 1': 30.0, 'sensor 2': 22.0}
-```
+   This will execute the program using 6 MPI processes. You can adjust the number of processes based on the available cores.
 
 ## How It Works
 
-1. **Sensors**: 
-   - The program initializes 3 sensors. Each sensor generates a random temperature between 15 and 40 degrees Celsius every second.
-   
-2. **Data Sharing and Locking**:
-   - The `latest_temperatures` dictionary holds the most recent temperature reading for each sensor.
-   - The `latest_temperatures_lock` ensures that updates to this dictionary are thread-safe.
-   
-3. **Processing Temperature**:
-   - The `process_temperature` function retrieves the temperature data from the queue and updates the average temperature for each sensor in the `average_temperatures` dictionary. It also uses a lock to ensure thread-safe updates.
+1. The `numbers` array is distributed using `MPI.Scatter()` to all processes.
+2. Each process computes the square of the assigned number.
+3. Each process sends its result to the root process using `MPI.isend()` and `MPI.irecv()`.
+4. The root process collects the results and displays them.
 
-## Concurrency
+### Output Example
+The output will display the rank of each process and the numbers being processed, followed by the computed squares and the gathered results at the root process:
+```
+rank: 0 of 6
+numbers: [0 1 2 3 4 5]
+number: [0]
+square of 0 is 0
+...
+results: [0, 1, 4, 9, 16, 25]
+```
 
-- The program uses multithreading to simulate multiple sensors and process temperature data concurrently.
-- Each sensor runs in its own thread, and the data processing happens in a separate thread to maintain performance.
+## Notes
 
-## License
-
-This project is open-source and available under the MIT License.
-
-# 4.2 Working on it...
+- **Parallel Execution**: This program distributes tasks among multiple processes to speed up computation.
+- **Random Delay**: Each process includes a random delay (`time.sleep()`) to simulate work and avoid synchronization issues during testing.
