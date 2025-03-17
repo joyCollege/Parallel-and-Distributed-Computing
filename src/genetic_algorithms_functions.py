@@ -16,12 +16,19 @@ def calculate_fitness(route,
     total_distance = 0
 
     for i in range(len(route) - 1):
-        total_distance += distance_matrix[route[i], route[i + 1]]
+        # Retrieve the distance between node1 and node2
+        node_distance = distance_matrix[route[i], route[i + 1]]
+        total_distance += node_distance
+        # If the distance is equal to 10000 (indicating an infeasible route), directly return a large negative penalty (e.g., 1e6).
+        if (node_distance == 10000):
+            return -10**6 # Impossible route
+        total_distance += node_distance    
     
     # Add the return to the starting point to complete the cycle
     total_distance += distance_matrix[route[-1], route[0]]
-    
-    return total_distance
+
+    # Return the negative of total_distance as the fitness value.
+    return -total_distance
     
 
 
