@@ -1,7 +1,8 @@
 import numpy as np
 
 def calculate_fitness(route,
-                      distance_matrix):
+                      distance_matrix,
+                      infeasible_penalty):
     """
     calculate_fitness function: total distance traveled by the car.
 
@@ -9,28 +10,31 @@ def calculate_fitness(route,
         - route (list): A list representing the order of nodes visited in the route.
         - distance_matrix (numpy.ndarray): A matrix of the distances between nodes.
             A 2D numpy array where the element at position [i, j] represents the distance between node i and node j.
+        - infeasible_penalty (int): A very high number added when the path is impossible
     Returns:
         - float: The negative total distance traveled (negative because we want to minimize distance).
-           Returns a large negative penalty if the route is infeasible.
+           Returns a large negative penalty (infeasible_penalty) if the route is infeasible.
     """
     total_distance = 0
 
     for i in range(len(route) - 1):
         # Retrieve the distance between node1 and node2
         node_distance = distance_matrix[route[i], route[i + 1]]
-        total_distance += node_distance
+
         # If the distance is equal to 10000 (indicating an infeasible route), directly return a large negative penalty (e.g., 1e6).
         if (node_distance == 10000):
-            return -10**6 # Impossible route
-        total_distance += node_distance    
+            return infeasible_penalty
+        
+        total_distance += node_distance
     
     # Add the return to the starting point to complete the cycle
-    total_distance += distance_matrix[route[-1], route[0]]
+    return_distance = distance_matrix[route[-1], route[0]]
 
-    # Return the negative of total_distance as the fitness value.
-    return -total_distance
+    if return_distance == 10000:
+            return infeasible_penalty
     
-
+    return total_distance + return_distance
+    
 
 def select_in_tournament(population,
                          scores,
@@ -44,16 +48,21 @@ def select_in_tournament(population,
         - scores (np.array): The calculate_fitness scores corresponding to each individual in the population.
         - number_tournaments (int): The number of the tournamnents to run in the population.
         - tournament_size (int): The number of individual to compete in the tournaments.
+            >> A larger tournament_size (4–6) might be better since the population size 10000 
 
     Returns:
         - list: A list of selected individuals for crossover.
     """
+    # An empty list selected to store the individuals 
     selected = []
     for _ in range(number_tournaments):
+        # Randomly select tournament_size individuals from the population using np.random.choice.
         tournament_indices = np.random.choice(len(population), tournament_size, replace=False)
-        best_index = tournament_indices[np.argmax(scores[tournament_indices])]
-        selected.append(population[best_index])
+        # Find the index of the individual with the highest fitness score among the selected individuals using np.argmax(scores[idx])
+        best_idx = tournament_indices[np.argmax(scores[tournament_indices])]
+        selected.append(population[best_idx])
     return selected
+    
 
 
 def order_crossover(parent1, parent2):
