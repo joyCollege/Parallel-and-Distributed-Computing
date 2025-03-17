@@ -9,6 +9,36 @@ from src.calc_amdahl import calc_amdahl
 from src.calc_gustafson import calc_gustafson
 
 if __name__ == '__main__':
+    """
+    Performance Analysis of Parallel Processing Techniques
+
+    This script compares different execution methods (sequential, threading, 
+    advanced threading, multiprocessing, and advanced multiprocessing) to analyze 
+    speedup, efficiency, and performance based on Amdahl’s and Gustafson’s laws.
+
+    Execution steps:
+    1. Runs a computation-intensive task sequentially.
+    2. Runs the same task using threading, advanced threading, multiprocessing, 
+    and advanced multiprocessing.
+    3. Computes speedup, efficiency, Amdahl’s law speedup, and Gustafson’s law speedup 
+    for each parallel execution technique.
+
+    Modules used:
+    - `sequential_case`: Runs the task sequentially.
+    - `threading_case`: Runs the task using basic threading.
+    - `advanced_threading_case`: Runs the task using optimized threading.
+    - `multiprocessing_case`: Runs the task using basic multiprocessing.
+    - `advanced_multiprocessing_case`: Runs the task using optimized multiprocessing.
+    - `calc_speadup`: Calculates speedup.
+    - `calc_efficiency`: Computes efficiency based on speedup and number of processors.
+    - `calc_amdahl`: Computes theoretical speedup using Amdahl’s law.
+    - `calc_gustafson`: Computes theoretical speedup using Gustafson’s law.
+
+    Usage:
+    Run the script to compare execution methods with `n = 1000000`.
+
+    Author:
+    """
     n = 1000000
 
     print(f"\n**************** Running {n} times ****************")
