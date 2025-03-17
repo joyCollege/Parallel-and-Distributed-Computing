@@ -1,3 +1,7 @@
+# Lab 4: Temperature Sensor Simulation & Image Processing and Model Optimization
+## DSAI3202: Parallel and Distributed Computing
+## By: Dela Cruz, Joy Anne P. [60301959]
+
 # 4.1 Temperature Sensor Simulation Program
 
 This program simulates temperature sensors that periodically generate random temperature readings. The readings are then processed to calculate and update the average temperature for each sensor in real time using multithreading.
@@ -169,8 +173,5 @@ The execution times of different processing methods are compared:
 - **Hybrid Processing** (Thread and Process Combination)
 
 ## License
-This project is open-source and available for modification and distribution.
+This project is licensed under the MIT License.
 
----
-
-Let me know if you need further adjustments!
