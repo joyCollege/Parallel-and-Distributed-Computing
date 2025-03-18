@@ -1,11 +1,11 @@
 if __name__ == "__main__":
-    from src.p3_parallel_fitness import p3_parallel_fitness
-    p3_parallel_fitness_time = p3_parallel_fitness()
-    print("*"*50,"\n","p3_parallel_fitness time:", p3_parallel_fitness_time, "\n" + "*"*50)
+    # from src.p3_parallel_fitness import p3_parallel_fitness
+    # p3_parallel_fitness_time = p3_parallel_fitness()
+    # print("*"*50,"\n","p3_parallel_fitness time:", p3_parallel_fitness_time, "\n" + "*"*50)
 
-    # from src.p0_sequential import p0_sequential
-    # p0_sequential_time = p0_sequential()
-    # print("*"*50,"\n","p0_sequential time:", p0_sequential_time, "\n" + "*"*50)
+    from tests.test9_negativeDistance import test9_negativeDistance
+    test9_negativeDistance_time = test9_negativeDistance()
+    print("*"*50,"\n","test9_negativeDistance time:", test9_negativeDistance_time, "\n" + "*"*50)
     # 7.81717586517334
     
     # from src.p1_ThreadPoolExecutor import p1_ThreadPoolExecutor

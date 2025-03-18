@@ -3,6 +3,7 @@
 ## By: Dela Cruz, Joy Anne 60301959
 
 ## Understanding the code
+
 In the genetic algorithm trial, the distance matrix was loaded from a CSV file. This contains the distances between all the nodes. Then, a set of parameters was defined. These will be experimented with later on. Now, I generated a unique set of population. The population size is the number of routes we want to create, and the number of nodes is the number of nodes in our city—in this case, 32.
 
 In the function, we are creating a population-sized number of routes using the permutation of nodes 1 to n. These were added into a set to ensure there are no repetitions. The set is then turned into a list, returning a list of lists.
@@ -25,50 +26,77 @@ Then, the individuals that lost in the tournament are replaced with the new offs
 
 The entire process repeats for the specified number of generations. At the end, the route with the lowest total distance in the final generation is considered the best solution.
 
-## Changing the the code
+## **Changes to the Code**  
 
-in the calculate_fitness i did not put negative since we are trying to find the min in the genetic_algorithm_trial
+In `calculate_fitness`, I removed the negative sign since we are trying to find the minimum in `genetic_algorithm_trial`.  
 
-at this point i changed the total distance to print  add commas and to give non negative
+At this point, I also formatted the total distance output to include commas and ensure it displays a non-negative value.  
 
-## Initial approach to improve distance 
+Running with default parameters led to stagnation. Increasing `num_tournaments = 7` and `tournament_size = 20` did not significantly reduce stagnation, and the Total Distance remained 1,224.0.  
 
-Running with normal parameter lead to stagnation and increasing to , number_tournaments=7,tournament_size=20 did not do much to fix the stagnation the Total Distance: is still 1,224.0
+I changed the parameters to reduce stagnation, but the total distance remained the same, and there was still stagnation:  
+```python
+# Experimental Parameters
+num_nodes = distance_matrix.shape[0]
+population_size     = 10000  # default = 10000
+num_tournaments     = 20     # default = 4  
+tournament_size     = 7      # default = 3 
+mutation_rate       = 0.5    # default = 0.1
+num_generations     = 200    # default = 200
+infeasible_penalty  = 1e6    # default = 1e6  
+stagnation_limit    = 5      # default = 5  
+```
 
-i changed the parameters as an attempt to top stagnation but the total distance is the same and theres stil stagnation
-        # Experimental Parameters 
-        num_nodes = distance_matrix.shape[0]
-        population_size     = 10000 # default = 10000
-        num_tournaments     = 20    # default = 4  
-        tournament_size     = 7     # default = 3 
-        mutation_rate       = 0.5   # default = 0.1
-        num_generations     = 200   # default = 200
-        infeasible_penalty  = 1e6   # default = 1e6  
-        stagnation_limit    = 5     # default = 5  
-  
-i changed the stagnation but it actually got worst with a distance of 2,416 to imreturning ti back but this was the attempt
-                print(f"Regenerating population at generation {generation} due to stagnation")
-                
-                # Keep the top 10% best individuals
-                elite_count = population_size // 10  # 10% of population
-                best_individuals = sorted(population, key=lambda ind: calculate_fitness(ind, distance_matrix, infeasible_penalty))[:elite_count]
-                
-                new_population = generate_unique_population(population_size - len(best_individuals), num_nodes)
-                population = best_individuals + new_population
-                stagnation_counter = 0
-                continue  # Skip rest of loop for this generation
+I experimented with modifying stagnation handling, but it actually made the results worse, increasing the distance to 2,416, so I reverted the changes:  
+```python
+# Attempted a different stagnation approach (reverted)
+print(f"Regenerating population at generation {generation} due to stagnation")
 
- i experimented with using the new stagnant function and and a very high num_tournaments 500 and there are still stagnation and the total distance improved now being 1,211.0, adding more tournament_size 1000 did not improve the results. since theres still so much stagnation, i make the stgantion and mutation extreme giving a Total Distance: 1,074.0 which is the best one so far
-        num_tournaments     = 500   # default = 4  
-        tournament_size     = 1000  # default = 3 
-        mutation_rate       = 1     # default = 0.1
+# Keep the top 10% best individuals
+elite_count = population_size // 10  # 10% of population
+best_individuals = sorted(population, key=lambda ind: calculate_fitness(ind, distance_matrix, infeasible_penalty))[:elite_count]
 
-## Parallelizing 
-For this we are using the default parameters, i first assumed threading would improve the speed but it got much slower running fro 7.75s with sequential to 36 with threadingPoolExecutor then i tried Pool start with all the functions and with just the fitness evaluations and theyre all still very slow. 
- 
+new_population = generate_unique_population(population_size - len(best_individuals), num_nodes)
+population = best_individuals + new_population
+stagnation_counter = 0
+continue  # Skip rest of loop for this generation
+```
+I then experimented with an extreme approach, using a high number of tournaments and larger tournament sizes, which reduced stagnation but still didn’t fully solve it.  
+```python
+num_tournaments = 500   # default = 4  
+tournament_size = 1000  # default = 3 
+mutation_rate = 1       # default = 0.1
+```
+Running it for longer finally reduced stagnation, improving the Total Distance to 992.0.  
+```python
+num_tournaments     = 500   # default = 4  
+tournament_size     = 1000  # default = 3 
+mutation_rate       = 1     # default = 0.1
+num_generations     = 10000   # default = 200
+stagnation_limit    = 2     # default = 5  
+```
+```
+Regenerating population at generation 9998 due to stagnation
+Generation 9999: Best calculate_fitness = 992.0
+Total Distance: 992.0
+************************************************  
+ p0_sequential time: 991.6502876281738  
+**************************************************
+```
 
-Now I broke down the time for each process
-bash```
+
+## **Parallelizing the Code**  
+
+For this, I used default parameters. At first, I assumed threading would improve speed, but it actually made execution much slower.  
+
+- Sequential Execution: `7.75s`  
+- ThreadPoolExecutor: `36s` ❌  
+
+I then tried multiprocessing using `Pool.starmap()`, but it was still slow.  
+Even when only parallelizing fitness evaluation, the improvement was not significant. So I wanted to revisit my methodology and by timing each segment of the code
+
+### **Breaking Down Execution Time**  
+```bash
 === Timing Breakdown ===
 Total Execution Time: 7.75 seconds
 Fitness Evaluation Time: 2.55 seconds (32.85%)
@@ -77,7 +105,18 @@ Selection Time: 0.09 seconds (1.17%)
 Crossover Time: 0.01 seconds (0.14%)
 Mutation Time: 0.00 seconds (0.01%)
 Replacement & Uniqueness Time: 2.72 seconds (35.07%)
-************************************************** 
- test6_sequentialTimed time: 7.751987934112549 
+**************************************************  
+ test6_sequentialTimed time: 7.751987934112549  
 **************************************************
 ```
+
+
+
+## Using the Extended Dataset  
+Running the larger dataset resulted in significant stagnation, and the total distance remained 1,000,000.0, even after 2,000 generations.  
+```
+**************************************************  
+ p0_sequential time: 3776.785297393799  
+**************************************************
+```
+This suggests that parameter tuning alone may not be enough, and alternative genetic operators or hybrid approaches could be considered.  
