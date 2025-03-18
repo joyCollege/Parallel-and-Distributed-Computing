@@ -119,4 +119,33 @@ Running the larger dataset resulted in significant stagnation, and the total dis
  p0_sequential time: 3776.785297393799  
 **************************************************
 ```
-This suggests that parameter tuning alone may not be enough, and alternative genetic operators or hybrid approaches could be considered.  
+
+I ran with more generations and different parameters in test10_running_extended.py
+```
+# Experimental Parameters 
+num_nodes = distance_matrix.shape[0]
+population_size     = 10000 # default = 10000
+num_tournaments     = 100   # default = 4  
+tournament_size     = 6   # default = 3 
+mutation_rate       = 0.2     # default = 0.1
+num_generations     = 10**6   # default = 200
+infeasible_penalty  = 1e6   # default = 1e6  
+stagnation_limit    = 10     # default = 5 
+```
+```
+Regenerating population at generation 91279 due to stagnation
+Generation 91280: Best calculate_fitness = 1,000,000.0
+Generation 91281: Best calculate_fitness = 1,000,000.0
+Generation 91282: Best calculate_fitness = 1,000,000.0
+Generation 91283: Best calculate_fitness = 1,000,000.0
+Generation 91284: Best calculate_fitness = 1,000,000.0
+Generation 91285: Best calculate_fitness = 1,000,000.0
+Generation 91286: Best calculate_fitness = 1,000,000.0
+Generation 91287: Best calculate_fitness = 1,000,000.0
+Generation 91288: Best calculate_fitness = 1,000,000.0
+Regenerating population at generation 91289 due to stagnation
+Generation 91290: Best calculate_fitness = 1,000,000.0
+Generation 91291: Best calculate_fitness = 1,000,000.0
+Generation 91292: Best calculate_fitness = 1,000,000.0
+```
+No path is still found after 91289 generations

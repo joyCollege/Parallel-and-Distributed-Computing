@@ -59,7 +59,7 @@ def select_in_tournament(population,
         # Randomly select tournament_size individuals from the population using np.random.choice.
         tournament_indices = np.random.choice(len(population), tournament_size, replace=False)
         # Find the index of the individual with the highest fitness score among the selected individuals using np.argmax(scores[idx])
-        best_idx = tournament_indices[np.argmax(scores[tournament_indices])]
+        best_idx = tournament_indices[np.argmin(scores[tournament_indices])]
         selected.append(population[best_idx])
     return selected
     
