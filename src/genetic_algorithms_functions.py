@@ -21,8 +21,8 @@ def calculate_fitness(route,
         # Retrieve the distance between node1 and node2
         node_distance = distance_matrix[route[i], route[i + 1]]
 
-        # If the distance is equal to 10000 (indicating an infeasible route), directly return a large negative penalty (e.g., 1e6).
-        if (node_distance == 10000):
+        # If the distance is equal to 100000 (indicating an infeasible route), directly return a large negative penalty (e.g., 1e6).
+        if (node_distance == 100000):
             return infeasible_penalty
         
         total_distance += node_distance
@@ -30,7 +30,7 @@ def calculate_fitness(route,
     # Add the return to the starting point to complete the cycle
     return_distance = distance_matrix[route[-1], route[0]]
 
-    if return_distance == 10000:
+    if return_distance == 100000:
             return infeasible_penalty
     
     return total_distance + return_distance

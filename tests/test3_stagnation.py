@@ -9,7 +9,7 @@ def genetic_algorithm_trial():
     # Load the distance matrix
     distance_matrix = pd.read_csv('./data/city_distances.csv').to_numpy()
 
-    use_default_parameters = False
+    use_default_parameters = True
     use_default_stagnation = False
 
     if use_default_parameters:
@@ -26,12 +26,13 @@ def genetic_algorithm_trial():
         # Experimental Parameters 
         num_nodes = distance_matrix.shape[0]
         population_size     = 10000 # default = 10000
-        num_tournaments     = 500   # default = 4  
-        tournament_size     = 1000  # default = 3 
-        mutation_rate       = 1     # default = 0.1
+        num_tournaments     = 20    # default = 4  
+        tournament_size     = 7     # default = 3 
+        mutation_rate       = 0.1   # default = 0.1
         num_generations     = 200   # default = 200
         infeasible_penalty  = 1e6   # default = 1e6  
-        stagnation_limit    = 2     # default = 5  
+        stagnation_limit    = 5     # default = 5  
+    print(f"Number of Nodes: {num_nodes}")
 
     # Generate initial population: each individual is a route starting at node 0
     np.random.seed(42)  # For reproducibility

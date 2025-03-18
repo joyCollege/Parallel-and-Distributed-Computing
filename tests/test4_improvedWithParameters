@@ -28,7 +28,7 @@ def genetic_algorithm_trial():
         population_size     = 10000 # default = 10000
         num_tournaments     = 500   # default = 4  
         tournament_size     = 1000  # default = 3 
-        mutation_rate       = 1     # default = 0.1
+        mutation_rate       = 1   # default = 0.1
         num_generations     = 200   # default = 200
         infeasible_penalty  = 1e6   # default = 1e6  
         stagnation_limit    = 2     # default = 5  
