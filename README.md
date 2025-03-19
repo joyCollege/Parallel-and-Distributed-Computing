@@ -102,15 +102,15 @@ The entire process repeats for the specified number of generations. At the end, 
 
 ## Parallelize the code (20 pts)
 
-### Define the parts to be distributed and parallelized, explain your choices (5 pts).
+* Parallelize your program (10 pts)
+* Define the parts to be distributed and parallelized, explain your choices (5 pts).
+* Run your code and compute the performance metrics (5 pts).
 
-At first, I assumed threading would improve speed, but it actually made execution much slower.  
-
+At first, I assumed threading would improve speed because the functions are not CPU intensive, but it actually made execution much slower. 
 - Sequential Execution: `7.75s`  
-- ThreadPoolExecutor: `36s` ❌  
+- ThreadPoolExecutor: `36s` 
 
-I then tried multiprocessing using `Pool.starmap()`, but it was still slow.  
-Even when only parallelizing fitness evaluation, the improvement was not significant. So I wanted to revisit my methodology and by timing each segment of the code
+I then tried multiprocessing using `Pool.starmap()`, but it was still slow. Even when only parallelizing fitness evaluation, the improvement was not significant. So I wanted to revisit my methodology and by timing each segment of the code. 
 
 #### **Breaking Down Execution Time**  
 ```bash
@@ -126,12 +126,25 @@ Replacement & Uniqueness Time: 2.72 seconds (35.07%)
  test6_sequentialTimed time: 7.751987934112549  
 **************************************************
 ```
+After this I called it a day and started to improve the implementation instead. Completing the enhancement of algorithm and with the knowledge from breaking down the execution time, I tried again first parallelizing only the fitness calculation with starmap. This was way slower than the sequential. I figured implementing with non-blocking starmap_async would do better and it did run around the same time as the sequential. For this attempt of starmap_async, I added more tasks to the worker, applying granularity. Each worker is assigned a sixth of the population and this segement of population returns the mutated offspring to the main function which is aggregated and added to new replaced routes for the next generation. 
 
+However during implementation, since we are making sure that the same routes are not added to the population again, stagnations and flushing the population with new routes/individuals took a long time so I tried to check for stagnation first before the main GA worker; this way if there was a stagnation, all the cores would be working on that first before continuing to the main GA worker. This ended up improving the speedup—this time actually running faster than the sequential. 
 
-### Parallelize your program (10 pts)
+Below are the timings after running 75 generations. 
 
-### Run your code and compute the performance metrics (5 pts).
+```bash
+updated_GA_trial time: 169.268807888031
+p2_starMapAsync_largerWorker time: 222.8095691204071
+p3_starMapAsync_stagnation time: 144.1353316307068 
 
+**************** p2_starMapAsync_largerWorker Performance Analysis ****************
+Speedup             0.7597016975359686
+Efficiency          0.1266169495893281
+
+**************** p2_starMapAsync_largerWorker Performance Analysis ****************
+Speedup             1.1743741522149433
+Efficiency          0.1957290253691572
+```
 
 ## Enhance the algorithm (20 pts).
 
