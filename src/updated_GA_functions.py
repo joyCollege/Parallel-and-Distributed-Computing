@@ -75,5 +75,5 @@ def order_crossover(parent1, parent2, num_nodes=32):
     
     if None in offspring:
         raise ValueError("Offspring not fully filled: " + str(offspring))
-
-    return [0] + offspring
+    
+    return offspring
