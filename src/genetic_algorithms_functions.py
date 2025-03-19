@@ -23,7 +23,7 @@ def calculate_fitness(route,
 
         # If the distance is equal to 100000 (indicating an infeasible route), directly return a large negative penalty (e.g., 1e6).
         if (node_distance == 100000):
-            return infeasible_penalty
+            return -infeasible_penalty
         
         total_distance += node_distance
     
@@ -31,9 +31,11 @@ def calculate_fitness(route,
     return_distance = distance_matrix[route[-1], route[0]]
 
     if return_distance == 100000:
-            return infeasible_penalty
+            return -infeasible_penalty
     
-    return total_distance + return_distance
+    total_distance += return_distance
+    
+    return -total_distance 
     
 
 def select_in_tournament(population,

@@ -1,41 +1,33 @@
 import numpy as np
 import pandas as pd
-from src.genetic_algorithms_functions import calculate_fitness, \
-    select_in_tournament, order_crossover, mutate, \
-    generate_unique_population
+from src.genetic_algorithms_functions import calculate_fitness, select_in_tournament, mutate
+from src.updated_GA_functions import generate_unique_population, order_crossover
 
-
-def genetic_algorithm_trial():
+def updated_GA_trial(
+                        population_size      = 10000,  # default = 10000
+                        num_tournaments      = 500,   # default = 4
+                        tournament_size      = 1000,  # default = 3
+                        mutation_rate        = .2,    # default = 0.1
+                        num_generations      = 200,   # default = 200
+                        infeasible_penalty   = 1e6,   # default = 1e6
+                        stagnation_limit     = 5,     # default = 5
+                        use_extended_datset  = False,
+                        use_default_stagnation = True
+                    ):
+    
     # Load the distance matrix
-    distance_matrix = pd.read_csv('./data/city_distances.csv').to_numpy()
-
-    use_default_parameters = False
-    use_default_stagnation = False
-
-    if use_default_parameters:
-        # Default Parameters 
-        num_nodes = distance_matrix.shape[0]
-        population_size     = 10000
-        num_tournaments     = 4     # Number of tournaments to run
-        tournament_size     = 3     # Added this
-        mutation_rate       = 0.1
-        num_generations     = 200
-        infeasible_penalty  = 1e6   # Penalty for infeasible routes
-        stagnation_limit    = 5     # Number of generations without improvement before regeneration
+    if use_extended_datset: 
+        FILEPATH = './data/city_distances_extended.csv'
     else: 
-        # Experimental Parameters 
-        num_nodes = distance_matrix.shape[0]
-        population_size     = 10000 # default = 10000
-        num_tournaments     = 500   # default = 4  
-        tournament_size     = 1000  # default = 3 
-        mutation_rate       = 1     # default = 0.1
-        num_generations     = 200   # default = 200
-        infeasible_penalty  = 1e6   # default = 1e6  
-        stagnation_limit    = 2     # default = 5  
+        FILEPATH = './data/city_distances.csv'
+
+    distance_matrix = pd.read_csv(FILEPATH).to_numpy()
+    num_nodes = distance_matrix.shape[0]
 
     # Generate initial population: each individual is a route starting at node 0
     np.random.seed(42)  # For reproducibility
-    population = generate_unique_population(population_size, num_nodes)
+    doneRoutes = []
+    population = generate_unique_population(doneRoutes, population_size, num_nodes)
 
     # Initialize variables for tracking stagnation
     best_calculate_fitness = int(1e6)
@@ -59,7 +51,7 @@ def genetic_algorithm_trial():
             if use_default_stagnation:
                 print(f"Regenerating population at generation {generation} due to stagnation")
                 best_individual = population[np.argmin(calculate_fitness_values)]
-                population = generate_unique_population(population_size - 1, num_nodes)
+                population = generate_unique_population(doneRoutes, population_size - 1, num_nodes)
                 population.append(best_individual)
                 stagnation_counter = 0
                 continue  # Skip the rest of the loop for this generation
@@ -70,7 +62,7 @@ def genetic_algorithm_trial():
                 elite_count = population_size // 10  # 10% of population
                 best_individuals = sorted(population, key=lambda ind: -calculate_fitness(ind, distance_matrix, infeasible_penalty))[:elite_count]
                 
-                new_population = generate_unique_population(population_size - len(best_individuals), num_nodes)
+                new_population = generate_unique_population(doneRoutes, population_size - len(best_individuals), num_nodes)
                 population = best_individuals + new_population
                 stagnation_counter = 0
                 continue  # Skip rest of loop for this generation

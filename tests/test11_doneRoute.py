@@ -79,12 +79,12 @@ def order_crossover(parent1, parent2, num_nodes=32):
     if None in offspring:
         raise ValueError("Offspring not fully filled: " + str(offspring))
     
-    return offspring
+    return [0] + offspring
 
 
 def test11_doneRoute():
     # Load the distance matrix
-    distance_matrix = pd.read_csv('./data/city_distances_extended.csv').to_numpy()
+    distance_matrix = pd.read_csv('./data/city_distances.csv').to_numpy()
 
     use_default_parameters = False
     use_default_stagnation = True
@@ -122,7 +122,7 @@ def test11_doneRoute():
     # Main GA loop
     for generation in range(num_generations):
         # Evaluate calculate_fitness
-        calculate_fitness_values = np.array([calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
+        calculate_fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
 
         # Check for stagnation
         current_best_calculate_fitness = np.min(calculate_fitness_values)
@@ -146,7 +146,7 @@ def test11_doneRoute():
                 
                 # Keep the top 10% best individuals
                 elite_count = population_size // 10  # 10% of population
-                best_individuals = sorted(population, key=lambda ind: calculate_fitness(ind, distance_matrix, infeasible_penalty))[:elite_count]
+                best_individuals = sorted(population, key=lambda ind: -calculate_fitness(ind, distance_matrix, infeasible_penalty))[:elite_count]
                 
                 new_population = generate_unique_population(doneRoutes, population_size - len(best_individuals), num_nodes)
                 population = best_individuals + new_population
@@ -181,11 +181,11 @@ def test11_doneRoute():
         print(f"Generation {generation}: Best calculate_fitness = {current_best_calculate_fitness:,}")  # Changed to add commas 
 
     # Update calculate_fitness_values for the final population
-    calculate_fitness_values = np.array([calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
+    calculate_fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
 
     # Output the best solution
     best_idx = np.argmin(calculate_fitness_values)
     best_solution = population[best_idx]
     print("Best Solution:", best_solution)
-    print(f"Total Distance: {calculate_fitness(best_solution, distance_matrix, infeasible_penalty):,}") # Changed to add commas 
+    print(f"Total Distance: {-calculate_fitness(best_solution, distance_matrix, infeasible_penalty):,}") # Changed to add commas 
 

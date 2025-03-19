@@ -2,7 +2,81 @@
 ## DSAI3202 - Parallel and Distributed Computing
 ## By: Dela Cruz, Joy Anne 60301959
 
-## Understanding the code
+## Completing the Functions (10 pts)
+
+The implementations of the following functions are provided in `src/genetic_algorithms_functions.py`:
+
+```python
+def calculate_fitness(route, distance_matrix, infeasible_penalty):
+    """
+    Calculate the total distance traveled along a given route.
+
+    Parameters:
+        route (list): A list representing the order of nodes visited in the route.
+        distance_matrix (numpy.ndarray): A 2D array where the element at [i, j] represents the distance between node i and node j.
+        infeasible_penalty (int): A high penalty value returned if any segment of the route is infeasible.
+
+    Returns:
+        float: The total distance traveled along the route.
+               If any segment of the route is infeasible (i.e. a distance equals 100000), the function returns the infeasible_penalty.
+    """
+    total_distance = 0
+
+    for i in range(len(route) - 1):
+        # Retrieve the distance between consecutive nodes.
+        node_distance = distance_matrix[route[i], route[i + 1]]
+        # If the distance indicates an infeasible route, return the penalty.
+        if node_distance == 100000:
+            return infeasible_penalty
+        
+        total_distance += node_distance
+    
+    # Complete the cycle by adding the distance from the last node back to the starting node.
+    return_distance = distance_matrix[route[-1], route[0]]
+    if return_distance == 100000:
+        return infeasible_penalty
+    
+    return total_distance + return_distance
+    
+
+def select_in_tournament(population, scores, number_tournaments=4, tournament_size=3):
+    """
+    Perform tournament selection on the population for the genetic algorithm.
+
+    Parameters:
+        population (list): The current population of routes.
+        scores (np.array): The fitness scores for each individual in the population.
+        number_tournaments (int): The number of tournaments to run.
+        tournament_size (int): The number of individuals competing in each tournament.
+            (Note: A larger tournament size (e.g., 4–6) might be more effective given a population of 10,000.)
+
+    Returns:
+        list: A list of selected individuals chosen for crossover.
+    """
+    selected = []
+    for _ in range(number_tournaments):
+        # Randomly select 'tournament_size' individuals from the population.
+        tournament_indices = np.random.choice(len(population), tournament_size, replace=False)
+        # Choose the individual with the best (lowest) fitness score among the tournament participants.
+        best_idx = tournament_indices[np.argmin(scores[tournament_indices])]
+        selected.append(population[best_idx])
+    return selected
+```
+
+### Explanation of Fixes
+
+- **calculate_fitness:**
+  - Clarified that the function returns the total distance (not a negative value).
+  - Explained that if any segment is infeasible (i.e. distance equals 100000), the function returns the infeasible_penalty.
+  - Improved inline comments for clarity.
+
+- **select_in_tournament:**
+  - Updated the description and parameter explanations.
+  - Provided more context on why a larger tournament size might be beneficial with a large population.
+
+Does this revised README snippet meet your needs? Let me know if you'd like any further adjustments or clarifications!
+
+## Explain and run the algorithm (5 pts).
 
 In the genetic algorithm trial, the distance matrix was loaded from a CSV file. This contains the distances between all the nodes. Then, a set of parameters was defined. These will be experimented with later on. Now, I generated a unique set of population. The population size is the number of routes we want to create, and the number of nodes is the number of nodes in our city—in this case, 32.
 
@@ -26,68 +100,9 @@ Then, the individuals that lost in the tournament are replaced with the new offs
 
 The entire process repeats for the specified number of generations. At the end, the route with the lowest total distance in the final generation is considered the best solution.
 
-## **Changes to the Code**  
+## Parallelize the code (20 pts)
 
-In `calculate_fitness`, I removed the negative sign since we are trying to find the minimum in `genetic_algorithm_trial`.  
-
-At this point, I also formatted the total distance output to include commas and ensure it displays a non-negative value.  
-
-Running with default parameters led to stagnation. Increasing `num_tournaments = 7` and `tournament_size = 20` did not significantly reduce stagnation, and the Total Distance remained 1,224.0.  
-
-I changed the parameters to reduce stagnation, but the total distance remained the same, and there was still stagnation:  
-```python
-# Experimental Parameters
-num_nodes = distance_matrix.shape[0]
-population_size     = 10000  # default = 10000
-num_tournaments     = 20     # default = 4  
-tournament_size     = 7      # default = 3 
-mutation_rate       = 0.5    # default = 0.1
-num_generations     = 200    # default = 200
-infeasible_penalty  = 1e6    # default = 1e6  
-stagnation_limit    = 5      # default = 5  
-```
-
-I experimented with modifying stagnation handling, but it actually made the results worse, increasing the distance to 2,416, so I reverted the changes:  
-```python
-# Attempted a different stagnation approach (reverted)
-print(f"Regenerating population at generation {generation} due to stagnation")
-
-# Keep the top 10% best individuals
-elite_count = population_size // 10  # 10% of population
-best_individuals = sorted(population, key=lambda ind: calculate_fitness(ind, distance_matrix, infeasible_penalty))[:elite_count]
-
-new_population = generate_unique_population(population_size - len(best_individuals), num_nodes)
-population = best_individuals + new_population
-stagnation_counter = 0
-continue  # Skip rest of loop for this generation
-```
-I then experimented with an extreme approach, using a high number of tournaments and larger tournament sizes, which reduced stagnation but still didn’t fully solve it.  
-```python
-num_tournaments = 500   # default = 4  
-tournament_size = 1000  # default = 3 
-mutation_rate = 1       # default = 0.1
-```
-Running it for longer finally reduced stagnation, improving the Total Distance to 992.0.  
-```python
-num_tournaments     = 500   # default = 4  
-tournament_size     = 1000  # default = 3 
-mutation_rate       = 1     # default = 0.1
-num_generations     = 10000   # default = 200
-stagnation_limit    = 2     # default = 5  
-```
-```
-Regenerating population at generation 9998 due to stagnation
-Generation 9999: Best calculate_fitness = 992.0
-Total Distance: 992.0
-************************************************  
- p0_sequential time: 991.6502876281738  
-**************************************************
-```
-
-
-## **Parallelizing the Code**  
-
-For this, I used default parameters. At first, I assumed threading would improve speed, but it actually made execution much slower.  
+At first, I assumed threading would improve speed, but it actually made execution much slower.  
 
 - Sequential Execution: `7.75s`  
 - ThreadPoolExecutor: `36s` ❌  
@@ -112,7 +127,91 @@ Replacement & Uniqueness Time: 2.72 seconds (35.07%)
 
 
 
-## Using the Extended Dataset  
+## Enhance the algorithm (20 pts).
+
+At this point, I also formatted the total distance output to include commas (I'm dyslexic so it makes numbers easier to read) and ensure it displays a non-negative value.  
+
+Running with default parameters led to stagnation. Increasing `num_tournaments = 7` and `tournament_size = 20` did not significantly reduce stagnation, and the Total Distance remained 1,224.0.  
+
+### Parameter 
+
+I changed the parameters to reduce stagnation, but the total distance remained the same, and there was still stagnation:  
+```python
+# Experimental Parameters
+num_nodes = distance_matrix.shape[0]
+population_size     = 10000  # default = 10000
+num_tournaments     = 20     # default = 4  
+tournament_size     = 7      # default = 3 
+mutation_rate       = 0.5    # default = 0.1
+num_generations     = 200    # default = 200
+infeasible_penalty  = 1e6    # default = 1e6  
+stagnation_limit    = 5      # default = 5  
+```
+
+I then experimented with an extreme approach, using a high number of tournaments and larger tournament sizes, which reduced stagnation but still didn’t fully solve it.  
+```python
+num_tournaments = 500   # default = 4  
+tournament_size = 1000  # default = 3 
+mutation_rate = 1       # default = 0.1
+```
+Running it for longer finally reduced stagnation, improving the Total Distance to 992.0.  
+```python
+num_tournaments     = 500   # default = 4  
+tournament_size     = 1000  # default = 3 
+mutation_rate       = 1     # default = 0.1
+num_generations     = 10000   # default = 200
+stagnation_limit    = 2     # default = 5  
+```
+```
+Regenerating population at generation 9998 due to stagnation
+Generation 9999: Best calculate_fitness = 992.0
+Total Distance: 992.0
+************************************************  
+ p0_sequential time: 991.6502876281738  
+**************************************************
+```
+
+Later on I figured that a lower mutation_rate and longer stagnation_limit improves the grade.
+
+### Stagnation handling
+I experimented with modifying stagnation handling, Originally this didn't improve anything but it improve anything until implementing unique route generation.
+
+```python
+# Attempted a different stagnation approach (reverted)
+print(f"Regenerating population at generation {generation} due to stagnation")
+
+# Keep the top 10% best individuals
+elite_count = population_size // 10  # 10% of population
+best_individuals = sorted(population, key=lambda ind: calculate_fitness(ind, distance_matrix, infeasible_penalty))[:elite_count]
+
+new_population = generate_unique_population(population_size - len(best_individuals), num_nodes)
+population = best_individuals + new_population
+stagnation_counter = 0
+continue  # Skip rest of loop for this generation
+```
+
+### Unique route generation
+
+I suspect it's because we are creating the same routes so in test11_running_extended.py i kept track of the routes we are checking and that was indeed the problem so after fixing it worked. This new test will be refined and added to src.updated_GA_trial.py and src.updated_GA_function.py
+
+```bash
+SHORT RUN:
+Generation 0: Best calculate_fitness = 1,395.0
+Generation 1: Best calculate_fitness = 1,315.0
+Generation 2: Best calculate_fitness = 1,253.0
+Generation 3: Best calculate_fitness = 1,195.0
+Generation 4: Best calculate_fitness = 1,195.0
+Generation 5: Best calculate_fitness = 1,186.0
+Generation 6: Best calculate_fitness = 1,132.0
+...
+Generation 104: Best calculate_fitness = 519.0
+Generation 105: Best calculate_fitness = 519.0
+Regenerating population at generation 106 due to stagnation
+```
+This also fixed the extended run to actually try and find values
+
+## Large scale problem (10 pts)
+### Run the program using the extended city map
 Running the larger dataset resulted in significant stagnation, and the total distance remained 1,000,000.0, even after 2,000 generations.  
 ```
 **************************************************  
@@ -121,31 +220,65 @@ Running the larger dataset resulted in significant stagnation, and the total dis
 ```
 
 I ran with more generations and different parameters in test10_running_extended.py
-```
+```python
 # Experimental Parameters 
 num_nodes = distance_matrix.shape[0]
 population_size     = 10000 # default = 10000
 num_tournaments     = 100   # default = 4  
-tournament_size     = 6   # default = 3 
-mutation_rate       = 0.2     # default = 0.1
-num_generations     = 10**6   # default = 200
+tournament_size     = 6     # default = 3 
+mutation_rate       = 0.2   # default = 0.1
+num_generations     = 10**6 # default = 200
 infeasible_penalty  = 1e6   # default = 1e6  
-stagnation_limit    = 10     # default = 5 
+stagnation_limit    = 10    # default = 5 
 ```
-```
-Regenerating population at generation 91279 due to stagnation
-Generation 91280: Best calculate_fitness = 1,000,000.0
-Generation 91281: Best calculate_fitness = 1,000,000.0
-Generation 91282: Best calculate_fitness = 1,000,000.0
-Generation 91283: Best calculate_fitness = 1,000,000.0
-Generation 91284: Best calculate_fitness = 1,000,000.0
-Generation 91285: Best calculate_fitness = 1,000,000.0
-Generation 91286: Best calculate_fitness = 1,000,000.0
+```bash
 Generation 91287: Best calculate_fitness = 1,000,000.0
 Generation 91288: Best calculate_fitness = 1,000,000.0
 Regenerating population at generation 91289 due to stagnation
 Generation 91290: Best calculate_fitness = 1,000,000.0
-Generation 91291: Best calculate_fitness = 1,000,000.0
-Generation 91292: Best calculate_fitness = 1,000,000.0
+
 ```
 No path is still found after 91289 generations
+
+After implementing the unique route generation. A path was finally found. 
+
+```
+EXTENDED RUN:
+eneration 0: Best calculate_fitness = 1,000,000.0
+Generation 1: Best calculate_fitness = 1,000,000.0
+Generation 2: Best calculate_fitness = 1,602.0
+Generation 3: Best calculate_fitness = 1,602.0
+Generation 4: Best calculate_fitness = 1,424.0
+Generation 5: Best calculate_fitness = 1,424.0
+Generation 6: Best calculate_fitness = 1,424.0
+...
+Generation 25: Best calculate_fitness = 1,111.0
+Generation 26: Best calculate_fitness = 1,111.0
+Regenerating population at generation 27 due to stagnation
+```
+### Add more cars to the problem
+Split the node and run n car
+
+## Bonuses 
+### Implement and run the code correctly with multiple cars (5 pts).
+### Use AWS to do the assignment on multiple machines (5 pts).
+### Best solution in the first part (2 pts).
+I believe my distance in the short run is competitive.
+```bash
+Generation 113: Best calculate_fitness = 519.0
+Generation 114: Best calculate_fitness = 519.0
+Generation 115: Best calculate_fitness = 519.0
+Regenerating population at generation 116 due to stagnation
+```
+### Best solution in the second part (5 pts).
+My found distance for the long run is also competitive.
+```bash
+Generation 4: Best calculate_fitness = 1,424.0
+Generation 5: Best calculate_fitness = 1,424.0
+Generation 6: Best calculate_fitness = 1,424.0
+...
+Generation 25: Best calculate_fitness = 1,111.0
+Generation 26: Best calculate_fitness = 1,111.0
+Regenerating population at generation 27 due to stagnation
+```
+
