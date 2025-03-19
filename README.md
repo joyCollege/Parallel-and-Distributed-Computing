@@ -102,6 +102,8 @@ The entire process repeats for the specified number of generations. At the end, 
 
 ## Parallelize the code (20 pts)
 
+### Define the parts to be distributed and parallelized, explain your choices (5 pts).
+
 At first, I assumed threading would improve speed, but it actually made execution much slower.  
 
 - Sequential Execution: `7.75s`  
@@ -110,7 +112,7 @@ At first, I assumed threading would improve speed, but it actually made executio
 I then tried multiprocessing using `Pool.starmap()`, but it was still slow.  
 Even when only parallelizing fitness evaluation, the improvement was not significant. So I wanted to revisit my methodology and by timing each segment of the code
 
-### **Breaking Down Execution Time**  
+#### **Breaking Down Execution Time**  
 ```bash
 === Timing Breakdown ===
 Total Execution Time: 7.75 seconds
@@ -125,6 +127,10 @@ Replacement & Uniqueness Time: 2.72 seconds (35.07%)
 **************************************************
 ```
 
+
+### Parallelize your program (10 pts)
+
+### Run your code and compute the performance metrics (5 pts).
 
 
 ## Enhance the algorithm (20 pts).
@@ -159,7 +165,7 @@ Running it for longer finally reduced stagnation, improving the Total Distance t
 num_tournaments     = 500   # default = 4  
 tournament_size     = 1000  # default = 3 
 mutation_rate       = 1     # default = 0.1
-num_generations     = 10000   # default = 200
+num_generations     = 10000 # default = 200
 stagnation_limit    = 2     # default = 5  
 ```
 ```
@@ -263,13 +269,34 @@ Split the node and run n car
 ### Implement and run the code correctly with multiple cars (5 pts).
 ### Use AWS to do the assignment on multiple machines (5 pts).
 ### Best solution in the first part (2 pts).
-I believe my distance in the short run is competitive.
+
+I believe my distance in the short run is competitive. This was from the test.test15_parallelizing_stagnation.py run; the output of which is saved in  output_test15.txt
 ```bash
-Generation 113: Best calculate_fitness = 519.0
-Generation 114: Best calculate_fitness = 519.0
-Generation 115: Best calculate_fitness = 519.0
-Regenerating population at generation 116 due to stagnation
+...
+Generation 194: Best fitness = 371.0
+Regenerating population at generation 195 due to stagnation
+Best route so far: [0, 14, 10, 7, 1, 28, 23, 16, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 6, 30, 18, 5, 4, 13, 22, 27, 31, 12, 29, 3, 25] with total distance: 371.0
+Generation 196: Best fitness = 371.0
+Generation 197: Best fitness = 371.0
+Generation 198: Best fitness = 371.0
+Generation 199: Best fitness = 371.0
+Best Solution: [0, 14, 10, 7, 1, 28, 23, 16, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 6, 30, 18, 5, 4, 13, 22, 27, 31, 12, 29, 3, 25]
+Total Distance: 371.0
 ```
+
+I checked if the code is correct with test12_testing_routedistance.
+
+```bash
+[0, 14, 10, 7, 1, 28, 23, 16, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 6, 30, 18, 5, 4, 13, 22, 27, 31, 12, 29, 3, 25]
+All 32 node are there.
+All elements are unique.
+>> distance from 0 and 14 is 4.0
+...
+>> distance from 29 and 3 is 17.0
+>> distance from 3 and 25 is 26.0
+Total distance: 371.0
+```
+
 ### Best solution in the second part (5 pts).
 My found distance for the long run is also competitive.
 ```bash

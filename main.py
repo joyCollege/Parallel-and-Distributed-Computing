@@ -1,22 +1,34 @@
+from time import time
+from src.calc_print_analysis import calc_print_analysis
+
 if __name__ == "__main__":
-    # from src.p3_parallel_fitness import p3_parallel_fitness
-    # p3_parallel_fitness_time = p3_parallel_fitness()
-    # print("*"*50,"\n","p3_parallel_fitness time:", p3_parallel_fitness_time, "\n" + "*"*50)
-
     from src.updated_GA_trial import updated_GA_trial
-    updated_GA_trial_time = updated_GA_trial()
-    print("*"*50,"\n","updated_GA_trial time:", updated_GA_trial_time, "\n" + "*"*50)
-    # 7.81717586517334
+    updated_GA_trial_time = time()
+    updated_GA_trial()
+    updated_GA_trial_time = time() - updated_GA_trial_time
+    print("*"*200,"\n","updated_GA_trial time:", updated_GA_trial_time, "\n" + "*"*200)
     
-    # from src.p1_ThreadPoolExecutor import p1_ThreadPoolExecutor
-    # p1_ThreadPoolExecutor_time = p1_ThreadPoolExecutor()
-    # print("*"*50,"\n","p1_ThreadPoolExecutor_time time:", p1_ThreadPoolExecutor_time, "\n" + "*"*50)
-    # # 31.0927996635437
+    from src.p1_starMap_fitnessOnly import p1_starMap_fitnessOnly
+    p1_starMap_fitnessOnly_time = time()
+    p1_starMap_fitnessOnly()
+    p1_starMap_fitnessOnly_time = time() - p1_starMap_fitnessOnly_time
+    print("*"*200,"\n","p1_starMap_fitnessOnly time:", p1_starMap_fitnessOnly_time, "\n" + "*"*200)
+    calc_print_analysis(updated_GA_trial_time, p1_starMap_fitnessOnly_time, "p1_starMap_fitnessOnly")
 
-    # from src.p2_PoolStarMap import p2_PoolStarMap
-    # p2_PoolStarMap_time = p2_PoolStarMap()
-    # print("*"*50,"\n","p2_PoolStarMap_time time:", p2_PoolStarMap_time, "\n" + "*"*50)
-    # # 32.868497133255005
+    from src.p2_starMapAsync_largerWorker import p2_starMapAsync_largerWorker
+    p2_starMapAsync_largerWorker_time = time()
+    p2_starMapAsync_largerWorker()
+    p2_starMapAsync_largerWorker_time = time() - p2_starMapAsync_largerWorker_time
+    print("*"*200,"\n","p2_starMapAsync_largerWorker time:", p2_starMapAsync_largerWorker_time, "\n" + "*"*200)
+    calc_print_analysis(updated_GA_trial_time, p2_starMapAsync_largerWorker_time, "p2_starMapAsync_largerWorker")
+
+    from src.p3_starMapAsync_stagnation import p3_starMapAsync_stagnation
+    p3_starMapAsync_stagnation_time = time()
+    p3_starMapAsync_stagnation()
+    p3_starMapAsync_stagnation_time = time() - p3_starMapAsync_stagnation_time
+    print("*"*200,"\n","p3_starMapAsync_stagnation time:", p3_starMapAsync_stagnation_time, "\n" + "*"*200)
+    calc_print_analysis(updated_GA_trial_time, p3_starMapAsync_stagnation_time, "p2_starMapAsync_largerWorker")
+    
 
 
 
