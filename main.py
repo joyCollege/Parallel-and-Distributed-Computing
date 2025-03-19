@@ -2,6 +2,16 @@ from src.tasks import power
 from src.dispatch_tasks import dispatch
 
 if __name__ == "__main__":
+    """
+    Main script to execute the Celery-powered dispatch function.
+
+    This script imports the `dispatch` function, which submits multiple 
+    power computations asynchronously using Celery. The first 10 results 
+    are printed for quick verification.
+
+    Example Output:
+        [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+    """
     results = dispatch()
     print(results[:10])
 
