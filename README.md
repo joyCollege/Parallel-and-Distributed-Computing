@@ -146,6 +146,21 @@ Speedup             1.1743741522149433
 Efficiency          0.1957290253691572
 ```
 
+After distributing with mpirun -n 6 python your_script.py, I got a much faster time of 68.1564929485321, running 75 generations. 
+```bash
+Generation 73: Best fitness = 416.0
+Generation 74: Best fitness = 416.0
+Best Solution: [0, 2, 8, 19, 15, 9, 11, 21, 5, 4, 13, 22, 27, 7, 1, 28, 26, 17, 6, 30, 18, 14, 3, 20, 24, 10, 12, 16, 23, 31, 29, 25]
+Total Distance: 416.0
+Distributed execution time with 6n: 68.1564929485321
+
+**************** distributed Performance Analysis ****************
+Speedup             2.4835316572971728
+Efficiency          0.4139219428828622
+```
+
+
+
 ## Enhance the algorithm (20 pts).
 
 At this point, I also formatted the total distance output to include commas (I'm dyslexic so it makes numbers easier to read) and ensure it displays a non-negative value.  
@@ -308,6 +323,18 @@ All elements are unique.
 >> distance from 29 and 3 is 17.0
 >> distance from 3 and 25 is 26.0
 Total distance: 371.0
+```
+
+After trying the the distributed run I got
+
+```bash
+Best route so far: [0, 11, 9, 15, 19, 8, 2, 17, 26, 1, 28, 24, 20, 3, 22, 13, 4, 5, 21, 6, 30, 18, 14, 10, 7, 27, 16, 23, 31, 12, 29, 25] with total distance: 349.0
+Generation 147: Best fitness = 349.0
+Generation 148: Best fitness = 349.0
+Generation 149: Best fitness = 349.0
+Generation 150: Best fitness = 349.0
+Generation 151: Best fitness = 349.0
+Regenerating population at generation 152 due to stagnation
 ```
 
 ### Best solution in the second part (5 pts).
