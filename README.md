@@ -301,28 +301,95 @@ Split the node and run n car
 I believe my distance in the short run is competitive. This was from the test.test15_parallelizing_stagnation.py run; the output of which is saved in  output_test15.txt
 ```bash
 ...
-Generation 194: Best fitness = 371.0
-Regenerating population at generation 195 due to stagnation
-Best route so far: [0, 14, 10, 7, 1, 28, 23, 16, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 6, 30, 18, 5, 4, 13, 22, 27, 31, 12, 29, 3, 25] with total distance: 371.0
-Generation 196: Best fitness = 371.0
-Generation 197: Best fitness = 371.0
-Generation 198: Best fitness = 371.0
-Generation 199: Best fitness = 371.0
-Best Solution: [0, 14, 10, 7, 1, 28, 23, 16, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 6, 30, 18, 5, 4, 13, 22, 27, 31, 12, 29, 3, 25]
-Total Distance: 371.0
+Generation 435: Best fitness = 325.0
+Regenerating population at generation 436 due to stagnation
+Best route so far: [0, 14, 10, 7, 27, 16, 31, 23, 1, 28, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 12, 29, 6, 30, 18, 5, 4, 13, 22, 3, 25] with total distance: 325.0
+Generation 437: Best fitness = 325.0
+Generation 438: Best fitness = 325.0
+Generation 439: Best fitness = 325.0
+Generation 440: Best fitness = 325.0
+Regenerating population at generation 441 due to stagnation
+Best route so far: [0, 14, 10, 7, 27, 16, 31, 23, 1, 28, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 12, 29, 6, 30, 18, 5, 4, 13, 22, 3, 25] with total distance: 325.0
 ```
 
 I checked if the code is correct with test12_testing_routedistance.
 
 ```bash
-[0, 14, 10, 7, 1, 28, 23, 16, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 6, 30, 18, 5, 4, 13, 22, 27, 31, 12, 29, 3, 25]
+[0, 14, 10, 7, 27, 16, 31, 23, 1, 28, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 12, 29, 6, 30, 18, 5, 4, 13, 22, 3, 25]
 All 32 node are there.
 All elements are unique.
 >> distance from 0 and 14 is 4.0
-...
->> distance from 29 and 3 is 17.0
+>> distance from 14 and 10 is 10.0
+>> distance from 10 and 7 is 5.0
+>> distance from 7 and 27 is 9.0
+>> distance from 27 and 16 is 6.0
+>> distance from 16 and 31 is 21.0
+>> distance from 31 and 23 is 8.0
+>> distance from 23 and 1 is 27.0
+>> distance from 1 and 28 is 2.0
+>> distance from 28 and 24 is 11.0
+>> distance from 24 and 20 is 4.0
+>> distance from 20 and 26 is 24.0
+>> distance from 26 and 17 is 5.0
+>> distance from 17 and 2 is 4.0
+>> distance from 2 and 8 is 7.0
+>> distance from 8 and 19 is 12.0
+>> distance from 19 and 15 is 9.0
+>> distance from 15 and 9 is 7.0
+>> distance from 9 and 11 is 4.0
+>> distance from 11 and 21 is 3.0
+>> distance from 21 and 12 is 1.0
+>> distance from 12 and 29 is 3.0
+>> distance from 29 and 6 is 7.0
+>> distance from 6 and 30 is 1.0
+>> distance from 30 and 18 is 7.0
+>> distance from 18 and 5 is 19.0
+>> distance from 5 and 4 is 3.0
+>> distance from 4 and 13 is 12.0
+>> distance from 13 and 22 is 34.0
+>> distance from 22 and 3 is 14.0
 >> distance from 3 and 25 is 26.0
-Total distance: 371.0
+Total distance: 325.0
+******************************************************************************************************************************************************************************************************** 
+ test12_testing_routedistance time: 0.0024843215942382812 
+********************************************************************************************************************************************************************************************************
+(base) student@vg-DSAI-3202-32:~/Parallel-and-Distributed-Computing$ python3 main.py
+[0, 14, 10, 7, 27, 16, 31, 23, 1, 28, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 12, 29, 6, 30, 18, 5, 4, 13, 22, 3, 25]
+All 32 node are there.
+All elements are unique.
+>> distance from 0 and 14 is 4.0
+>> distance from 14 and 10 is 10.0
+>> distance from 10 and 7 is 5.0
+>> distance from 7 and 27 is 9.0
+>> distance from 27 and 16 is 6.0
+>> distance from 16 and 31 is 21.0
+>> distance from 31 and 23 is 8.0
+>> distance from 23 and 1 is 27.0
+>> distance from 1 and 28 is 2.0
+>> distance from 28 and 24 is 11.0
+>> distance from 24 and 20 is 4.0
+>> distance from 20 and 26 is 24.0
+>> distance from 26 and 17 is 5.0
+>> distance from 17 and 2 is 4.0
+>> distance from 2 and 8 is 7.0
+>> distance from 8 and 19 is 12.0
+>> distance from 19 and 15 is 9.0
+>> distance from 15 and 9 is 7.0
+>> distance from 9 and 11 is 4.0
+>> distance from 11 and 21 is 3.0
+>> distance from 21 and 12 is 1.0
+>> distance from 12 and 29 is 3.0
+>> distance from 29 and 6 is 7.0
+>> distance from 6 and 30 is 1.0
+>> distance from 30 and 18 is 7.0
+>> distance from 18 and 5 is 19.0
+>> distance from 5 and 4 is 3.0
+>> distance from 4 and 13 is 12.0
+>> distance from 13 and 22 is 34.0
+>> distance from 22 and 3 is 14.0
+>> distance from 3 and 25 is 26.0
+>> distance from 25 and 0 is 16.0
+Total distance: 325.0
 ```
 
 After trying the the distributed run I got

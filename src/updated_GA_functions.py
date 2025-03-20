@@ -23,7 +23,7 @@ def generate_unique_population(doneRoutes, population_size, num_nodes):
             doneRoutes.append(individual)
     return [list(ind) for ind in population]
 
-def order_crossover(parent1, parent2, num_nodes=32):
+def order_crossover(parent1, parent2):
     """
     Order crossover (OX) for permutations using circular filling.
     This function assumes that the fixed starting node (0) should not appear in the variable parts.
@@ -37,6 +37,7 @@ def order_crossover(parent1, parent2, num_nodes=32):
     Returns:
         - list: The offspring's variable part.
     """
+    num_nodes=len(parent1)
     # Expected genes: 1 to num_nodes-1
     expected_genes = set(range(1, num_nodes))
     

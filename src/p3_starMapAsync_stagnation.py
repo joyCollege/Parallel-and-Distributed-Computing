@@ -89,8 +89,10 @@ def p3_starMapAsync_stagnation(
             # Check for stagnation BEFORE running the normal GA worker.
             if stagnation_counter >= stagnation_limit:
                 print(f"Regenerating population at generation {generation} due to stagnation")
-                print("Best route so far:", population[np.argmin(fitness_values)], "with total distance:", np.min(fitness_values))
-                
+                best_idx = np.argmin(fitness_values)
+                best_solution = population[best_idx]
+                print("Best route so far:", best_solution, "with total distance:", best_fitness)
+
                 if use_default_stagnation:
                     best_individual = population[np.argmin(fitness_values)]
                     # Generate a new population (all but the best) in parallel.

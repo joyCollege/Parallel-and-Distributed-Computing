@@ -33,6 +33,7 @@ def calculate_fitness(route,
     
     # Add the return to the starting point to complete the cycle
     return_distance = distance_matrix[route[-1], route[0]]
+    print(f">> distance from {route[-1]} and {route[0]} is {return_distance}")
 
     if return_distance == 100000:
             return -infeasible_penalty
@@ -299,12 +300,12 @@ def test12_testing_routedistance():
     #     [0, 21, 5, 4, 7, 11, 22, 10, 14, 3, 24, 31, 27, 16, 23, 2, 12, 25, 29, 28, 1, 13, 26, 17, 8, 20, 19, 6, 30, 18, 15, 9],
     # ]
     
-    bestRoute = [0, 14, 10, 7, 1, 28, 23, 16, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 6, 30, 18, 5, 4, 13, 22, 27, 31, 12, 29, 3, 25]
+    bestRoute = [0, 5, 26, 25, 11, 7, 8, 17, 16, 2, 29, 23, 12, 13, 24, 4, 18, 22, 9, 10, 14, 31, 30, 21, 6, 19, 28, 15, 27, 20, 54, 1]
     routes = [bestRoute]
     for route in routes :
         print(route)
-        if len(route) == 32:
-            print("All 32 node are there.")
+        if len(route) == 100:
+            print("All 100 node are there.")
         else: 
             print("!!!!! THERE ARE MISSING NODES")
         if len(route) == len(set(route)):

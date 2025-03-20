@@ -1,0 +1,79 @@
+(parallel) student@vg-DSAI-3202-32:~/Parallel-and-Distributed-Computing$ python3 main.py
+Generation 0: Best fitness = 1,000,000.0
+Generation 1: Best fitness = 1,000,000.0
+Generation 2: Best fitness = 1,000,000.0
+Generation 3: Best fitness = 1,000,000.0
+Regenerating population at generation 4 due to stagnation
+Best route so far: [0, 22, 33, 52, 26, 75, 11, 72, 53, 17, 68, 32, 91, 94, 84, 44, 13, 40, 62, 59, 83, 38, 89, 67, 74, 10, 93, 25, 70, 14, 27, 12, 28, 31, 47, 30, 73, 39, 92, 35, 23, 85, 41, 56, 97, 88, 81, 6, 46, 55, 95, 1, 3, 2, 50, 99, 5, 57, 60, 58, 69, 64, 79, 76, 42, 9, 15, 45, 65, 54, 16, 49, 24, 82, 80, 48, 78, 4, 98, 90, 8, 34, 19, 87, 66, 21, 43, 29, 36, 61, 77, 20, 51, 71, 37, 63, 96, 86, 18, 7] with total distance: 1000000.0
+Generation 5: Best fitness = 1,000,000.0
+Generation 6: Best fitness = 1,000,000.0
+Generation 7: Best fitness = 1,000,000.0
+Generation 8: Best fitness = 1,000,000.0
+Regenerating population at generation 9 due to stagnation
+Best route so far: [0, 51, 1, 24, 30, 78, 80, 25, 89, 94, 27, 96, 12, 32, 45, 38, 28, 58, 37, 20, 49, 6, 26, 50, 85, 43, 19, 79, 29, 13, 71, 15, 3, 57, 33, 9, 16, 56, 54, 76, 77, 90, 60, 47, 8, 46, 67, 88, 10, 42, 5, 14, 40, 35, 61, 64, 62, 99, 81, 11, 4, 55, 95, 59, 92, 75, 17, 98, 63, 83, 22, 41, 48, 7, 52, 74, 87, 31, 53, 36, 82, 68, 93, 84, 72, 91, 97, 23, 70, 39, 44, 34, 21, 18, 86, 69, 65, 2, 73] with total distance: 1000000.0
+Generation 10: Best fitness = 1,000,000.0
+Generation 11: Best fitness = 1,000,000.0
+Generation 12: Best fitness = 1,000,000.0
+Generation 13: Best fitness = 1,000,000.0
+Regenerating population at generation 14 due to stagnation
+Best route so far: [0, 50, 36, 64, 78, 55, 14, 66, 33, 91, 75, 22, 85, 46, 69, 56, 63, 81, 88, 15, 68, 31, 2, 92, 35, 37, 52, 4, 26, 79, 18, 11, 99, 67, 61, 57, 47, 90, 16, 41, 38, 30, 84, 72, 73, 80, 5, 28, 20, 44, 94, 42, 12, 23, 77, 40, 93, 24, 43, 59, 87, 74, 96, 58, 48, 13, 21, 25, 19, 83, 62, 8, 7, 82, 3, 17, 60, 95, 9, 27, 70, 51, 86, 89, 10, 1, 49, 71, 29, 97, 45, 54, 76, 32, 34, 39, 65, 53, 98] with total distance: 1000000.0
+Generation 15: Best fitness = 1,000,000.0
+Generation 16: Best fitness = 1,000,000.0
+Generation 17: Best fitness = 1,000,000.0
+Generation 18: Best fitness = 1,000,000.0
+Regenerating population at generation 19 due to stagnation
+Best route so far: [0, 83, 78, 45, 26, 12, 74, 96, 2, 97, 71, 22, 89, 90, 52, 72, 61, 11, 48, 6, 41, 53, 79, 43, 73, 86, 28, 24, 68, 15, 87, 36, 85, 8, 20, 30, 64, 27, 95, 1, 35, 46, 5, 69, 13, 4, 77, 84, 49, 98, 23, 17, 51, 94, 44, 91, 10, 92, 75, 67, 14, 31, 55, 58, 81, 93, 3, 99, 57, 39, 40, 29, 37, 62, 42, 7, 65, 34, 47, 38, 33, 25, 16, 56, 19, 60, 54, 82, 21, 9, 88, 76, 18, 66, 80, 70, 63, 32, 59, 50] with total distance: 1000000.0
+Generation 20: Best fitness = 1,000,000.0
+Generation 21: Best fitness = 1,000,000.0
+Generation 22: Best fitness = 1,000,000.0
+Generation 23: Best fitness = 1,000,000.0
+Regenerating population at generation 24 due to stagnation
+Best route so far: [0, 49, 5, 83, 76, 45, 51, 66, 84, 42, 96, 75, 14, 18, 80, 81, 43, 56, 35, 29, 40, 16, 17, 12, 63, 4, 31, 26, 57, 67, 11, 32, 36, 33, 62, 93, 88, 1, 8, 60, 6, 53, 22, 19, 34, 99, 82, 13, 54, 50, 89, 20, 15, 27, 21, 55, 58, 23, 39, 85, 46, 65, 70, 64, 38, 86, 59, 52, 94, 2, 41, 92, 72, 25, 74, 10, 95, 79, 28, 44, 98, 69, 87, 77, 97, 90, 7, 68, 91, 24, 30, 9, 47, 3, 71, 48, 37, 73] with total distance: 1000000.0
+Generation 25: Best fitness = 1,000,000.0
+Generation 26: Best fitness = 1,000,000.0
+Generation 27: Best fitness = 1,000,000.0
+Generation 28: Best fitness = 1,000,000.0
+Regenerating population at generation 29 due to stagnation
+Best route so far: [0, 43, 7, 38, 78, 18, 97, 70, 74, 69, 80, 66, 27, 58, 40, 31, 45, 72, 20, 5, 48, 25, 68, 13, 24, 10, 22, 65, 8, 19, 99, 64, 35, 87, 60, 49, 71, 2, 30, 79, 16, 98, 83, 4, 90, 92, 54, 34, 93, 41, 82, 50, 15, 63, 75, 85, 12, 37, 44, 39, 6, 96, 56, 84, 21, 86, 14, 81, 61, 1, 89, 52, 73, 77, 29, 55, 3, 59, 47, 9, 33, 94, 51, 46, 32, 28, 57, 42, 53, 17, 76, 95, 67, 23, 62, 36, 11, 26, 88] with total distance: 1000000.0
+Generation 30: Best fitness = 1,000,000.0
+Generation 31: Best fitness = 1,000,000.0
+Generation 32: Best fitness = 1,000,000.0
+Generation 33: Best fitness = 1,000,000.0
+Regenerating population at generation 34 due to stagnation
+Best route so far: [0, 47, 38, 62, 21, 50, 63, 17, 71, 53, 54, 45, 23, 32, 83, 70, 9, 89, 3, 39, 35, 31, 19, 90, 93, 41, 97, 99, 87, 74, 94, 58, 80, 76, 34, 6, 78, 51, 91, 46, 33, 40, 82, 73, 15, 86, 4, 57, 96, 92, 95, 55, 11, 59, 26, 5, 65, 69, 20, 44, 81, 29, 25, 12, 75, 37, 79, 66, 24, 77, 88, 42, 56, 16, 22, 28, 67, 14, 72, 13, 43, 27, 30, 7, 49, 8, 85, 52, 2, 60, 10, 36, 1, 48, 68, 61, 84, 64, 98, 18] with total distance: 1000000.0
+Generation 35: Best fitness = 1,000,000.0
+Generation 36: Best fitness = 1,000,000.0
+Generation 37: Best fitness = 1,000,000.0
+Generation 38: Best fitness = 1,000,000.0
+Regenerating population at generation 39 due to stagnation
+Best route so far: [0, 23, 9, 86, 33, 82, 71, 91, 7, 4, 41, 77, 55, 17, 49, 35, 63, 65, 59, 21, 2, 74, 60, 3, 64, 76, 66, 69, 90, 45, 95, 70, 40, 81, 54, 88, 16, 57, 36, 67, 84, 68, 38, 28, 44, 58, 27, 98, 42, 24, 51, 97, 15, 80, 31, 5, 37, 94, 19, 18, 48, 8, 25, 10, 39, 47, 26, 29, 22, 73, 83, 12, 89, 1, 92, 14, 56, 61, 34, 50, 62, 79, 78, 87, 30, 85, 20, 96, 72, 43, 52, 75, 99, 53, 32, 46, 13, 93, 11] with total distance: 1000000.0
+Generation 40: Best fitness = 1,000,000.0
+Generation 41: Best fitness = 1,000,000.0
+Generation 42: Best fitness = 1,000,000.0
+Generation 43: Best fitness = 1,000,000.0
+Regenerating population at generation 44 due to stagnation
+Best route so far: [0, 90, 56, 34, 88, 19, 63, 48, 24, 83, 42, 27, 2, 93, 11, 45, 69, 18, 98, 70, 50, 64, 55, 12, 60, 52, 35, 33, 99, 37, 32, 20, 71, 4, 62, 78, 75, 51, 41, 85, 95, 58, 1, 7, 89, 77, 79, 81, 47, 49, 84, 82, 76, 67, 6, 28, 46, 54, 16, 9, 74, 30, 38, 31, 80, 13, 87, 26, 94, 44, 5, 8, 15, 72, 21, 14, 92, 68, 97, 53, 36, 39, 57, 59, 86, 61, 3, 25, 22, 40, 17, 96, 10, 65, 29, 43, 91, 66, 23] with total distance: 1000000.0
+Generation 45: Best fitness = 1,000,000.0
+Generation 46: Best fitness = 1,000,000.0
+Generation 47: Best fitness = 1,000,000.0
+Generation 48: Best fitness = 1,000,000.0
+Regenerating population at generation 49 due to stagnation
+Best route so far: [0, 10, 18, 67, 4, 69, 40, 98, 63, 28, 53, 74, 97, 25, 83, 64, 60, 49, 47, 65, 2, 13, 21, 84, 6, 77, 71, 88, 73, 89, 26, 41, 34, 80, 38, 79, 48, 33, 39, 35, 20, 78, 50, 58, 66, 76, 32, 27, 30, 14, 59, 29, 90, 62, 70, 85, 86, 68, 42, 54, 93, 22, 15, 81, 55, 16, 82, 61, 99, 3, 37, 56, 24, 45, 31, 44, 23, 57, 8, 75, 12, 36, 7, 43, 94, 72, 87, 96, 51, 91, 9, 5, 19, 52, 11, 95, 17, 46, 1] with total distance: 1000000.0
+Generation 50: Best fitness = 1,000,000.0
+Generation 51: Best fitness = 1,000,000.0
+Generation 52: Best fitness = 1,000,000.0
+Generation 53: Best fitness = 1,000,000.0
+Regenerating population at generation 54 due to stagnation
+Best route so far: [0, 27, 59, 28, 18, 30, 1, 79, 72, 93, 11, 60, 7, 99, 29, 91, 84, 95, 68, 81, 71, 77, 78, 98, 46, 42, 90, 83, 16, 36, 35, 57, 23, 54, 24, 6, 10, 75, 19, 17, 4, 37, 70, 51, 61, 13, 97, 2, 85, 45, 22, 21, 32, 33, 38, 20, 94, 48, 14, 9, 15, 47, 69, 62, 66, 67, 49, 8, 50, 80, 92, 5, 65, 88, 31, 41, 86, 76, 74, 12, 40, 25, 82, 39, 56, 53, 87, 96, 43, 73, 64, 34, 44, 63, 55, 58, 26, 52, 3, 89] with total distance: 1000000.0
+Generation 55: Best fitness = 1,000,000.0
+Generation 56: Best fitness = 1,000,000.0
+Generation 57: Best fitness = 1,000,000.0
+Generation 58: Best fitness = 1,000,000.0
+Regenerating population at generation 59 due to stagnation
+Best route so far: [0, 56, 47, 60, 43, 48, 52, 99, 80, 55, 50, 37, 2, 41, 67, 4, 66, 39, 21, 68, 84, 85, 71, 24, 96, 9, 72, 91, 44, 42, 15, 70, 38, 94, 13, 12, 23, 88, 1, 36, 30, 14, 25, 86, 75, 54, 89, 82, 77, 76, 11, 26, 57, 98, 97, 69, 18, 8, 22, 7, 65, 95, 20, 45, 93, 40, 74, 19, 87, 32, 92, 78, 83, 53, 90, 33, 49, 58, 61, 73, 31, 3, 6, 35, 79, 59, 5, 17, 62, 51, 64, 46, 28, 81, 29, 63, 16, 10, 34, 27] with total distance: 1000000.0
+Generation 60: Best fitness = 1,000,000.0
+Generation 61: Best fitness = 1,000,000.0
+Generation 62: Best fitness = 1,000,000.0
+Generation 63: Best fitness = 1,000,000.0
+Regenerating population at generation 64 due to stagnation
+Best route so far: [0, 84, 99, 91, 37, 16, 85, 2, 9, 89, 15, 31, 60, 97, 90, 11, 33, 3, 73, 78, 66, 86, 13, 57, 29, 4, 45, 54, 79, 18, 76, 23, 68, 14, 5, 12, 83, 17, 98, 8, 21, 40, 49, 7, 75, 81, 26, 61, 42, 48, 74, 41, 22, 70, 35, 55, 62, 30, 28, 95, 43, 47, 71, 24, 92, 88, 36, 6, 20, 27, 53, 63, 10, 51, 46, 25, 56, 39, 94, 77, 93, 1, 87, 58, 72, 96, 52, 32, 82, 64, 59, 69, 80, 67, 44, 50, 19, 65, 34, 38] with total distance: 1000000.0
