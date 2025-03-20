@@ -24,7 +24,8 @@ def parallel_generate_population(doneRoutes, target_size, num_nodes, pool, num_w
     new_population = [ind for sublist in results for ind in sublist]
     return new_population[:target_size]
 
-def ga_worker(sub_population, distance_matrix, infeasible_penalty, num_tournaments, tournament_size, mutation_rate):
+def ga_worker(sub_population, distance_matrix, infeasible_penalty, 
+     num_tournaments, tournament_size, mutation_rate, num_nodes):
     """
     Processes a sub-population:
       - Calculates fitness values
@@ -41,7 +42,7 @@ def ga_worker(sub_population, distance_matrix, infeasible_penalty, num_tournamen
     for i in range(0, len(selected) - (len(selected) % 2), 2):
         parent1, parent2 = selected[i], selected[i+1]
         # Exclude the starting node (assumed to be 0) for crossover and then add it back.
-        route_child = order_crossover(parent1[1:], parent2[1:])
+        route_child = order_crossover(parent1[1:], parent2[1:], num_nodes)
         offspring.append([0] + route_child)
     
     mutated_offspring = [mutate(route, mutation_rate) for route in offspring]
@@ -58,8 +59,14 @@ def p3_starMapAsync_stagnation(
                         use_extended_datset     = False,
                         use_default_stagnation  = True
                     ):
-    # Load the distance matrix.
-    FILEPATH = './data/city_distances_extended.csv' if use_extended_datset else './data/city_distances.csv'
+    # Load the distance matrix
+    if use_extended_datset: 
+        FILEPATH = './data/city_distances_extended.csv'
+        num_nodes=100
+    else: 
+        FILEPATH = './data/city_distances.csv'
+        num_nodes=32
+
     distance_matrix = pd.read_csv(FILEPATH).to_numpy()
     num_nodes = distance_matrix.shape[0]
     
@@ -116,7 +123,7 @@ def p3_starMapAsync_stagnation(
             sub_pops = split_list(population, num_workers)
             async_results = pool.starmap_async(
                 ga_worker,
-                [(sub_pop, distance_matrix, infeasible_penalty, num_tournaments, tournament_size, mutation_rate)
+                [(sub_pop, distance_matrix, infeasible_penalty, num_tournaments, tournament_size, mutation_rate, num_nodes)
                  for sub_pop in sub_pops]
             )
             results = async_results.get()

@@ -4,6 +4,11 @@ from src.genetic_algorithms_functions import calculate_fitness, select_in_tourna
 from src.updated_GA_functions import generate_unique_population, order_crossover
 from multiprocessing import Manager, Pool
 
+def split_list(lst, n):
+    """Split a list into n nearly equal parts."""
+    k, m = divmod(len(lst), n)
+    return [lst[i*k + min(i, m):(i+1)*k + min(i+1, m)] for i in range(n)]
+
 def process_chunk(chunk, distance_matrix, infeasible_penalty, doneRoutes):
     """
     Process a chunk of the population: calculate fitness for each individual,
@@ -11,7 +16,7 @@ def process_chunk(chunk, distance_matrix, infeasible_penalty, doneRoutes):
     """
     results = []
     for individual in chunk:
-        fitness = calculate_fitness(individual, distance_matrix, infeasible_penalty)
+        fitness = -calculate_fitness(individual, distance_matrix, infeasible_penalty)
         route_tuple = tuple(individual)
         if route_tuple not in doneRoutes:
             doneRoutes.append(route_tuple)
@@ -20,12 +25,12 @@ def process_chunk(chunk, distance_matrix, infeasible_penalty, doneRoutes):
 
 def p1_starMap_fitnessOnly(
                         population_size      = 10000,  # default = 10000
-                        num_tournaments      = 500,   # default = 4
-                        tournament_size      = 1000,  # default = 3
-                        mutation_rate        = .2,    # default = 0.1
-                        num_generations      = 200,   # default = 200
-                        infeasible_penalty   = 1e6,   # default = 1e6
-                        stagnation_limit     = 5,     # default = 5
+                        num_tournaments      = 500,    # default = 4 (but using 500 here)
+                        tournament_size      = 1000,   # default = 3 (but using 1000 here)
+                        mutation_rate        = 0.2,    # default = 0.1 (set to 0.2)
+                        num_generations      = 200,    # default = 200
+                        infeasible_penalty   = 1e6,    # default = 1e6
+                        stagnation_limit     = 5,      # default = 5
                         use_extended_datset  = False,
                         use_default_stagnation = True
                     ):
@@ -33,8 +38,10 @@ def p1_starMap_fitnessOnly(
     # Load the distance matrix
     if use_extended_datset: 
         FILEPATH = './data/city_distances_extended.csv'
+        num_nodes=100
     else: 
         FILEPATH = './data/city_distances.csv'
+        num_nodes=32
 
     distance_matrix = pd.read_csv(FILEPATH).to_numpy()
     num_nodes = distance_matrix.shape[0]
@@ -42,7 +49,7 @@ def p1_starMap_fitnessOnly(
     # Generate initial population: each individual is a route starting at node 0
     np.random.seed(42)  # For reproducibility
     
-    # ======> doneRoutes to share resources
+    # Shared doneRoutes list (storing route tuples)
     doneRoutes = Manager().list()
     population = generate_unique_population(doneRoutes, population_size, num_nodes)
     
@@ -55,11 +62,11 @@ def p1_starMap_fitnessOnly(
     # Main GA loop
     for generation in range(num_generations):
         
-        # Parallel evaluation: split population into six chunks
-        chunks = np.array_split(population, 6)
+        # Instead of np.array_split, use our custom split_list function.
+        chunks = split_list(population, 6)
         chunk_results = pool.starmap(
             process_chunk,
-            [(list(chunk), distance_matrix, infeasible_penalty, doneRoutes) for chunk in chunks]
+            [(chunk, distance_matrix, infeasible_penalty, doneRoutes) for chunk in chunks]
         )
         # Flatten the results and extract fitness values.
         flat_results = [item for sublist in chunk_results for item in sublist]
@@ -75,40 +82,35 @@ def p1_starMap_fitnessOnly(
 
         # Regenerate population if stagnation limit is reached, keeping the best individual
         if stagnation_counter >= stagnation_limit:
+            print(f"Regenerating population at generation {generation} due to stagnation")
+            print("Best route so far:", population[np.argmin(fitness_values)], "with total distance:", np.min(fitness_values))
+
             if use_default_stagnation:
-                print(f"Regenerating population at generation {generation} due to stagnation")
-                best_individual = population[np.argmin(calculate_fitness_values)]
+                best_individual = population[np.argmin(fitness_values)]
                 population = generate_unique_population(doneRoutes, population_size - 1, num_nodes)
                 population.append(best_individual)
                 stagnation_counter = 0
                 continue  # Skip the rest of the loop for this generation
             else:
-                print(f"Regenerating population at generation {generation} due to stagnation")
-                
                 # Keep the top 10% best individuals
                 elite_count = population_size // 10  # 10% of population
                 best_individuals = sorted(population, key=lambda ind: -calculate_fitness(ind, distance_matrix, infeasible_penalty))[:elite_count]
-                
                 new_population = generate_unique_population(doneRoutes, population_size - len(best_individuals), num_nodes)
                 population = best_individuals + new_population
                 stagnation_counter = 0
                 continue  # Skip rest of loop for this generation
 
-
         # Selection, crossover, and mutation
-        selected = select_in_tournament(population,
-                                        calculate_fitness_values,
-                                        num_tournaments,
-                                        tournament_size)
+        selected = select_in_tournament(population, fitness_values, num_tournaments, tournament_size)
         offspring = []
         for i in range(0, len(selected), 2):
             parent1, parent2 = selected[i], selected[i + 1]
-            route1 = order_crossover(parent1[1:], parent2[1:])
+            route1 = order_crossover(parent1[1:], parent2[1:], num_nodes)
             offspring.append([0] + route1)
         mutated_offspring = [mutate(route, mutation_rate) for route in offspring]
 
         # Replacement: Replace the individuals that lost in the tournaments with the new offspring
-        for i, idx in enumerate(np.argsort(calculate_fitness_values)[::-1][:len(mutated_offspring)]):
+        for i, idx in enumerate(np.argsort(fitness_values)[::-1][:len(mutated_offspring)]):
             population[idx] = mutated_offspring[i]
 
         # Ensure population uniqueness
@@ -118,15 +120,14 @@ def p1_starMap_fitnessOnly(
             unique_population.add(tuple(individual))
         population = [list(individual) for individual in unique_population]
 
-        # Print best calculate_fitness
-        print(f"Generation {generation}: Best calculate_fitness = {current_best_calculate_fitness:,}")  # Changed to add commas 
+        print(f"Generation {generation}: Best calculate_fitness = {current_best_calculate_fitness:,}")
 
     # Update calculate_fitness_values for the final population
-    calculate_fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
-
-    # Output the best solution
-    best_idx = np.argmin(calculate_fitness_values)
+    fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
+    best_idx = np.argmin(fitness_values)
     best_solution = population[best_idx]
     print("Best Solution:", best_solution)
-    print(f"Total Distance: {-calculate_fitness(best_solution, distance_matrix, infeasible_penalty):,}") # Changed to add commas 
+    print(f"Total Distance: {-calculate_fitness(best_solution, distance_matrix, infeasible_penalty):,}")
 
+    pool.close()
+    pool.join()

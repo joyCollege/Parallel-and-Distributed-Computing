@@ -18,8 +18,10 @@ def updated_GA_trial(
     # Load the distance matrix
     if use_extended_datset: 
         FILEPATH = './data/city_distances_extended.csv'
+        num_nodes=100
     else: 
         FILEPATH = './data/city_distances.csv'
+        num_nodes=32
 
     distance_matrix = pd.read_csv(FILEPATH).to_numpy()
     num_nodes = distance_matrix.shape[0]
@@ -75,7 +77,7 @@ def updated_GA_trial(
         offspring = []
         for i in range(0, len(selected), 2):
             parent1, parent2 = selected[i], selected[i + 1]
-            route1 = order_crossover(parent1[1:], parent2[1:])
+            route1 = order_crossover(parent1[1:], parent2[1:], num_nodes)
             offspring.append([0] + route1)
         mutated_offspring = [mutate(route, mutation_rate) for route in offspring]
 

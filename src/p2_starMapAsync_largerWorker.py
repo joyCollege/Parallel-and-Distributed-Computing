@@ -10,7 +10,7 @@ def split_list(lst, n):
     return [lst[i*k + min(i, m):(i+1)*k + min(i+1, m)] for i in range(n)]
 
 # Worker function to process a sub-population:
-def ga_worker(sub_population, distance_matrix, infeasible_penalty, num_tournaments, tournament_size, mutation_rate):
+def ga_worker(sub_population, distance_matrix, infeasible_penalty, num_tournaments, tournament_size, mutation_rate, num_nodes):
     # Calculate fitness for each individual in the sub-population
     fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in sub_population])
     
@@ -22,7 +22,7 @@ def ga_worker(sub_population, distance_matrix, infeasible_penalty, num_tournamen
     for i in range(0, len(selected) - (len(selected) % 2), 2):
         parent1, parent2 = selected[i], selected[i+1]
         # Exclude the starting node (assumed to be 0) from crossover, then prepend it back to offspring
-        route_child = order_crossover(parent1[1:], parent2[1:])
+        route_child = order_crossover(parent1[1:], parent2[1:], num_nodes)
         offspring.append([0] + route_child)
     
     # Apply mutation to each offspring route
@@ -41,7 +41,13 @@ def p2_starMapAsync_largerWorker(
                         use_default_stagnation  = True
                     ):
     # Load the distance matrix
-    FILEPATH = './data/city_distances_extended.csv' if use_extended_datset else './data/city_distances.csv'
+    if use_extended_datset: 
+        FILEPATH = './data/city_distances_extended.csv'
+        num_nodes=100
+    else: 
+        FILEPATH = './data/city_distances.csv'
+        num_nodes=32
+
     distance_matrix = pd.read_csv(FILEPATH).to_numpy()
     num_nodes = distance_matrix.shape[0]
     
@@ -88,7 +94,7 @@ def p2_starMapAsync_largerWorker(
             # Run the GA worker in parallel on each sub-population
             async_results = pool.starmap_async(
                 ga_worker,
-                [(sub_pop, distance_matrix, infeasible_penalty, num_tournaments, tournament_size, mutation_rate)
+                [(sub_pop, distance_matrix, infeasible_penalty, num_tournaments, tournament_size, mutation_rate, num_nodes)
                  for sub_pop in sub_pops]
             )
             # Wait for results and combine all mutated offspring from the workers
