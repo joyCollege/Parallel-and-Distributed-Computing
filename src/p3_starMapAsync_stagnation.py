@@ -33,7 +33,7 @@ def ga_worker(sub_population, distance_matrix, infeasible_penalty,
       - Applies order crossover and mutation.
     """
     fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty)
-                               for route in sub_population])
+                               for route in sub_population], dtype=int)
     
     selected = select_in_tournament(sub_population, fitness_values, num_tournaments, tournament_size)
     
@@ -151,7 +151,7 @@ def p3_starMapAsync_stagnation(
         fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty)
                                      for route in population])
         best_idx = np.argmin(fitness_values)
-        best_solution = population[best_idx]
+        best_solution = [int(x) for x in population[best_idx]]
         print("Best Solution:", best_solution)
         print(f"Total Distance: {-calculate_fitness(best_solution, distance_matrix, infeasible_penalty):,}")
 

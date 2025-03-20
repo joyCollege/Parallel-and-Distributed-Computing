@@ -38,7 +38,7 @@ def updated_GA_trial(
     # Main GA loop
     for generation in range(num_generations):
         # Evaluate calculate_fitness
-        calculate_fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
+        calculate_fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population], dtype=int)
 
         # Check for stagnation
         current_best_calculate_fitness = np.min(calculate_fitness_values)
@@ -100,7 +100,7 @@ def updated_GA_trial(
 
     # Output the best solution
     best_idx = np.argmin(calculate_fitness_values)
-    best_solution = population[best_idx]
+    best_solution = [int(x) for x in population[best_idx]]
     print("Best Solution:", best_solution)
     print(f"Total Distance: {-calculate_fitness(best_solution, distance_matrix, infeasible_penalty):,}") # Changed to add commas 
 

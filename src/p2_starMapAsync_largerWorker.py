@@ -64,7 +64,7 @@ def p2_starMapAsync_largerWorker(
     with Pool(processes=num_workers) as pool:
         for generation in range(num_generations):
             # Global fitness evaluation for stagnation check
-            fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
+            fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population], dtype=int)
             current_best = np.min(fitness_values)
             if current_best < best_calculate_fitness:
                 best_calculate_fitness = current_best
@@ -105,7 +105,7 @@ def p2_starMapAsync_largerWorker(
             doneRoutes.extend(all_mutated_offspring)
             
             # Replacement: Replace the worst individuals in the population with new offspring
-            fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
+            fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population], dtype=int)
             indices_to_replace = np.argsort(fitness_values)[::-1][:len(all_mutated_offspring)]
             for i, idx in enumerate(indices_to_replace):
                 population[idx] = all_mutated_offspring[i]
@@ -122,7 +122,7 @@ def p2_starMapAsync_largerWorker(
     # Final evaluation after all generations have completed.
     fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
     best_idx = np.argmin(fitness_values)
-    best_solution = population[best_idx]
+    best_solution = [int(x) for x in population[best_idx]]
     print("Best Solution:", best_solution)
     print(f"Total Distance: {-calculate_fitness(best_solution, distance_matrix, infeasible_penalty):,}")
 

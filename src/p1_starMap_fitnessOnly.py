@@ -70,7 +70,7 @@ def p1_starMap_fitnessOnly(
         )
         # Flatten the results and extract fitness values.
         flat_results = [item for sublist in chunk_results for item in sublist]
-        fitness_values = np.array([fitness for (_, fitness) in flat_results])
+        fitness_values = np.array([fitness for (_, fitness) in flat_results], dtype=int)
         current_best_calculate_fitness = np.min(fitness_values)
 
         # Check for stagnation
@@ -125,7 +125,7 @@ def p1_starMap_fitnessOnly(
     # Update calculate_fitness_values for the final population
     fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in population])
     best_idx = np.argmin(fitness_values)
-    best_solution = population[best_idx]
+    best_solution = [int(x) for x in population[best_idx]]
     print("Best Solution:", best_solution)
     print(f"Total Distance: {-calculate_fitness(best_solution, distance_matrix, infeasible_penalty):,}")
 
