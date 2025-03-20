@@ -1,4 +1,5 @@
 cd ~
+conda activate parallel
 scp -r assignment1.2_joy student@10.102.0.217:~/
 scp -r assignment1.2_joy student@10.102.0.167:~/
 scp -r assignment1.2_joy student@10.102.0.150:~/

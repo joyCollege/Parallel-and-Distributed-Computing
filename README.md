@@ -145,6 +145,7 @@ Efficiency          0.1266169495893281
 Speedup             1.1743741522149433
 Efficiency          0.1957290253691572
 ```
+### Distributing with own machine
 
 After distributing with mpirun -n 6 python your_script.py, I got a much faster time of 68.1564929485321, running 75 generations. 
 ```bash
@@ -159,7 +160,18 @@ Speedup             2.4835316572971728
 Efficiency          0.4139219428828622
 ```
 
+### Distributing with more machines
+Initially, I installed Anaconda in the wrong directory (`/home/student/yes/`), which caused system conflicts and missing dependencies when trying to run Conda commands. As a result, the system kept looking for Conda in a deleted path, leading to errors when managing environments. To fix this, I removed all references to the incorrect installation from my `.bashrc` file and ensured the correct Conda path (`/home/student/anaconda3/`) was set. After reloading my shell and verifying the correct Conda installation, I attempted to restore my previous environment. However, some packages were missing or referenced old local build paths, so I manually reinstalled missing dependencies via Conda and `pip`, ensuring a clean and fully functional distributed computing setup.
 
+```bash
+Generation 71: Best fitness = 481.0
+Generation 72: Best fitness = 481.0
+Generation 73: Best fitness = 481.0
+Generation 74: Best fitness = 481.0
+Best Solution: [0, 8, 2, 29, 4, 13, 30, 18, 14, 10, 7, 1, 28, 3, 20, 26, 17, 6, 24, 5, 22, 16, 23, 31, 27, 15, 9, 19, 11, 21, 12, 25]
+Total Distance: 481.0
+Distributed execution time with 2n: 99.33517932891846
+```
 
 ## Enhance the algorithm (20 pts).
 
