@@ -29,7 +29,7 @@ def ga_worker(sub_population, distance_matrix, infeasible_penalty, num_tournamen
     for i in range(0, len(selected) - (len(selected) % 2), 2):
         parent1, parent2 = selected[i], selected[i+1]
         # Exclude the starting node (assumed to be 0) for crossover and then add it back.
-        child = order_crossover(parent1[1:], parent2[1:])
+        child = order_crossover(parent1[1:], parent2[1:], num_nodes)
         offspring.append([0] + child)
     mutated_offspring = [mutate(route, mutation_rate) for route in offspring]
     return mutated_offspring
@@ -38,7 +38,15 @@ if __name__ == '__main__':
     # === Master loads data and initial population ===
     startTime = time()
     use_extended_datset = False
-    FILEPATH = './data/city_distances_extended.csv' if use_extended_datset else './data/city_distances.csv'
+    
+    # Load the distance matrix
+    if use_extended_datset: 
+        FILEPATH = './data/city_distances_extended.csv'
+        num_nodes=100
+    else: 
+        FILEPATH = './data/city_distances.csv'
+        num_nodes=32
+
     if rank == 0:
         distance_matrix = pd.read_csv(FILEPATH).to_numpy()
     else:
