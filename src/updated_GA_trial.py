@@ -14,7 +14,29 @@ def updated_GA_trial(
                         use_extended_datset  = False,
                         use_default_stagnation = True
                     ):
-    
+    """
+    Runs a Genetic Algorithm (GA) to optimize a route-based problem, such as the 
+    Traveling Salesman Problem (TSP). This version includes population stagnation 
+    detection and regeneration strategies to avoid premature convergence.
+
+    Args:
+        population_size (int): Total number of individuals in the population.
+        num_tournaments (int): Number of tournaments for selection.
+        tournament_size (int): Number of individuals per tournament.
+        mutation_rate (float): Probability of mutation per individual.
+        num_generations (int): Maximum number of generations to run the GA.
+        infeasible_penalty (float): Penalty for infeasible solutions.
+        stagnation_limit (int): Number of generations without improvement before 
+                                triggering population regeneration.
+        use_extended_datset (bool): Whether to use a larger dataset (100 nodes) 
+                                    or the default (32 nodes).
+        use_default_stagnation (bool): If True, regenerates the entire population 
+                                       except for the best individual; otherwise, 
+                                       keeps the top 10% best individuals.
+
+    Returns:
+        None: Prints the best solution found and its total distance.
+    """
     # Load the distance matrix
     if use_extended_datset: 
         FILEPATH = './data/city_distances_extended.csv'

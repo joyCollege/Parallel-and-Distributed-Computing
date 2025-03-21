@@ -5,12 +5,36 @@ from src.genetic_algorithms_functions import calculate_fitness, select_in_tourna
 from src.updated_GA_functions import generate_unique_population, order_crossover
 
 def split_list(lst, n):
-    """Splits a list into n nearly-equal parts."""
+    """
+    Split a list into `n` nearly equal parts.
+
+    Args:
+        lst (list): The list to split.
+        n (int): Number of parts to divide the list into.
+
+    Returns:
+        list: A list of sublists.
+    """
     k, m = divmod(len(lst), n)
     return [lst[i*k + min(i, m):(i+1)*k + min(i+1, m)] for i in range(n)]
 
 # Worker function to process a sub-population:
 def ga_worker(sub_population, distance_matrix, infeasible_penalty, num_tournaments, tournament_size, mutation_rate, num_nodes):
+    """
+    Perform genetic algorithm operations (selection, crossover, mutation) on a sub-population.
+    
+    Parameters:
+        sub_population (list): A subset of the population.
+        distance_matrix (numpy.ndarray): A matrix representing distances between nodes.
+        infeasible_penalty (float): Penalty for infeasible routes.
+        num_tournaments (int): Number of tournament selection rounds.
+        tournament_size (int): Number of individuals per tournament.
+        mutation_rate (float): Probability of mutation occurring.
+        num_nodes (int): Number of nodes in the route.
+    
+    Returns:
+        list: A list of new mutated offspring.
+    """
     # Calculate fitness for each individual in the sub-population
     fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty) for route in sub_population])
     
@@ -40,6 +64,33 @@ def p2_starMapAsync_largerWorker(
                         use_extended_datset     = False,
                         use_default_stagnation  = True
                     ):
+    """
+    Runs a parallelized Genetic Algorithm (GA) using multiprocessing to evolve a 
+    population of routes for a Traveling Salesman Problem (TSP) variant.
+
+    The function utilizes tournament selection, order crossover, and mutation to 
+    optimize the routes while ensuring diversity. If stagnation is detected, the 
+    population is partially regenerated.
+
+    Args:
+        population_size (int, optional): Total number of individuals in the population. Default is 10000.
+        num_tournaments (int, optional): Number of tournaments for selection. Default is 500.
+        tournament_size (int, optional): Number of individuals per tournament. Default is 1000.
+        mutation_rate (float, optional): Probability of mutation per individual. Default is 0.2.
+        num_generations (int, optional): Number of generations to evolve. Default is 200.
+        infeasible_penalty (float, optional): Penalty for infeasible solutions. Default is 1e6.
+        stagnation_limit (int, optional): Maximum consecutive generations without improvement before population reset. Default is 5.
+        use_extended_datset (bool, optional): Whether to use an extended dataset (100 cities instead of 32). Default is False.
+        use_default_stagnation (bool, optional): Whether to use full population reset or elite preservation upon stagnation. Default is True.
+
+    Returns:
+        None. The function prints the best solution found and its total distance.
+
+    Notes:
+        - Uses multiprocessing to evaluate and evolve sub-populations in parallel.
+        - Ensures population uniqueness after each generation.
+        - Implements stagnation handling to avoid premature convergence.
+    """
     # Load the distance matrix
     if use_extended_datset: 
         FILEPATH = './data/city_distances_extended.csv'

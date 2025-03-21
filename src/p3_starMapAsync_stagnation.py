@@ -5,18 +5,49 @@ from src.genetic_algorithms_functions import calculate_fitness, select_in_tourna
 from src.updated_GA_functions import generate_unique_population, order_crossover
 
 def split_list(lst, n):
-    """Splits a list into n nearly-equal parts."""
+    """
+    Split a list into `n` nearly equal parts.
+
+    Args:
+        lst (list): The list to split.
+        n (int): Number of parts to divide the list into.
+
+    Returns:
+        list: A list of sublists.
+    """
     k, m = divmod(len(lst), n)
     return [lst[i*k + min(i, m):(i+1)*k + min(i+1, m)] for i in range(n)]
 
 def generate_population_worker(chunk_size, doneRoutes, num_nodes):
-    """Worker to generate a chunk of unique individuals."""
+    """
+    Worker function to generate a chunk of unique individuals for the population.
+
+    Args:
+        chunk_size (int): Number of individuals to generate.
+        doneRoutes (list): List of already processed routes to ensure uniqueness.
+        num_nodes (int): Number of cities (nodes) in the problem.
+
+    Returns:
+        list: A list of unique routes (individuals) generated for the population.
+    """
     return generate_unique_population(doneRoutes, chunk_size, num_nodes)
 
 def parallel_generate_population(doneRoutes, target_size, num_nodes, pool, num_workers):
     """
-    Uses the pool to generate a new population in parallel.
-    Splits the target size across workers and then combines the results.
+    Generates a new population in parallel using multiple worker processes.
+
+    The population is split into chunks, each processed by a separate worker to 
+    ensure efficient and unique population generation.
+
+    Args:
+        doneRoutes (list): List of routes already processed (to avoid duplicates).
+        target_size (int): Total number of individuals to generate.
+        num_nodes (int): Number of cities (nodes) in the problem.
+        pool (multiprocessing.Pool): Pool of worker processes for parallel execution.
+        num_workers (int): Number of worker processes to use.
+
+    Returns:
+        list: A list of newly generated unique routes, with a total size of `target_size`.
     """
     # Determine how many individuals each worker should generate.
     chunks = [target_size // num_workers + (1 if i < target_size % num_workers else 0) for i in range(num_workers)]
@@ -27,10 +58,23 @@ def parallel_generate_population(doneRoutes, target_size, num_nodes, pool, num_w
 def ga_worker(sub_population, distance_matrix, infeasible_penalty, 
      num_tournaments, tournament_size, mutation_rate, num_nodes):
     """
-    Processes a sub-population:
-      - Calculates fitness values
-      - Performs tournament selection
-      - Applies order crossover and mutation.
+    Processes a sub-population in the Genetic Algorithm (GA) by performing:
+      - Fitness evaluation
+      - Tournament selection
+      - Order crossover
+      - Mutation
+
+    Args:
+        sub_population (list): A list of routes (individuals) representing a sub-population.
+        distance_matrix (np.ndarray): Matrix of distances between nodes.
+        infeasible_penalty (float): Penalty applied to infeasible solutions.
+        num_tournaments (int): Number of tournaments for selection.
+        tournament_size (int): Number of individuals per tournament.
+        mutation_rate (float): Probability of mutation per individual.
+        num_nodes (int): Number of cities (nodes) in the problem.
+
+    Returns:
+        list: A list of mutated offspring routes after crossover and mutation.
     """
     fitness_values = np.array([-calculate_fitness(route, distance_matrix, infeasible_penalty)
                                for route in sub_population], dtype=int)
@@ -59,6 +103,34 @@ def p3_starMapAsync_stagnation(
                         use_extended_datset     = False,
                         use_default_stagnation  = True
                     ):
+    """
+    Runs a parallelized Genetic Algorithm (GA) for the Traveling Salesman Problem (TSP) with 
+    enhanced stagnation handling using multiprocessing.
+
+    This function divides the population into sub-populations and processes them in parallel 
+    using tournament selection, order crossover, and mutation. If stagnation is detected, 
+    it regenerates part or all of the population to escape local optima.
+
+    Args:
+        population_size (int, optional): Total number of individuals in the population. Default is 10000.
+        num_tournaments (int, optional): Number of tournaments for selection. Default is 500.
+        tournament_size (int, optional): Number of individuals per tournament. Default is 1000.
+        mutation_rate (float, optional): Probability of mutation per individual. Default is 0.2.
+        num_generations (int, optional): Number of generations to evolve. Default is 200.
+        infeasible_penalty (float, optional): Penalty for infeasible solutions. Default is 1e6.
+        stagnation_limit (int, optional): Maximum consecutive generations without improvement before population reset. Default is 5.
+        use_extended_datset (bool, optional): Whether to use an extended dataset (100 cities instead of 32). Default is False.
+        use_default_stagnation (bool, optional): Whether to use full population reset or elite preservation upon stagnation. Default is True.
+
+    Returns:
+        None. The function prints the best solution found and its total distance.
+
+    Notes:
+        - Uses multiprocessing to process sub-populations in parallel for efficiency.
+        - Implements stagnation detection and population regeneration when needed.
+        - Maintains population uniqueness after each generation.
+    """
+
     # Load the distance matrix
     if use_extended_datset: 
         FILEPATH = './data/city_distances_extended.csv'
@@ -156,6 +228,3 @@ def p3_starMapAsync_stagnation(
         best_solution = [int(x) for x in population[best_idx]]
         print("Best Solution:", best_solution)
         print(f"Total Distance: {-calculate_fitness(best_solution, distance_matrix, infeasible_penalty):,}")
-
-# Example call:
-# updated_GA_trial_parallel()

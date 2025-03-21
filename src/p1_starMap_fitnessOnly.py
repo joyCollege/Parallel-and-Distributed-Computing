@@ -5,14 +5,31 @@ from src.updated_GA_functions import generate_unique_population, order_crossover
 from multiprocessing import Manager, Pool
 
 def split_list(lst, n):
-    """Split a list into n nearly equal parts."""
+    """
+    Split a list into `n` nearly equal parts.
+
+    Args:
+        lst (list): The list to split.
+        n (int): Number of parts to divide the list into.
+
+    Returns:
+        list: A list of sublists.
+    """
     k, m = divmod(len(lst), n)
     return [lst[i*k + min(i, m):(i+1)*k + min(i+1, m)] for i in range(n)]
 
 def process_chunk(chunk, distance_matrix, infeasible_penalty, doneRoutes):
     """
-    Process a chunk of the population: calculate fitness for each individual,
-    and update the shared doneRoutes list (storing route tuples).
+    Process a subset of the population by calculating fitness for each individual.
+
+    Args:
+        chunk (list): A subset of the population.
+        distance_matrix (np.ndarray): The matrix representing distances between cities.
+        infeasible_penalty (float): Penalty value for infeasible solutions.
+        doneRoutes (Manager().list): Shared list to track evaluated routes.
+
+    Returns:
+        list: A list of tuples containing individuals and their fitness values.
     """
     results = []
     for individual in chunk:
@@ -34,7 +51,20 @@ def p1_starMap_fitnessOnly(
                         use_extended_datset  = False,
                         use_default_stagnation = True
                     ):
-    
+    """
+    Runs a parallelized Genetic Algorithm (GA) to find an optimized route in a given distance matrix.
+
+    Args:
+        population_size (int): Number of individuals in the population.
+        num_tournaments (int): Number of tournaments for selection.
+        tournament_size (int): Number of participants in each tournament.
+        mutation_rate (float): Probability of mutation occurring in offspring.
+        num_generations (int): Number of generations to evolve.
+        infeasible_penalty (float): Penalty applied for infeasible routes.
+        stagnation_limit (int): Number of generations without improvement before regeneration.
+        use_extended_datset (bool): Whether to use an extended dataset.
+        use_default_stagnation (bool): Whether to use the default stagnation mechanism.
+    """
     # Load the distance matrix
     if use_extended_datset: 
         FILEPATH = './data/city_distances_extended.csv'

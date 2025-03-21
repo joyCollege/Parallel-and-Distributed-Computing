@@ -6,6 +6,27 @@ from src.genetic_algorithms_functions import calculate_fitness, \
 
 
 def genetic_algorithm_trial():
+    """
+    Runs the original unmodified genetic algorithm trial to find an optimized route using a genetic approach.
+    
+    The function performs the following steps:
+    1. Loads the city distance matrix.
+    2. Initializes algorithm parameters (default or experimental settings).
+    3. Generates an initial population of unique routes.
+    4. Runs the genetic algorithm for a set number of generations:
+       - Evaluates fitness of each route.
+       - Applies tournament selection, crossover, and mutation.
+       - Implements a stagnation mechanism to regenerate population if no improvement is detected.
+    5. Prints and returns the best solution found.
+    
+    Args:
+        None
+    
+    Prints:
+        - Progress updates for each generation.
+        - Best fitness value per generation.
+        - Final optimized route and its total distance.
+    """
     # Load the distance matrix
     distance_matrix = pd.read_csv('./data/city_distances.csv').to_numpy()
 
