@@ -29,7 +29,6 @@ if __name__ == "__main__":
     print("*"*200,"\n","p3_starMapAsync_stagnation time:", p3_starMapAsync_stagnation_time, "\n" + "*"*200)
     # calc_print_analysis(updated_GA_trial_time, p3_starMapAsync_stagnation_time, "p2_starMapAsync_largerWorker")
 
-
     print("*"*200,"\n","updated_GA_trial time:", updated_GA_trial_time)
     print("p1_starMap_fitnessOnly time:", p1_starMap_fitnessOnly_time)
     print("p2_starMapAsync_largerWorker time:", p2_starMapAsync_largerWorker_time)
@@ -37,4 +36,4 @@ if __name__ == "__main__":
 
     calc_print_analysis(updated_GA_trial_time, p1_starMap_fitnessOnly_time, "p1_starMap_fitnessOnly")
     calc_print_analysis(updated_GA_trial_time, p2_starMapAsync_largerWorker_time, "p2_starMapAsync_largerWorker")
-    calc_print_analysis(updated_GA_trial_time, p2_starMapAsync_largerWorker_time, "p2_starMapAsync_largerWorker")
+    calc_print_analysis(updated_GA_trial_time, p3_starMapAsync_stagnation_time, "p3_starMapAsync_stagnation")
