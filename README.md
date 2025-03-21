@@ -56,6 +56,8 @@ This assignment explores parallel and distributed computing techniques to enhanc
 ### Conclusion
 When squaring 10^6 numbers, the sequential run is the fastest, running for 0.061s, because squaring numbers is not a CPU-intensive task; the overhead introduced by multiprocessing, like inter-process communication, slows down the execution. When doing multiprocessing, applying a process per number is not very practical because memory cannot handle one million processes and it crashes. To fix that, pooling was applied which allows reusing worker processes instead of creating new ones for every task.
 
+Note: I tried to make multiprocessing work with queue which you can see in the tests folder and commits
+
 First, I applied synchronous pools where blocking is allowed. Pool.map() (0.162s) performed better than Pool.apply() (167.38s) because the Pool.map() distributes the task better whereas Pool.apply() sends the task one by one. Even though Pool.map() was better, it is still slower than the sequential approach due to the IPC slowing the execution down. 
 
 Then, the same multiprocessing pools are implemented but asynchronously. Pool.map_async() (0.172s) did not improve as it was already distributing the tasks efficienty before allowing non-blocking processes. Pool.apply_async(), however, significantly preformed better than the synchronous Pool.apply(), reducing execution time 3x from 167.38s to 53.75s. This is because asynchronous execution allows multiple tasks to be submitted without waiting for each one to complete sequentially.
