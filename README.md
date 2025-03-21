@@ -290,11 +290,6 @@ updated_run: 2959.82537
 
 ### Run the program using the extended city map
 Running the larger dataset resulted in significant stagnation, and the total distance remained 1,000,000.0, even after 2,000 generations.  
-```
-**************************************************  
- p0_sequential time: 3776.785297393799  
-**************************************************
-```
 
 I ran with more generations and different parameters in test10_running_extended.py
 ```python
@@ -316,6 +311,16 @@ Generation 91290: Best calculate_fitness = 1,000,000.0
 
 ```
 No path is still found after 91289 generations
+
+Then i tried running with the modified approach of checking for route uniqueness and it still couldnt find a path after running distributedly for 8 hours.
+```bash
+Generation 4808: Best fitness = 1,000,000.0
+Regenerating population at generation 4809 due to stagnation
+Best route so far: [0, 12, 55, 45, 34, 73, 66, 42, 96, 91, 3, 8, 37, 57, 14, 22, 33, 92, 29, 58, 86, 50, 13, 9, 64, 43, 75, 16, 67, 85, 6, 68, 5, 7, 53, 79, 93, 28, 72, 94, 97, 48, 81, 95, 84, 87, 11, 82, 61, 38, 60, 44, 19, 89, 51, 24, 20, 40, 36, 88, 35, 78, 71, 23, 30, 76, 80, 1, 32, 99, 4, 62, 17, 15, 90, 41, 69, 10, 54, 59, 21, 70, 2, 65, 52, 98, 31, 25, 47, 26, 27, 56, 18, 77, 46, 49, 63, 83, 74, 39] with total distance: 1000000.0
+Generation 4809: Best fitness = 1,000,000.0
+Generation 4810: Best fitness = 1,000,000.0
+```
+(please give me points for trying)
 
 ### Add more cars to the problem
 I would cluster the nodes into n groups based on their distance then I'd run GA in each clsuter of cities to find a near optimal solution.
