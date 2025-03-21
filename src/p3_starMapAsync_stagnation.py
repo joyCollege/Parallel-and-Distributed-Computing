@@ -97,8 +97,10 @@ def p3_starMapAsync_stagnation(
             if stagnation_counter >= stagnation_limit:
                 print(f"Regenerating population at generation {generation} due to stagnation")
                 best_idx = np.argmin(fitness_values)
-                best_solution = population[best_idx]
-                print("Best route so far:", best_solution, "with total distance:", best_fitness)
+                best_route = [int(x) for x in population[best_idx]]  # Convert all elements to int
+                best_distance = float(np.min(fitness_values))  
+            
+                print("Best route so far:", best_route, "with total distance:", best_distance)
 
                 if use_default_stagnation:
                     best_individual = population[np.argmin(fitness_values)]

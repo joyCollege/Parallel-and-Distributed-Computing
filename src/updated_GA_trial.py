@@ -51,7 +51,11 @@ def updated_GA_trial(
         # Regenerate population if stagnation limit is reached, keeping the best individual
         if stagnation_counter >= stagnation_limit:
             print(f"Regenerating population at generation {generation} due to stagnation")
-            print("Best route so far:", population[np.argmin(calculate_fitness_values)], "with total distance:", np.min(calculate_fitness_values))
+            best_idx = np.argmin(calculate_fitness_values)
+            best_route = [int(x) for x in population[best_idx]]  # Convert all elements to int
+            best_distance = float(np.min(calculate_fitness_values))  
+            
+            print("Best route so far:", best_route, "with total distance:", best_distance)
             if use_default_stagnation:
                 best_individual = population[np.argmin(calculate_fitness_values)]
                 population = generate_unique_population(doneRoutes, population_size - 1, num_nodes)
