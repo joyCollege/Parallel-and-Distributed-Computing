@@ -184,14 +184,15 @@ Efficiency          0.4139219428828622
 Initially, I installed Anaconda in the wrong directory (`/home/student/yes/`), which caused system conflicts and missing dependencies when trying to run Conda commands. As a result, the system kept looking for Conda in a deleted path, leading to errors when managing environments. To fix this, I removed all references to the incorrect installation from my `.bashrc` file and ensured the correct Conda path (`/home/student/anaconda3/`) was set. After reloading my shell and verifying the correct Conda installation, I attempted to restore my previous environment. However, some packages were missing or referenced old local build paths, so I manually reinstalled missing dependencies via Conda and `pip`, ensuring a clean and fully functional distributed computing setup.
 
 ```bash
-Generation 71: Best fitness = 481.0
-Generation 72: Best fitness = 481.0
-Generation 73: Best fitness = 481.0
-Generation 74: Best fitness = 481.0
-Best Solution: [0, 8, 2, 29, 4, 13, 30, 18, 14, 10, 7, 1, 28, 3, 20, 26, 17, 6, 24, 5, 22, 16, 23, 31, 27, 15, 9, 19, 11, 21, 12, 25]
-Total Distance: 481.0
-Distributed execution time with 2n: 99.33517932891846
+Generation 196: Best fitness = 450.0
+Generation 197: Best fitness = 450.0
+Generation 198: Best fitness = 450.0
+Generation 199: Best fitness = 450.0
+Best Solution: [0, 25, 12, 21, 5, 7, 1, 28, 4, 29, 6, 24, 20, 2, 17, 26, 13, 8, 19, 15, 9, 11, 22, 3, 16, 27, 31, 23, 10, 30, 18, 14]
+Total Distance: 450.0
+Distributed execution time with 2n: 350.5339436531067
 ```
+This has a a speed up of 8.44376251907 and an efficieny of 0.70364687658 across the 12 processors
 
 ## Enhance the algorithm (20 pts).
 
