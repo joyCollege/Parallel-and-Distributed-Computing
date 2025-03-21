@@ -7,60 +7,71 @@
 The implementations of the following functions are provided in `src/genetic_algorithms_functions.py`:
 
 ```python
-def calculate_fitness(route, distance_matrix, infeasible_penalty):
+def calculate_fitness(route,
+                      distance_matrix,
+                      infeasible_penalty):
     """
-    Calculate the total distance traveled along a given route.
+    calculate_fitness function: total distance traveled by the car.
 
     Parameters:
-        route (list): A list representing the order of nodes visited in the route.
-        distance_matrix (numpy.ndarray): A 2D array where the element at [i, j] represents the distance between node i and node j.
-        infeasible_penalty (int): A high penalty value returned if any segment of the route is infeasible.
-
+        - route (list): A list representing the order of nodes visited in the route.
+        - distance_matrix (numpy.ndarray): A matrix of the distances between nodes.
+            A 2D numpy array where the element at position [i, j] represents the distance between node i and node j.
+        - infeasible_penalty (int): A very high number added when the path is impossible
     Returns:
-        float: The total distance traveled along the route.
-               If any segment of the route is infeasible (i.e. a distance equals 100000), the function returns the infeasible_penalty.
+        - float: The negative total distance traveled (negative because we want to minimize distance).
+           Returns a large negative penalty (infeasible_penalty) if the route is infeasible.
     """
     total_distance = 0
 
     for i in range(len(route) - 1):
-        # Retrieve the distance between consecutive nodes.
+        # Retrieve the distance between node1 and node2
         node_distance = distance_matrix[route[i], route[i + 1]]
-        # If the distance indicates an infeasible route, return the penalty.
-        if node_distance == 100000:
-            return infeasible_penalty
+
+        # If the distance is equal to 100000 (indicating an infeasible route), directly return a large negative penalty (e.g., 1e6).
+        if (node_distance == 100000):
+            return -infeasible_penalty
         
         total_distance += node_distance
     
-    # Complete the cycle by adding the distance from the last node back to the starting node.
+    # Add the return to the starting point to complete the cycle
     return_distance = distance_matrix[route[-1], route[0]]
+
     if return_distance == 100000:
-        return infeasible_penalty
+            return -infeasible_penalty
     
-    return total_distance + return_distance
+    total_distance += return_distance
+    
+    return -total_distance 
     
 
-def select_in_tournament(population, scores, number_tournaments=4, tournament_size=3):
+def select_in_tournament(population,
+                         scores,
+                         number_tournaments=4,
+                         tournament_size=3):
     """
-    Perform tournament selection on the population for the genetic algorithm.
+    Tournament selection for genetic algorithm.
 
     Parameters:
-        population (list): The current population of routes.
-        scores (np.array): The fitness scores for each individual in the population.
-        number_tournaments (int): The number of tournaments to run.
-        tournament_size (int): The number of individuals competing in each tournament.
-            (Note: A larger tournament size (e.g., 4–6) might be more effective given a population of 10,000.)
+        - population (list): The current population of routes.
+        - scores (np.array): The calculate_fitness scores corresponding to each individual in the population.
+        - number_tournaments (int): The number of the tournamnents to run in the population.
+        - tournament_size (int): The number of individual to compete in the tournaments.
+            >> A larger tournament_size (4–6) might be better since the population size 10000 
 
     Returns:
-        list: A list of selected individuals chosen for crossover.
+        - list: A list of selected individuals for crossover.
     """
+    # An empty list selected to store the individuals 
     selected = []
     for _ in range(number_tournaments):
-        # Randomly select 'tournament_size' individuals from the population.
+        # Randomly select tournament_size individuals from the population using np.random.choice.
         tournament_indices = np.random.choice(len(population), tournament_size, replace=False)
-        # Choose the individual with the best (lowest) fitness score among the tournament participants.
+        # Find the index of the individual with the highest fitness score among the selected individuals using np.argmax(scores[idx])
         best_idx = tournament_indices[np.argmin(scores[tournament_indices])]
         selected.append(population[best_idx])
     return selected
+    
 ```
 
 ### Explanation of Fixes
@@ -130,21 +141,30 @@ After this I called it a day and started to improve the implementation instead. 
 
 However during implementation, since we are making sure that the same routes are not added to the population again, stagnations and flushing the population with new routes/individuals took a long time so I tried to check for stagnation first before the main GA worker; this way if there was a stagnation, all the cores would be working on that first before continuing to the main GA worker. This ended up improving the speedup—this time actually running faster than the sequential. 
 
-Below are the timings after running 75 generations. 
+Below are the timings after running 200 generations with the updated code
 
 ```bash
-updated_GA_trial time: 169.268807888031
-p2_starMapAsync_largerWorker time: 222.8095691204071
-p3_starMapAsync_stagnation time: 144.1353316307068 
+updated_GA_trial time: 2959.8253750801086
+p1_starMap_fitnessOnly time: 3025.703073501587
+p2_starMapAsync_largerWorker time: 8446.1833486557
+p3_starMapAsync_stagnation time: 1008.216605424881 
+*********************************************************************************
 
-**************** p2_starMapAsync_largerWorker Performance Analysis ****************
-Speedup             0.7597016975359686
-Efficiency          0.1266169495893281
+**************** p1_starMap_fitnessOnly Performance Analysis ********************
+Speedup             0.9782273088861825
+Efficiency          0.1630378848143637
 
-**************** p2_starMapAsync_largerWorker Performance Analysis ****************
-Speedup             1.1743741522149433
-Efficiency          0.1957290253691572
+**************** p2_starMapAsync_largerWorker Performance Analysis **************
+Speedup             0.3504334742568898
+Efficiency          0.0584055790428150
+
+**************** p3_starMapAsync_stagnation Performance Analysis ****************
+Speedup             2.9357038548604186
+Efficiency          0.4892839758100698
 ```
+
+If I have time I'll check on only parallelizing the stagnation and caclculation fitness (spoiler alert: I didn't have time)
+
 ### Distributing with own machine
 
 After distributing with mpirun -n 6 python your_script.py, I got a much faster time of 68.1564929485321, running 75 generations. 
@@ -174,6 +194,10 @@ Distributed execution time with 2n: 99.33517932891846
 ```
 
 ## Enhance the algorithm (20 pts).
+
+•	Distribute your algorithm over 2 machines or more (10 pts).
+•	What improvements do you propose? Add them to your code (5 pts).
+•	After adding your improvements, recompute the performance metrics and compare with before the enhancements (5 pts).
 
 At this point, I also formatted the total distance output to include commas (I'm dyslexic so it makes numbers easier to read) and ensure it displays a non-negative value.  
 
@@ -241,22 +265,28 @@ continue  # Skip rest of loop for this generation
 I suspect it's because we are creating the same routes so in test11_running_extended.py i kept track of the routes we are checking and that was indeed the problem so after fixing it worked. This new test will be refined and added to src.updated_GA_trial.py and src.updated_GA_function.py
 
 ```bash
-SHORT RUN:
-Generation 0: Best calculate_fitness = 1,395.0
-Generation 1: Best calculate_fitness = 1,315.0
-Generation 2: Best calculate_fitness = 1,253.0
-Generation 3: Best calculate_fitness = 1,195.0
-Generation 4: Best calculate_fitness = 1,195.0
-Generation 5: Best calculate_fitness = 1,186.0
-Generation 6: Best calculate_fitness = 1,132.0
-...
-Generation 104: Best calculate_fitness = 519.0
-Generation 105: Best calculate_fitness = 519.0
-Regenerating population at generation 106 due to stagnation
+Generation 179: Best calculate_fitness = 515
+Generation 180: Best calculate_fitness = 515
+Regenerating population at generation 181 due to stagnation
+Best route so far: [0, 14, 10, 7, 27, 31, 12, 29, 30, 6, 21, 9, 11, 19, 8, 13, 4, 5, 22, 2, 17, 26, 20, 24, 28, 1, 18, 23, 15, 3, 16, 25] with total distance: 515.0
+Generation 182: Best calculate_fitness = 515
+Generation 183: Best calculate_fitness = 515
+Generation 184: Best calculate_fitness = 515
+Generation 185: Best calculate_fitness = 515
+Regenerating population at generation 186 due to stagnation
+Best route so far: [0, 14, 10, 7, 27, 31, 12, 29, 30, 6, 21, 9, 11, 19, 8, 13, 4, 5, 22, 2, 17, 26, 20, 24, 28, 1, 18, 23, 15, 3, 16, 25] with total distance: 515.0
 ```
-This also fixed the extended run to actually try and find values
+This improved the distance but the run is so so so much slower. However you can argue that each generation for the updated_run is much more productive and is worth more than one generation from the original run that stagnates a lot
+
+```bash
+original_run: 77.23450
+updated_run: 2959.82537
+```
 
 ## Large scale problem (10 pts)
+* Run the program using the extended city map: city_distances_extended.csv. Successful execution in feasible time is rewarded with 5 pts.
+* How would you add more cars to the problem? (Just explain, 5 pts).
+
 ### Run the program using the extended city map
 Running the larger dataset resulted in significant stagnation, and the total distance remained 1,000,000.0, even after 2,000 generations.  
 ```
@@ -286,24 +316,10 @@ Generation 91290: Best calculate_fitness = 1,000,000.0
 ```
 No path is still found after 91289 generations
 
-After implementing the unique route generation. A path was finally found. 
-
-```
-EXTENDED RUN:
-eneration 0: Best calculate_fitness = 1,000,000.0
-Generation 1: Best calculate_fitness = 1,000,000.0
-Generation 2: Best calculate_fitness = 1,602.0
-Generation 3: Best calculate_fitness = 1,602.0
-Generation 4: Best calculate_fitness = 1,424.0
-Generation 5: Best calculate_fitness = 1,424.0
-Generation 6: Best calculate_fitness = 1,424.0
-...
-Generation 25: Best calculate_fitness = 1,111.0
-Generation 26: Best calculate_fitness = 1,111.0
-Regenerating population at generation 27 due to stagnation
-```
 ### Add more cars to the problem
-Split the node and run n car
+I would cluster the nodes into n groups based on their distance then I'd run GA in each clsuter of cities to find a near optimal solution.
+
+Using GA alone, I'm assuming the nodes will be spilt into n groups with all cars stating and ending at node 0. Since GA is probabilistic, I would randomly split the cities k times to fill the population. The total fitness function and selection will still remain similar. Crossover and mutation can happen between the different car-routes.
 
 ## Bonuses 
 ### Implement and run the code correctly with multiple cars (5 pts).
@@ -313,9 +329,6 @@ Split the node and run n car
 I believe my distance in the short run is competitive. This was from the test.test15_parallelizing_stagnation.py run; the output of which is saved in  output_test15.txt
 ```bash
 ...
-Generation 435: Best fitness = 325.0
-Regenerating population at generation 436 due to stagnation
-Best route so far: [0, 14, 10, 7, 27, 16, 31, 23, 1, 28, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 12, 29, 6, 30, 18, 5, 4, 13, 22, 3, 25] with total distance: 325.0
 Generation 437: Best fitness = 325.0
 Generation 438: Best fitness = 325.0
 Generation 439: Best fitness = 325.0
@@ -361,70 +374,6 @@ All elements are unique.
 >> distance from 13 and 22 is 34.0
 >> distance from 22 and 3 is 14.0
 >> distance from 3 and 25 is 26.0
-Total distance: 325.0
-******************************************************************************************************************************************************************************************************** 
- test12_testing_routedistance time: 0.0024843215942382812 
-********************************************************************************************************************************************************************************************************
-(base) student@vg-DSAI-3202-32:~/Parallel-and-Distributed-Computing$ python3 main.py
-[0, 14, 10, 7, 27, 16, 31, 23, 1, 28, 24, 20, 26, 17, 2, 8, 19, 15, 9, 11, 21, 12, 29, 6, 30, 18, 5, 4, 13, 22, 3, 25]
-All 32 node are there.
-All elements are unique.
->> distance from 0 and 14 is 4.0
->> distance from 14 and 10 is 10.0
->> distance from 10 and 7 is 5.0
->> distance from 7 and 27 is 9.0
->> distance from 27 and 16 is 6.0
->> distance from 16 and 31 is 21.0
->> distance from 31 and 23 is 8.0
->> distance from 23 and 1 is 27.0
->> distance from 1 and 28 is 2.0
->> distance from 28 and 24 is 11.0
->> distance from 24 and 20 is 4.0
->> distance from 20 and 26 is 24.0
->> distance from 26 and 17 is 5.0
->> distance from 17 and 2 is 4.0
->> distance from 2 and 8 is 7.0
->> distance from 8 and 19 is 12.0
->> distance from 19 and 15 is 9.0
->> distance from 15 and 9 is 7.0
->> distance from 9 and 11 is 4.0
->> distance from 11 and 21 is 3.0
->> distance from 21 and 12 is 1.0
->> distance from 12 and 29 is 3.0
->> distance from 29 and 6 is 7.0
->> distance from 6 and 30 is 1.0
->> distance from 30 and 18 is 7.0
->> distance from 18 and 5 is 19.0
->> distance from 5 and 4 is 3.0
->> distance from 4 and 13 is 12.0
->> distance from 13 and 22 is 34.0
->> distance from 22 and 3 is 14.0
->> distance from 3 and 25 is 26.0
 >> distance from 25 and 0 is 16.0
 Total distance: 325.0
 ```
-
-After trying the the distributed run I got
-
-```bash
-Best route so far: [0, 11, 9, 15, 19, 8, 2, 17, 26, 1, 28, 24, 20, 3, 22, 13, 4, 5, 21, 6, 30, 18, 14, 10, 7, 27, 16, 23, 31, 12, 29, 25] with total distance: 349.0
-Generation 147: Best fitness = 349.0
-Generation 148: Best fitness = 349.0
-Generation 149: Best fitness = 349.0
-Generation 150: Best fitness = 349.0
-Generation 151: Best fitness = 349.0
-Regenerating population at generation 152 due to stagnation
-```
-
-### Best solution in the second part (5 pts).
-My found distance for the long run is also competitive.
-```bash
-Generation 4: Best calculate_fitness = 1,424.0
-Generation 5: Best calculate_fitness = 1,424.0
-Generation 6: Best calculate_fitness = 1,424.0
-...
-Generation 25: Best calculate_fitness = 1,111.0
-Generation 26: Best calculate_fitness = 1,111.0
-Regenerating population at generation 27 due to stagnation
-```
-
