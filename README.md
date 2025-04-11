@@ -31,10 +31,10 @@ At first, I ran multiple explorers on multiple machines using MPY4Py. I ran four
 
 ``` bash
 === Summary of Results ===
-is_stuck definition 0, Time = 0.0017559528s, Moves = 1279, Backtracks = 0
-is_stuck definition 1, Time = 0.0014426708s, Moves = 1279, Backtracks = 0
-is_stuck definition 2, Time = 0.0018639565s, Moves = 1279, Backtracks = 0
-is_stuck definition 3, Time = 0.0015981197s, Moves = 1279, Backtracks = 0
+Rank 0, Time = 0.0017559528s, Moves = 1279, Backtracks = 0
+Rank 1, Time = 0.0014426708s, Moves = 1279, Backtracks = 0
+Rank 2, Time = 0.0018639565s, Moves = 1279, Backtracks = 0
+Rank 3, Time = 0.0015981197s, Moves = 1279, Backtracks = 0
 
 Fastest explorer: Rank 1 Time =  0.0014426708s, Moves = 1279, Backtracks = 0
 ```
@@ -48,47 +48,225 @@ I kept the original stuck condition the same—where is stuck will return true i
 
 ``` bash
 === Summary of Results ===
-is_stuck definition 0, Time = 0.0022592545s, Moves = 1279, Backtracks = 0
-is_stuck definition 1, Time = 0.0021748543s, Moves = 1279, Backtracks = 0
-is_stuck definition 2, Time = 0.0031981468s, Moves = 1279, Backtracks = 0
-is_stuck definition 3, Time = 0.0019450188s, Moves = 1279, Backtracks = 0
+Rank 0, is_stuck definition 0, Time = 0.0018565655s, Moves = 1279, Backtracks = 0
+Rank 1, is_stuck definition 1, Time = 0.0011942387s, Moves = 1279, Backtracks = 0
+Rank 2, is_stuck definition 2, Time = 0.0018227100s, Moves = 1279, Backtracks = 0
+Rank 3, is_stuck definition 3, Time = 0.0012023449s, Moves = 1279, Backtracks = 0
+Rank 4, is_stuck definition 0, Time = 0.0017056465s, Moves = 1279, Backtracks = 0
+Rank 5, is_stuck definition 1, Time = 0.0012824535s, Moves = 1279, Backtracks = 0
+Rank 6, is_stuck definition 2, Time = 0.0018355846s, Moves = 1279, Backtracks = 0
+Rank 7, is_stuck definition 3, Time = 0.0012183189s, Moves = 1279, Backtracks = 0
 
-Fastest run: Rank 3 Time =  0.0019450188s, Moves = 1279, Backtracks = 0
+Fastest run: Rank 1 Time =  0.0011942387s, Moves = 1279, Backtracks = 0
 ```
 
 Even after defining these different stuck conditions and applying them on different ranks, the results still stayed the same. 
 
 ### Implement enhancements
-Based on your analysis from Question 3, propose and implement enhancements to the maze explorer to overcome its limitations. Your solution should:
+The current explorer can find a path from beginning to end, but it does not do it very efficiently, nor does it optimize the path to be shorter. Even with modifications to the stuck-condition, the explorer still does not find a shorter path. Applying other state search algorithms can help the explorer find shorter routes and applying heuristics may speed up and optimize the process.
 
-1. Identify and explain the main limitations of the current explorer:
+Breast First Search (BFS) can find the shortest path in unweighted graphs like this grid-structured maze. It always finds the shortest path if it exists unlike the right-hand method where it only finds a signular path—not necessarily the shortest path. It works as First In First Out (FIFO); it does this by exploring all adjacent nodes then for each of those neighboring nodes, all their adjacent nodes are explored. 
 
-2. Propose specific improvements to the exploration algorithm:
+``` python3
+class bfs_explorer(Explorer):
+    def solve(self) -> Tuple[float, List[Tuple[int, int]]]:
+      """
+        Solve the maze using the Breadth-First Search (BFS) algorithm.
 
-3. Implement at least two of the proposed improvements:
+        BFS explores the maze level by level, ensuring the shortest path is found 
+        by visiting the nearest unvisited positions first. It uses a queue to track 
+        unexplored frontier positions and builds the path incrementally.
 
-Your answer should include:
-1. A detailed explanation of the identified limitations
-2. Documentation of your proposed improvements
-3. The modified code with clear comments explaining the changes
+        Returns:
+            Tuple[float, List[Tuple[int, int]]]: 
+                - The total time taken to solve the maze.
+                - The list of positions (x, y) representing the path from start to goal.
+        """
+        self.start_time = time.time()
+        start = self.maze.start_pos
+        goal = self.maze.end_pos
 
-### Question 5 (20 points)
+        # Implementing FIFO system
+        queue = deque()
+        queue.append((start, []))
+        visited = set()
 
-Compare the performance of your enhanced explorer with the original:
-   - Run both versions on the static maze
-   - Collect and compare all relevant metrics
-   - Create visualizations showing the improvements
-   - Document the trade-offs of your enhancements
-Your answer should include:
-1. Performance comparison results and analysis
-2. Discussion of any trade-offs or new limitations introduced
+        while queue:
+            # exploring first in
+            current, path = queue.popleft()
 
-### Final points 6 (10 points)
-1. Solve the static maze in 150 moves or less to get 10 points.
-2. Solve the static maze in 135 moves or less to get 15 points.
-3. Solve the static maze in 130 moves or less to get 100% in your assignment.
+            # skipping already explored positions
+            if current in visited:
+                continue
+            visited.add(current)
+
+            self.x, self.y = current
+            self.moves = path + [current]
+
+            if self.visualize:
+                self.draw_state()
+
+            if current == goal:
+                break
+            
+            # checking all four directions 
+            for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                nx, ny = current[0] + dx, current[1] + dy
+                if (0 <= nx < self.maze.width and 
+                    0 <= ny < self.maze.height and # if the position is in the maze
+                    self.maze.grid[ny][nx] == 0 and # if a free space
+                    (nx, ny) not in visited):
+                    # adding the new positions in queue
+                    queue.append(((nx, ny), self.moves))
+
+        self.end_time = time.time()
+        time_taken = self.end_time - self.start_time
+
+        if self.visualize:
+            pygame.time.wait(2000)
+            pygame.quit()
+
+        self.print_statistics(time_taken)
+        return time_taken, self.moves
+``` 
+
+A* is another state search algorithm but in addition to that: A* uses heuristics. Heuristic is an estimation of the remaining cost—in our case, it's the estimated remaining Manhattan distance from the current position to the goal, assuming there are no walls/obstacles. This method also finds the shortest path, but is usually faster given a good heuristic function. Unlike BFS that implements a queue, A* implements a priority queue.
+
+
+``` python3
+class a_star_explorer(Explorer):
+    def heuristic(self, a: Tuple[int, int], b: Tuple[int, int]) -> int:
+        """
+        Estimate the cost from node `a` to node `b` using Manhattan distance.
+
+        This heuristic is admissible for grid-based mazes without diagonal movement,
+        ensuring optimality of the A* algorithm.
+
+        Args:
+            a (Tuple[int, int]): The current node (x, y).
+            b (Tuple[int, int]): The goal node (x, y).
+
+        Returns:
+            int: The estimated cost to reach `b` from `a`.
+        """
+         # Manhattan Distance because the distances grid only
+        return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+    def solve(self) -> Tuple[float, List[Tuple[int, int]]]:
+        """
+        Solve the maze using the A* pathfinding algorithm.
+
+        A* searches for the optimal path from the maze's start to end position by 
+        evaluating both the actual path cost so far (g) and a heuristic estimate 
+        to the goal (h). It uses a priority queue to explore the most promising 
+        paths first.
+
+        Returns:
+            Tuple[float, List[Tuple[int, int]]]: 
+                - The total time taken to solve the maze.
+                - The list of positions (x, y) representing the path from start to goal.
+        """
+        self.start_time = time.time()
+        start = self.maze.start_pos
+        goal = self.maze.end_pos
+
+        open_set = []
+        heappush(open_set, (self.heuristic(start, goal), 0, start, []))
+        visited = set()
+
+        while open_set:
+            # choosing the lowest total estimated cost
+            est_total, cost_so_far, current, path = heappop(open_set)
+            if current in visited:
+                continue
+            # skipping alre
+            # ady explored positions
+            visited.add(current)
+
+            self.x, self.y = current
+            self.moves = path + [current]
+
+            if self.visualize:
+                self.draw_state()
+
+            if current == goal:
+                break
+
+            # checking all four directions 
+            for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                nx, ny = current[0] + dx, current[1] + dy
+                if (0 <= nx < self.maze.width and
+                    0 <= ny < self.maze.height and  # if the position is in the maze
+                    self.maze.grid[ny][nx] == 0 and # if a free space
+                    (nx, ny) not in visited):
+
+                    # update g(x)
+                    new_cost = cost_so_far + 1 
+
+                    # f(x) = g(x) + h(x)
+                    heappush(open_set, (
+                        new_cost + self.heuristic((nx, ny), goal), 
+                        new_cost,
+                        (nx, ny),
+                        self.moves
+                    ))
+
+        self.end_time = time.time()
+        time_taken = self.end_time - self.start_time
+
+        if self.visualize:
+            pygame.time.wait(2000)
+            pygame.quit()
+
+        self.print_statistics(time_taken)
+        return time_taken, self.moves
+```
+
+### Performance of enhanced explorer
+After implementing the two new explorer algorithms, all three explorers were run on the static maze map, and the following results are given. 
+``` bash
+=== Maze Exploration Statistics ===
+Total time taken: 0.0019645691 seconds
+Total moves made: 1279
+Number of backtrack operations: 0
+Average moves per second: 651033.35
+==================================
+
+> Maze solved in 0.00 seconds
+> Right Hand Number of moves: 1279
+
+=== Maze Exploration Statistics ===
+Total time taken: 0.0015385151 seconds
+Total moves made: 128
+Number of backtrack operations: 0
+Average moves per second: 83197.10
+==================================
+
+> Maze solved in 0.00 seconds
+> BFS Number of moves: 128
+
+=== Maze Exploration Statistics ===
+Total time taken: 0.0011959076 seconds
+Total moves made: 128
+Number of backtrack operations: 0
+Average moves per second: 107031.68
+==================================
+
+> Maze solved in 0.00 seconds
+> A* Number of moves: 128
+```
+![Comparison of exploreres based on time, moves, and moves per second.](explorer_comparison.png)
+
+The enhanced explorers that utilized state search algorithms did find the shortest path, staying true to their algorithm properties. They took less time to find the solution than the right hand—with A* being the fastest. A* was also able to explore more moves per second than BFS, although the right-hand rule still moved the most per second, despite being slower over all because of how many moves it made. 
+
+
+The enhanced methods were faster, but per move they were more computationally expensive as they had to calculate the distance, and in the case for A-Star, the heuristic cost had to be calculated as well. I would argue this is a good tradeoff as there were significantly less moves taken by these two algorithms. 
+
+The right hand method have very minimal memory use however BFS and especially A* used more memory. This could be a problem if the maze was much bigger, potentially needing better RAMs which are expensive.
 
 ### Bonus points
-1. Fastest solver to get top  10% routes (number of moves)
-2. Finding a solution with no backtrack operations
-3. Least number of moves.
+The following bonus points were (potentially) achieved:
+   * Solve the static maze in 130 moves or less to get 100% in your assignment.
+   * Finding a solution with no backtrack operations
+   * Least number of moves 
+   * Fastest solver to get top 10% routes (number of moves)

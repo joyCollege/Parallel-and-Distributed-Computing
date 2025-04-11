@@ -60,9 +60,42 @@ def basic_static():
 
     # Run the explorer
     time_taken, moves = explorer.solve()
-    print(f"Maze solved in {time_taken:.2f} seconds")
-    print(f"Number of moves: {len(moves)}")
+    print(f"> Maze solved in {time_taken:.2f} seconds")
+    print(f"> Right Hand Number of moves: {len(moves)}")
+
+def advanced_static():
+    '''
+    Runs the explorer from explorer.py on a static map 
+
+    Result of the run:
+        === Maze Exploration Statistics ===
+        Total time taken: 0.0018935204 seconds
+        Total moves made: 1279
+        Number of backtrack operations: 0
+        Average moves per second: 675461.45
+        ==================================
+
+        Maze solved in 0.00 seconds
+        Number of moves: 1279
+    '''
+    from src.myExplorers import bfs_explorer, a_star_explorer
+    from src.maze import create_maze
+
+    # BFS 
+    maze = create_maze(0, 0, "static")
+    explorer = bfs_explorer(maze, visualize=False)
+    time_taken, moves = explorer.solve()
+    print(f"> Maze solved in {time_taken:.2f} seconds")
+    print(f"> BFS Number of moves: {len(moves)}")
+
+    # A* 
+    maze = create_maze(0, 0, "static")
+    explorer = a_star_explorer(maze, visualize=False)
+    time_taken, moves = explorer.solve()
+    print(f"> Maze solved in {time_taken:.2f} seconds")
+    print(f"> A* Number of moves: {len(moves)}")
 
 if __name__ == "__main__":
     # main()
     basic_static()
+    advanced_static()

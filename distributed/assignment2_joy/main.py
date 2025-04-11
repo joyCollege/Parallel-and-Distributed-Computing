@@ -34,7 +34,7 @@ if __name__ == "__main__":
                 if r[1] <= best[1]:
                     best = r
         for this_rank, this_time, this_move, this_backtracks in results:
-            print(f"is_stuck definition {this_rank}, Time = {this_time:.10f}s, Moves = {this_move}, Backtracks = {this_backtracks}")
+            print(f"Rank {this_rank}, is_stuck definition {this_rank % 4}, Time = {this_time:.10f}s, Moves = {this_move}, Backtracks = {this_backtracks}")
         
         print(f"\nFastest run: Rank {best[0]} Time =  {best[1]:.10f}s, Moves = {best[2]}, Backtracks = {best[3]}")
 
