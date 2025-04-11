@@ -9,7 +9,7 @@ from collections import deque
 from .constants import BLUE, WHITE, CELL_SIZE, WINDOW_SIZE
 
 class Explorer:
-    def __init__(self, maze, visualize: bool = False):
+    def __init__(self, maze, visualize: bool = False, stuck_def=0):
         self.maze = maze
         self.x, self.y = maze.start_pos
         self.direction = (1, 0)  # Start facing right
@@ -17,6 +17,7 @@ class Explorer:
         self.start_time = None
         self.end_time = None
         self.visualize = visualize
+        self.stuck_def = stuck_def
         self.move_history = deque(maxlen=3)  # Keep track of last 3 moves
         self.backtracking = False
         self.backtrack_path = []
@@ -58,10 +59,28 @@ class Explorer:
 
     def is_stuck(self) -> bool:
         """Check if the explorer is stuck in a loop."""
-        if len(self.move_history) < 3:
-            return False
-        # Check if the last 3 moves are the same
-        return (self.move_history[0] == self.move_history[1] == self.move_history[2])
+        if self.stuck_def == 0: # if in the same position for 3 consecutive moves
+            if len(self.move_history) < 3:
+                return False
+            return (self.move_history[0] == self.move_history[1] == self.move_history[2])
+        
+        if self.stuck_def == 1: # if in the same position for 2 consecutive moves
+            if len(self.move_history) < 2:
+                return False
+            return (self.move_history[0] == self.move_history[1])
+        
+        if self.stuck_def == 2: # if it goes back and fourth like A → B → A → B 
+            if len(self.move_history) < 4:
+                return False
+            return (self.move_history[-1] == self.move_history[-3] and
+                    self.move_history[-2] == self.move_history[-4])
+
+        if self.stuck_def == 3: # if ends up in the same position after 5 moves.
+            if len(self.move_history) < 5:
+                return False
+            first = self.move_history[-3]
+            last = self.move_history[-1]
+            return first == last
 
     def backtrack(self) -> bool:
         """Backtrack to the last position where we had multiple choices."""
@@ -148,6 +167,7 @@ class Explorer:
         print("\n=== Maze Exploration Statistics ===")
         print(f"Total time taken: {time_taken:.10f} seconds")
         print(f"Total moves made: {len(self.moves)}")
+        print(f"Loop Detection: {self.stuck_def}")
         print(f"Number of backtrack operations: {self.backtrack_count}")
         print(f"Average moves per second: {len(self.moves)/time_taken:.2f}")
         print("==================================\n")
@@ -211,4 +231,4 @@ class Explorer:
         # Print detailed statistics
         self.print_statistics(time_taken)
             
-        return time_taken, self.moves 
+        return time_taken, self.moves

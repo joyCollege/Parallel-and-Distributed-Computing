@@ -36,6 +36,33 @@ def main():
         # Run the interactive game
         run_game(maze_type=args.type, width=args.width, height=args.height)
 
+def basic_static():
+    '''
+    Runs the explorer from explorer.py on a static map 
+
+    Result of the run:
+        === Maze Exploration Statistics ===
+        Total time taken: 0.0018935204 seconds
+        Total moves made: 1279
+        Number of backtrack operations: 0
+        Average moves per second: 675461.45
+        ==================================
+
+        Maze solved in 0.00 seconds
+        Number of moves: 1279
+    '''
+    from src.explorer import Explorer
+    from src.maze import create_maze
+
+    # Create maze and explorer
+    maze = create_maze(0, 0, "static")
+    explorer = Explorer(maze, visualize=False)
+
+    # Run the explorer
+    time_taken, moves = explorer.solve()
+    print(f"Maze solved in {time_taken:.2f} seconds")
+    print(f"Number of moves: {len(moves)}")
 
 if __name__ == "__main__":
-    main()
+    # main()
+    basic_static()

@@ -4,7 +4,7 @@
 
 A simple maze exploration game built with Pygame where you can either manually navigate through a maze or watch an automated solver find its way to the exit.
 
-### How the automated maze explorer works (10 points)
+### Automated maze explorer overview
 The algorithm used by `explorer.py` is the right-hand rule algorithm with backtracking. It is a pathfinding method on mazes that are fully enclosed by walls. The explorer begins by keeping his right side close to the wall and continues throughout the maze keeping his right side on the wall/ This ensures that the explorer finds the target if it exists and there is a valid path. During implementation, the explorer always attempts to turn right. If there is no right turn, it moves forward. If it can't go forward, it goes left. If there are no other options, it moves backwards/turns around. The explorer repeats this until it finds the target. 
 
 ``` python3
@@ -26,39 +26,39 @@ To keep track of the performance of the explorer, some statistics are printed ou
 I have actually tried this technique myself on grass mazes. We ended up exploring half of the maze but the method eventually got us out. It is not the most efficient method but it does guarantee the way out.
 
 
-### Question 2 (30 points)
-Modify the main program to run multiple maze explorers simultaneously. This is because we want to find the best route out of the maze. Your solution should:
-1. Allow running multiple explorers in parallel
-2. Collect and compare statistics from all explorers
-3. Display a summary of results showing which explorer performed best
+### Multiple explores with MPI4Py 
+At first, I ran multiple explorers on multiple machines using MPY4Py. I ran four explorers on two machines to get the results of each explorers. The machines communicated using gather() to receive all the data from other ranks. I chose this as I've already used send and receive on the other assignment.
 
-*Hints*:
-- To get 20 points, use use multiprocessing.
-- To get 30 points, use MPI4Py on multiple machines.
-- Use Celery and RabbitMQ to distribute the exploration tasks. You will get full marks plus a bonus.
-- Implement a task queue system
-- Do not visualize the exploration, just run it in parallel
-- Store results for comparison
+``` bash
+=== Summary of Results ===
+is_stuck definition 0, Time = 0.0017559528s, Moves = 1279, Backtracks = 0
+is_stuck definition 1, Time = 0.0014426708s, Moves = 1279, Backtracks = 0
+is_stuck definition 2, Time = 0.0018639565s, Moves = 1279, Backtracks = 0
+is_stuck definition 3, Time = 0.0015981197s, Moves = 1279, Backtracks = 0
 
-**To answer this question:** 
-1. Study the current explorer implementation
-2. Design a parallel execution system
-3. Implement task distribution
-4. Create a results comparison system
+Fastest explorer: Rank 1 Time =  0.0014426708s, Moves = 1279, Backtracks = 0
+```
 
-### Question 3 (10 points)
-Analyze and compare the performance of different maze explorers on the static maze. Your analysis should:
+All the explorers had similar results, only varying the total time spent by fractions of a second. When looking at the code, the all explorers are following the exact same algorithm on the exact same static maze map, therefore they are arriving at the same results and the differences in time is not significant.
 
-1. Run multiple explorers (at least 4 ) simultaneously on the static maze
-2. Collect and compare the following metrics for each explorer:
-   - Total time taken to solve the maze
-   - Number of moves made
-   - *Optional*:
-     - Number of backtrack operations
+### Performance of different maze explorers
+As all of the explorers had similar results, I tried to modify the explorer while still keeping the main algorithm of the right-hand rule the same. I did this by exploring changes and backtracking. On the previous runs, backtracking has never occurred due to the strict condition to trigger the is_stuck function therefore, I tried different variations on defining the triggering function. 
 
-3. What do you notice regarding the performance of the explorers? Explain the results and the observations you made.
+I kept the original stuck condition the same—where is stuck will return true if the last three moves are the same; I added a variation of this, only needing the same position for two consecutive moves. Another condition I added is if the Explorer goes back and forth on the same two positions. The last condition I made is if the Explorer ends up in the same position after five moves.
 
-### Question 4 (20 points)
+``` bash
+=== Summary of Results ===
+is_stuck definition 0, Time = 0.0022592545s, Moves = 1279, Backtracks = 0
+is_stuck definition 1, Time = 0.0021748543s, Moves = 1279, Backtracks = 0
+is_stuck definition 2, Time = 0.0031981468s, Moves = 1279, Backtracks = 0
+is_stuck definition 3, Time = 0.0019450188s, Moves = 1279, Backtracks = 0
+
+Fastest run: Rank 3 Time =  0.0019450188s, Moves = 1279, Backtracks = 0
+```
+
+Even after defining these different stuck conditions and applying them on different ranks, the results still stayed the same. 
+
+### Implement enhancements
 Based on your analysis from Question 3, propose and implement enhancements to the maze explorer to overcome its limitations. Your solution should:
 
 1. Identify and explain the main limitations of the current explorer:
