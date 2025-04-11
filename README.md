@@ -60,7 +60,7 @@ Rank 7, is_stuck definition 3, Time = 0.0012183189s, Moves = 1279, Backtracks = 
 Fastest run: Rank 1 Time =  0.0011942387s, Moves = 1279, Backtracks = 0
 ```
 
-Even after defining these different stuck conditions and applying them on different ranks, the results still stayed the same. 
+Even after defining these different stuck conditions and applying them on different ranks, the results still stayed the same. This may be bacause all the wall are connected to one another.
 
 ### Implement enhancements
 The current explorer can find a path from beginning to end, but it does not do it very efficiently, nor does it optimize the path to be shorter. Even with modifications to the stuck-condition, the explorer still does not find a shorter path. Applying other state search algorithms can help the explorer find shorter routes and applying heuristics may speed up and optimize the process.
