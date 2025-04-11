@@ -1,0 +1,15 @@
+python main.py --type static --auto --visualize
+
+Hello from the pygame community. https://www.pygame.org/contribute.html
+
+
+=== Maze Exploration Statistics ===
+Total time taken: 42.37 seconds
+Total moves made: 1279
+Number of backtrack operations: 0
+Average moves per second: 30.19
+==================================
+
+Maze solved in 42.37 seconds
+Number of moves: 1279
+Note: Width and height arguments were ignored for the static maze

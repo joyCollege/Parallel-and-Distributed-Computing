@@ -1,39 +1,41 @@
-from time import time
-from src.calc_print_analysis import calc_print_analysis
+"""
+Main entry point for the maze runner game.
+"""
+
+import argparse
+from src.game import run_game
+from src.explorer import Explorer
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Maze Runner Game")
+    parser.add_argument("--type", choices=["random", "static"], default="random",
+                        help="Type of maze to generate (random or static)")
+    parser.add_argument("--width", type=int, default=30,
+                        help="Width of the maze (default: 30, ignored for static mazes)")
+    parser.add_argument("--height", type=int, default=30,
+                        help="Height of the maze (default: 30, ignored for static mazes)")
+    parser.add_argument("--auto", action="store_true",
+                        help="Run automated maze exploration")
+    parser.add_argument("--visualize", action="store_true",
+                        help="Visualize the automated exploration in real-time")
+    
+    args = parser.parse_args()
+    
+    if args.auto:
+        # Create maze and run automated exploration
+        from src.maze import create_maze
+        maze = create_maze(args.width, args.height, args.type)
+        explorer = Explorer(maze, visualize=args.visualize)
+        time_taken, moves = explorer.solve()
+        print(f"Maze solved in {time_taken:.2f} seconds")
+        print(f"Number of moves: {len(moves)}")
+        if args.type == "static":
+            print("Note: Width and height arguments were ignored for the static maze")
+    else:
+        # Run the interactive game
+        run_game(maze_type=args.type, width=args.width, height=args.height)
+
 
 if __name__ == "__main__":
-    from src.updated_GA_trial import updated_GA_trial
-    updated_GA_trial_time = time()
-    updated_GA_trial(num_generations=200)
-    updated_GA_trial_time = time() - updated_GA_trial_time
-    print("*"*200,"\n","updated_GA_trial time:", updated_GA_trial_time, "\n" + "*"*200)
-    
-    from src.p1_starMap_fitnessOnly import p1_starMap_fitnessOnly
-    p1_starMap_fitnessOnly_time = time()
-    p1_starMap_fitnessOnly(num_generations=200)
-    p1_starMap_fitnessOnly_time = time() - p1_starMap_fitnessOnly_time
-    print("*"*200,"\n","p1_starMap_fitnessOnly time:", p1_starMap_fitnessOnly_time, "\n" + "*"*200)
-    # calc_print_analysis(updated_GA_trial_time, p1_starMap_fitnessOnly_time, "p1_starMap_fitnessOnly")
-
-    from src.p2_starMapAsync_largerWorker import p2_starMapAsync_largerWorker
-    p2_starMapAsync_largerWorker_time = time()
-    p2_starMapAsync_largerWorker(num_generations=200)
-    p2_starMapAsync_largerWorker_time = time() - p2_starMapAsync_largerWorker_time
-    print("*"*200,"\n","p2_starMapAsync_largerWorker time:", p2_starMapAsync_largerWorker_time, "\n" + "*"*200)
-    # calc_print_analysis(updated_GA_trial_time, p2_starMapAsync_largerWorker_time, "p2_starMapAsync_largerWorker")
-
-    from src.p3_starMapAsync_stagnation import p3_starMapAsync_stagnation
-    p3_starMapAsync_stagnation_time = time()
-    p3_starMapAsync_stagnation(num_generations=200)
-    p3_starMapAsync_stagnation_time = time() - p3_starMapAsync_stagnation_time
-    print("*"*200,"\n","p3_starMapAsync_stagnation time:", p3_starMapAsync_stagnation_time, "\n" + "*"*200)
-    # calc_print_analysis(updated_GA_trial_time, p3_starMapAsync_stagnation_time, "p2_starMapAsync_largerWorker")
-
-    print("*"*200,"\n","updated_GA_trial time:", updated_GA_trial_time)
-    print("p1_starMap_fitnessOnly time:", p1_starMap_fitnessOnly_time)
-    print("p2_starMapAsync_largerWorker time:", p2_starMapAsync_largerWorker_time)
-    print("p3_starMapAsync_stagnation time:", p3_starMapAsync_stagnation_time, "\n" + "*"*200)
-
-    calc_print_analysis(updated_GA_trial_time, p1_starMap_fitnessOnly_time, "p1_starMap_fitnessOnly")
-    calc_print_analysis(updated_GA_trial_time, p2_starMapAsync_largerWorker_time, "p2_starMapAsync_largerWorker")
-    calc_print_analysis(updated_GA_trial_time, p3_starMapAsync_stagnation_time, "p3_starMapAsync_stagnation")
+    main()
